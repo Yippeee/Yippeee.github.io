@@ -45,3 +45,29 @@ console.log(tc_add(9, 5))
 > 这还真的是巧了,从来没哟这么觉得这个异或有这么多功能,今天本来想做一下这块的记录.结果又看到了一道关于异或的题
 
 题目描述: 给定一个非空整数数组，除了某个元素只出现一次以外，其余每个元素均出现两次。找出那个只出现了一次的元素。 看这个题目, 想法有没有和这个交换变量的题的思想一模一样... 你可能会说为啥,两次就是偶数次,一次的就是奇数次. 还记得上面的那个 a ^ b ^ a = b 吧,所以这道题直接把所有的元素异或一道剩下的就是那个只有一次的元素了..
+
+>2019 - 03 - 06 add
+
+同时 | & 是js中的位比较符号, 也是对其数的二进制进行的位操作.
+
+| 是或, &是与 
+
+举一个使用&的栗子,在 js中的 Node的 API - compareDocumentPosition
+在这个 API中, 返回值都是二进制
+
+`node.compareDocumentPosition( otherNode ) `
+
+返回值 | 含义
+- | -
+1 | 不在同一个文档中
+2 | otherNode 在 node 之前
+4 | otherNode 在 node 之后
+8 | otherNode 包含 node
+16 |  otherNode 被 node 包含
+
+**注意:这个compare是 other和 node之间的关系**
+
+而且,关系并存的情况下,返回的值是和. 
+所以,这个地方就是用到的& 来进行判断了.
+
+`node.compareDocumentPosition( otherNode ) & 4`返回的如果是false,则说明other不在 node 之后,反之则反.
