@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="算法,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2">
+
+
+
+
+
+
+<meta name="description" content="位操作符在数字逻辑课程中,曾经系统的学习过,但是在JS中对应的是什么,往往好像不是很可以一次说的清楚.  刚刚看到位操作的英语 bit operation  在看mdn中的Polyfill中,常常可以看到这样的做法: length = length &amp;gt;&amp;gt;&amp;gt; 0 google一下, 在使用 &amp;gt;&amp;gt;&amp;gt;0的时候,基本上保证了参数不会为负数,但是可能会为其他类型的数值,">
+<meta name="keywords" content="算法">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JS中的位操作符">
+<meta property="og:url" content="http://yippee.ink/git-blog/2019/01/07/JS中的位操作符/index.html">
+<meta property="og:site_name" content="依破缘">
+<meta property="og:description" content="位操作符在数字逻辑课程中,曾经系统的学习过,但是在JS中对应的是什么,往往好像不是很可以一次说的清楚.  刚刚看到位操作的英语 bit operation  在看mdn中的Polyfill中,常常可以看到这样的做法: length = length &amp;gt;&amp;gt;&amp;gt; 0 google一下, 在使用 &amp;gt;&amp;gt;&amp;gt;0的时候,基本上保证了参数不会为负数,但是可能会为其他类型的数值,">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://i.loli.net/2019/01/07/5c32efafcf701.png">
+<meta property="og:updated_time" content="2019-03-07T04:08:33.100Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JS中的位操作符">
+<meta name="twitter:description" content="位操作符在数字逻辑课程中,曾经系统的学习过,但是在JS中对应的是什么,往往好像不是很可以一次说的清楚.  刚刚看到位操作的英语 bit operation  在看mdn中的Polyfill中,常常可以看到这样的做法: length = length &amp;gt;&amp;gt;&amp;gt; 0 google一下, 在使用 &amp;gt;&amp;gt;&amp;gt;0的时候,基本上保证了参数不会为负数,但是可能会为其他类型的数值,">
+<meta name="twitter:image" content="https://i.loli.net/2019/01/07/5c32efafcf701.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yippee.ink/git-blog/2019/01/07/JS中的位操作符/">
+
+
+
+
+
+  <title>JS中的位操作符 | 依破缘</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">依破缘</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yippee.ink/git-blog/2019/01/07/JS中的位操作符/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yippee">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="依破缘">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">JS中的位操作符</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-01-07T11:39:05+08:00">
+                2019-01-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">笔记</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>位操作符在数字逻辑课程中,曾经系统的学习过,但是在JS中对应的是什么,往往好像不是很可以一次说的清楚.</p>
+</blockquote>
+<p>刚刚看到位操作的英语 bit operation </p>
+<p>在看mdn中的Polyfill中,常常可以看到这样的做法: length = length &gt;&gt;&gt; 0 google一下, 在使用 &gt;&gt;&gt;0的时候,基本上保证了参数不会为负数,但是可能会为其他类型的数值,这样就会把其他类型的都变成0.作用和~~是一样的.</p>
+<blockquote>
+<p>这里再吐槽一句js吧.这设计的啥玩意啊,有点太混乱的了.上面的原因都是位操作符会把参数全部转成32位的2进制的补码进行操作,而且对参数没有限制, 所以是非数组的数值,都被当成了0进行的操作.同时还会忽略掉62位浮点型的精度,所以对于数字也只会保留数字的整数部分.</p>
+</blockquote>
+<p>先总结这样使用的作用 <strong>1.把非数字的字符转化成0 2.把数字取大于等于零的整数部分</strong> </p>
+<p>为了整理清楚上述结果产生的原因,我们需要对JS中的位操作符有一个基本的认识: <a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Guide/Expressions_and_Operators#%E4%BD%8D%E8%BF%90%E7%AE%97%E7%AC%A6" target="_blank" rel="noopener">位操作符</a> </p>
+<p>说一点基础的知识,位操作符是给电脑内存中二进制运算使用的.所以在使用位操作运算的时候,一定得把数字转化成2进制来运算.同时数值在计算机中存储都是用的补码,然后再转回到10进制呈现. </p>
+<p>对于负数的操作,记录一下.  当发现数值的首位是1的时候, 说明此时数为负数. 所以就不能直接转成10进制的数值. 需要取反,然后加一(就是补码操作).然后再把<strong>负数符号加上去</strong>.反之,如果本身首位都是0了,则说明是正数, 直接转成10进制就完事了.</p>
+<p><strong>同时在js中,</strong></p>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>操作</th>
+<th>举例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>&lt;&lt;(左移位)</td>
+<td>将第一个操作数向左移动指定数量的位. 左边移出位被抛弃. <strong>左边移出的几位被丢弃.右边多出的空位由0补齐</strong></td>
+<td>9&lt;&lt;2产生36，因为1001移位2比特向左变为100100，它是36。</td>
+</tr>
+<tr>
+<td>>&gt;(带符号右移)</td>
+<td>将第一个操作数向右移动指定数量的位. 右边移出位被抛弃. <strong>左边多出的空位由原值的最左边数字补齐</strong>.</td>
+<td>9&gt;&gt;2产生2，因为1001移位2位向右变为10，其是2。同样，-9&gt;&gt;2产生-3，由于符号被保留。</td>
+</tr>
+<tr>
+<td>>&gt;&gt;(补零右移)</td>
+<td>将第一个操作数向右移动指定数量的位. 右边移出位被抛弃. <strong>左边多出的空位由0补齐</strong>.</td>
+<td>19&gt;&gt;&gt;2产生4，因为10011移位2位向右变为100，它是4。对非负数值，补零右移和带符号右移产生相同结果。</td>
+</tr>
+</tbody>
+</table>
+<p>左移中,正数和负数的逻辑是一样的,只是符号会不一样而已. </p>
+<p>例如 19 &lt;&lt; 2 -&gt; 76 -19 &lt;&lt; 2 -&gt; 76 而对于右移,结果就会有所不同,使用带符号右移或者是补零右移的结果会完全不一样 带符号的移动: 19 &gt;&gt; 2 -&gt; 4 10010 变成了 100 -&gt; 4 -19 &gt;&gt; 4 -&gt; -5 </p>
+<p>-19的原码: 110011 补码:101101 移位: (注意这个地方需要高位用1补齐) 111011 补码:100101 -&gt; -5 </p>
+<p>两点注意事项: 负数在计算移位的使用用的补码移位; 移位中左边的补齐是用的最左边的符号数字(负数的话也就是1)来补齐 对于正数,两种右移的方式是一样的 19 &gt;&gt;&gt; 2 -&gt; 4 而对于负数来说就不一样了,产生的原因则是移动补位的数值不同导致的,在补零右移中,无论正数负数都是用的0来补齐(或者这正是为什么叫做补零右移的原因吧),所以对于正数来说就是一样的结果,而对于负数来说差异就会很大了. -19 &gt;&gt;&gt; 2 -&gt; 1073741819 正是因为补零右移的特性,所以才可以使用这个方法来讲数字强行取整,或者是把非数字转成0</p>
+<hr>
+<p>接下来再对其他的位操作对理解 先看一道题:</p>
+<p><a href="https://i.loli.net/2019/01/07/5c32efafcf701.png" target="_blank" rel="noopener"><img src="https://i.loli.net/2019/01/07/5c32efafcf701.png" alt=""></a> </p>
+<p>大意如下:如何不使用+完成加法 意思很明显了就是适用位操作来完成加法,这个地方就得提到一下异或(XOR),在JS中用^来表示.<a href="https://baike.baidu.com/item/%E5%BC%82%E6%88%96" target="_blank" rel="noopener">异或</a>,在百科中就可以知道,异或的名称又叫做半加运算,因为它实现的逻辑法则和加法是一样的,只是不进位,所以也叫做不进位加法. 理一下我的思路,有点乱了.a^b得到的是a+b在二进制的情况下没有进位得到的结果 eg. 9 + 5 -&gt; 1001 + 101 1001 ^ 101 = 1100 竟然我们知道了在没有进位的情况下获得的值,那么现在只需要知道哪些地方进位了,再加上不就是加法的最终结果了嘛 什么情况下才会进位呢,当然是都为1的情况啊. 什么? 都为1,这不就是与操作吗,但是还要想到的是,在与操作的时候,获取到的都为1的位置,但是在真实的加法的情况下,进位的数值应该在都是1的左边的位置 所以,将a &amp; b &gt;&gt; 1就可以得到a b相加的情况下,进位的位置了 现在思路有了,那怎么实现这个加法呢. 可以看到在上面思路中, a + b = (a ^ b) + (a &amp; b &lt;&lt; 1) 前一个部分是a b不进位的加法的结果,后一部分是进位的数值,也就是说,如果后一部分不为0那么怎么都需要加法. 那么,如果后一部分为0的话,也就是a b不进位的加法正好等于 a+b 的时候,就不需要用到+号了.<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">tc_add</span> (<span class="params">a, b</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">while</span> (b != <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">let</span> _a = a ^ b</span><br><span class="line">        <span class="keyword">let</span> _b = (a &amp; b) &lt;&lt; <span class="number">1</span></span><br><span class="line">        a = _a</span><br><span class="line">        b = _b</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">'a:'</span>, a)</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">'b:'</span>, b)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> a</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(tc_add(<span class="number">9</span>, <span class="number">5</span>))</span><br><span class="line"><span class="comment">// 其实看来就像是一个递归,直到b等于0的时候就完成了加法运算</span></span><br></pre></td></tr></table></figure></p>
+<p>再写一个不用临时变量来交换变量的方法 a = a ^ b b = a ^ b a = a ^ b 并不提倡这么使用,但是可以搞懂一下这个的原理. b = a ^ b ^ b = a ^ 0 = a a = a ^ b ^ a = b ^ 0 = b 就是因为,任何数和0异或还是本身</p>
+<blockquote>
+<p>这还真的是巧了,从来没哟这么觉得这个异或有这么多功能,今天本来想做一下这块的记录.结果又看到了一道关于异或的题</p>
+</blockquote>
+<p>题目描述: 给定一个非空整数数组，除了某个元素只出现一次以外，其余每个元素均出现两次。找出那个只出现了一次的元素。 </p>
+<p>看这个题目, 想法有没有和这个交换变量的题的思想一模一样… 你可能会说为啥,两次就是偶数次,一次的就是奇数次. 还记得上面的那个 a ^ b ^ a = b 吧,所以这道题直接把所有的元素异或一道剩下的就是那个只有一次的元素了..</p>
+<blockquote>
+<p>2019 - 03 - 06 add</p>
+</blockquote>
+<h3 id="按位逻辑操作符"><a href="#按位逻辑操作符" class="headerlink" title="按位逻辑操作符"></a>按位逻辑操作符</h3><blockquote>
+<p>操作数被转换成32位整数，用比特序列（0和1组成）表示。超过32位的数字会被丢弃。例如, 以下具有32位以上的整数将转换为32位整数:</p>
+</blockquote>
+<p>同时 | &amp; 是js中的位比较符号, 也是对其数的二进制进行的位操作.</p>
+<p>| 是或, &amp;是与 , ~ 是非 </p>
+<p>举一个使用&amp;的栗子,在 js中的 Node的 API - compareDocumentPosition<br>在这个 API中, 返回值都是二进制</p>
+<p><code>node.compareDocumentPosition( otherNode )</code></p>
+<table>
+<thead>
+<tr>
+<th>返回值</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>不在同一个文档中</td>
+</tr>
+<tr>
+<td>2</td>
+<td>otherNode 在 node 之前</td>
+</tr>
+<tr>
+<td>4</td>
+<td>otherNode 在 node 之后</td>
+</tr>
+<tr>
+<td>8</td>
+<td>otherNode 包含 node</td>
+</tr>
+<tr>
+<td>16</td>
+<td>otherNode 被 node 包含</td>
+</tr>
+</tbody>
+</table>
+<p><strong>注意:这个compare是 other和 node之间的关系</strong></p>
+<p>而且,关系并存的情况下,返回的值是和.<br>所以,这个地方就是用到的&amp; 来进行判断了.</p>
+<p><code>node.compareDocumentPosition( otherNode ) &amp; 4</code>返回的如果是false,则说明other不在 node 之后,反之则反.</p>
+<p>~也是按位操作符,按位取反<br>对于是数值的情况下, ~x = -(x + 1)</p>
+<p>使用情景:<br>和indexOf 一起使用, <figure class="highlight plain"><figcaption><span>&#123;</span><a href="//">包含&#125; ```</a></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">同时还可以使用 ~~ 将操作符转化成32位有符号正数</span><br><span class="line">```js</span><br><span class="line">~~ null // 0</span><br><span class="line">~~ undefined // 0</span><br><span class="line">~~ NaN // 0</span><br><span class="line">~~ &#123;&#125; // 0</span><br><span class="line">~~ true // 1</span><br><span class="line">~~ &apos;&apos; // 0</span><br><span class="line">~~ &apos;string&apos; // 0</span><br><span class="line">~~ &apos;1&apos; // 1</span><br><span class="line">~~ Number.POSITIVE_INFINITY // 0</span><br><span class="line"></span><br><span class="line">~~ 1.2 // 1</span><br><span class="line">~~ -1.2 // -1</span><br><span class="line">~~ 1.6 // 1</span><br><span class="line">~~ -1.6 // -1</span><br><span class="line">~~ (Math.pow(2, 31) - 1) // 2147483647 = 2^31-1</span><br><span class="line">~~ (Math.pow(2, 31)) // -2147483648 = -2^31</span><br><span class="line">~~ (-Math.pow(2, 31)) // -2147483648 = -2^31</span><br><span class="line">~~ (-Math.pow(2, 31) - 1) // 2147483647 = 2^31-1</span><br><span class="line">~~ (Math.pow(2, 32)) // 0</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/算法/" rel="tag"># 算法</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/01/01/2018-e5-b9-b4-e5-b9-b4-e7-bb-88-e6-80-bb-e7-bb-93/" rel="next" title="2018年年终总结">
+                <i class="fa fa-chevron-left"></i> 2018年年终总结
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/01/08/e4-b8-80-e4-ba-9b-e5-b8-b8-e8-a7-81-e7-9a-84-e9-9d-a2-e8-af-95-e9-a2-98/" rel="prev" title="一些常见的面试题">
+                一些常见的面试题 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="Yippee">
+          <p class="site-author-name" itemprop="name">Yippee</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">categories</span>
+              
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">tags</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#按位逻辑操作符"><span class="nav-number">1.</span> <span class="nav-text">按位逻辑操作符</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2018 - 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Yippee</span>
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
