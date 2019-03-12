@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2">
+
+
+
+
+
+
+<meta name="description" content="关于正则表达式也使用过很久了,但是总是会有点遗漏和本身就没有掌握的地方.在此做记录.  JS正则中的捕获元和非捕获元   字符 描述     (pattern) 匹配 pattern ,并且获取   (?:pattern) 匹配pattern, 但是不捕获结果, 就是在分组中不考虑pattern的分组   (?=pattern) 正向预查,也不捕获结果,同时还不获取pattern的结果,只是做一">
+<meta property="og:type" content="article">
+<meta property="og:title" content="正则表达式">
+<meta property="og:url" content="http://yippee.ink/git-blog/2019/03/12/正则表达式/index.html">
+<meta property="og:site_name" content="依破缘">
+<meta property="og:description" content="关于正则表达式也使用过很久了,但是总是会有点遗漏和本身就没有掌握的地方.在此做记录.  JS正则中的捕获元和非捕获元   字符 描述     (pattern) 匹配 pattern ,并且获取   (?:pattern) 匹配pattern, 但是不捕获结果, 就是在分组中不考虑pattern的分组   (?=pattern) 正向预查,也不捕获结果,同时还不获取pattern的结果,只是做一">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-03-12T07:17:45.418Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="正则表达式">
+<meta name="twitter:description" content="关于正则表达式也使用过很久了,但是总是会有点遗漏和本身就没有掌握的地方.在此做记录.  JS正则中的捕获元和非捕获元   字符 描述     (pattern) 匹配 pattern ,并且获取   (?:pattern) 匹配pattern, 但是不捕获结果, 就是在分组中不考虑pattern的分组   (?=pattern) 正向预查,也不捕获结果,同时还不获取pattern的结果,只是做一">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yippee.ink/git-blog/2019/03/12/正则表达式/">
+
+
+
+
+
+  <title>正则表达式 | 依破缘</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">依破缘</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yippee.ink/git-blog/2019/03/12/正则表达式/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yippee">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="依破缘">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">正则表达式</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-03-12T10:45:22+08:00">
+                2019-03-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>关于正则表达式也使用过很久了,但是总是会有点遗漏和本身就没有掌握的地方.在此做记录.</p>
+</blockquote>
+<h2 id="JS正则中的捕获元和非捕获元"><a href="#JS正则中的捕获元和非捕获元" class="headerlink" title="JS正则中的捕获元和非捕获元"></a>JS正则中的捕获元和非捕获元</h2><table>
+<thead>
+<tr>
+<th>字符</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>(pattern)</td>
+<td>匹配 pattern ,并且获取</td>
+</tr>
+<tr>
+<td>(?:pattern)</td>
+<td>匹配pattern, 但是不捕获结果, 就是在分组中不考虑pattern的分组</td>
+</tr>
+<tr>
+<td>(?=pattern)</td>
+<td>正向预查,也不捕获结果,同时还不获取pattern的结果,只是做一个预查(就是在P中, 都不会包含pattern匹配的结果,这也是?=和?:的差别所在)</td>
+</tr>
+<tr>
+<td>(?!pattern)</td>
+<td>正向预查的否定版</td>
+</tr>
+</tbody>
+</table>
+<p>这里用一道面试题作为例子: 将数值转化成千分位(00,000,000的形式)</p>
+<blockquote>
+<p>题外话,<code>toLocaleSting(&#39;en&#39;)</code>的方式也可以</p>
+</blockquote>
+<p>对比三种正则的获取情况<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> reg1 = <span class="regexp">/\d&#123;1,3&#125;(\d&#123;3&#125;)+$/</span></span><br><span class="line"><span class="keyword">var</span> reg2 = <span class="regexp">/\d&#123;1,3&#125;(?:(\d&#123;3&#125;)+)/g</span></span><br><span class="line"><span class="keyword">var</span> reg3 = <span class="regexp">/\d&#123;1,3&#125;(?=(\d&#123;3&#125;)+$)/g</span></span><br><span class="line"><span class="keyword">var</span> num = <span class="string">'1234567890'</span></span><br><span class="line">num.replace(reg1, <span class="function"><span class="keyword">function</span> (<span class="params">p, $<span class="number">1</span>, $<span class="number">2</span></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'p: '</span>, p); <span class="comment">// 1234567890</span></span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'$1: '</span>, $<span class="number">1</span>); <span class="comment">// 890</span></span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'$2: '</span>, $<span class="number">2</span>); <span class="comment">// 0</span></span><br><span class="line">&#125;)</span><br><span class="line">num.replace(reg2, <span class="function"><span class="keyword">function</span> (<span class="params">p, $<span class="number">1</span>, $<span class="number">2</span></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'p: '</span>, p); <span class="comment">// 1234567890</span></span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'$1: '</span>, $<span class="number">1</span>); <span class="comment">// 890</span></span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'$2: '</span>, $<span class="number">2</span>); <span class="comment">// 0</span></span><br><span class="line">&#125;)</span><br><span class="line">num.replace(reg3, <span class="function"><span class="keyword">function</span> (<span class="params">p, $<span class="number">1</span>, $<span class="number">2</span></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'p: '</span>, p);</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'$1: '</span>, $<span class="number">1</span>);</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'$2: '</span>, $<span class="number">2</span>);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></p>
+<p>首先看第一种正则的情况,虽然的确这就是最后千分位分割的样式,但是这样我们无法匹配以及获取到我们每次需要的数据,它只能讲整个结果返回出来.</p>
+<p>然后是第二种情况,首先说明,我们的匹配符都是用的正则中默认的规则也就是贪婪获取,所以可以看到第二种会和第一种得到一样的情况.如果我们这这种情况下进行优化呢.<br><code>reg2 = /(\d{1,3})(?:(\d{3})+?)/g</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">num.replace(reg2, <span class="function"><span class="keyword">function</span> (<span class="params">p, $<span class="number">1</span>, $<span class="number">2</span></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'p: '</span>, p); <span class="comment">// 123456   7890</span></span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'$1: '</span>, $<span class="number">1</span>); <span class="comment">// 123     7</span></span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'$2: '</span>, $<span class="number">2</span>); <span class="comment">// 456   890</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>这时候会进行两轮,但是因为<code>?:</code>非捕获元的特性, ?:后面的内容会进行消耗,也就是在P中会有消耗,所以下一轮的时候,会略过被消耗用掉的pattern.<br>这个时候肯定会说应该在最后加上$啊,是的,这只是为了举这个例而已,即便加上了$造成的结果还是一样的.</p>
+<p>第三种情况,当然就是正确的方法了.我们来分析这个为什么可以达到我们的效果.<br>因为?=不会消耗pattern匹配的内容,所以会保证每个值都会被捕获.同时由于第一次的匹配情况,保证了除了第一次之外的后面每次匹配都是{3}的情况.<br>同时P就是我们需要的数值的前面的部分,只需要 <code>return p + &#39;,&#39;</code>就可以了</p>
+<h3 id="实用情况"><a href="#实用情况" class="headerlink" title="实用情况"></a>实用情况</h3><h4 id="验证密码的复杂性和位数"><a href="#验证密码的复杂性和位数" class="headerlink" title="验证密码的复杂性和位数"></a>验证密码的复杂性和位数</h4><p>要求:位数大于6,而且包含有字母小写和大写,同时有特殊符号<br><code>/(?=.{6,})(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&amp;&amp;*()_+])/</code></p>
+<h4 id="验证邮箱"><a href="#验证邮箱" class="headerlink" title="验证邮箱"></a>验证邮箱</h4><p><code>/^[0-9a-zA-Z\-_]+@[0-9a-zA-Z\-_]+[\.0-9a-zA-Z\-_]+$/</code></p>
+<h4 id="匹配汉字"><a href="#匹配汉字" class="headerlink" title="匹配汉字"></a>匹配汉字</h4><p><code>[\u4e00-\u9fa5]</code></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/03/07/置顶文章/" rel="next" title="置顶文章">
+                <i class="fa fa-chevron-left"></i> 置顶文章
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="Yippee">
+          <p class="site-author-name" itemprop="name">Yippee</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">14</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">categories</span>
+              
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">tags</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#JS正则中的捕获元和非捕获元"><span class="nav-number">1.</span> <span class="nav-text">JS正则中的捕获元和非捕获元</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#实用情况"><span class="nav-number">1.1.</span> <span class="nav-text">实用情况</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#验证密码的复杂性和位数"><span class="nav-number">1.1.1.</span> <span class="nav-text">验证密码的复杂性和位数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#验证邮箱"><span class="nav-number">1.1.2.</span> <span class="nav-text">验证邮箱</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#匹配汉字"><span class="nav-number">1.1.3.</span> <span class="nav-text">匹配汉字</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2018 - 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Yippee</span>
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
