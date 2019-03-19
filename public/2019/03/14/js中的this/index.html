@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2">
+
+
+
+
+
+
+<meta name="description" content="提纲: this指向什么? 什么时候 this指向 window?  箭头函数中的this bind,apply和 call, 模拟实现一个bind,call,apply  this指向什么 刚开始了解this的时候, 看到过一句话, 谁调用函数, 函数中的this就执行谁.我也把这句话奉为圭臬.但是,随着深入的了解, 有些时候就更蒙蔽了.到底是谁调用的这个函数呢..  直接调用直接通过函数名调用">
+<meta property="og:type" content="article">
+<meta property="og:title" content="js中的this">
+<meta property="og:url" content="http://yippee.ink/git-blog/2019/03/14/js中的this/index.html">
+<meta property="og:site_name" content="依破缘">
+<meta property="og:description" content="提纲: this指向什么? 什么时候 this指向 window?  箭头函数中的this bind,apply和 call, 模拟实现一个bind,call,apply  this指向什么 刚开始了解this的时候, 看到过一句话, 谁调用函数, 函数中的this就执行谁.我也把这句话奉为圭臬.但是,随着深入的了解, 有些时候就更蒙蔽了.到底是谁调用的这个函数呢..  直接调用直接通过函数名调用">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-03-19T03:22:02.390Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="js中的this">
+<meta name="twitter:description" content="提纲: this指向什么? 什么时候 this指向 window?  箭头函数中的this bind,apply和 call, 模拟实现一个bind,call,apply  this指向什么 刚开始了解this的时候, 看到过一句话, 谁调用函数, 函数中的this就执行谁.我也把这句话奉为圭臬.但是,随着深入的了解, 有些时候就更蒙蔽了.到底是谁调用的这个函数呢..  直接调用直接通过函数名调用">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yippee.ink/git-blog/2019/03/14/js中的this/">
+
+
+
+
+
+  <title>js中的this | 依破缘</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">依破缘</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yippee.ink/git-blog/2019/03/14/js中的this/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yippee">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="依破缘">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">js中的this</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-03-14T18:19:09+08:00">
+                2019-03-14
+              </time>
+            
+
+            
+
+            
+          </span>
+          
+          
+            <span class="post-updated">
+              &nbsp; | &nbsp; post.updated
+              <time itemprop="dateUpdated" datetime="2019-03-19T11:22:02+08:00" content="2019-03-19">
+                2019-03-19
+              </time>
+            </span>
+          
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="提纲"><a href="#提纲" class="headerlink" title="提纲:"></a>提纲:</h3><ol>
+<li>this指向什么? 什么时候 this指向 window? </li>
+<li>箭头函数中的this</li>
+<li>bind,apply和 call, 模拟实现一个bind,call,apply</li>
+</ol>
+<h2 id="this指向什么"><a href="#this指向什么" class="headerlink" title="this指向什么"></a>this指向什么</h2><blockquote>
+<p>刚开始了解this的时候, 看到过一句话, 谁调用函数, 函数中的this就执行谁.我也把这句话奉为圭臬.<br>但是,随着深入的了解, 有些时候就更蒙蔽了.到底是谁调用的这个函数呢..</p>
+</blockquote>
+<h3 id="直接调用"><a href="#直接调用" class="headerlink" title="直接调用"></a>直接调用</h3><p>直接通过函数名调用, 无论在哪个作用域下返回的都是全局对象, 直接声明的函数就是在全局对象上声明的.<br>note: 浏览器下和node下的全局对象是不同的</p>
+<h3 id="方法中-this-指向全局对象的情况"><a href="#方法中-this-指向全局对象的情况" class="headerlink" title="方法中 this 指向全局对象的情况"></a>方法中 this 指向全局对象的情况</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> name = <span class="string">'Bob'</span></span><br><span class="line"><span class="keyword">var</span> obj = &#123;</span><br><span class="line">    name: <span class="string">'Jack'</span>,</span><br><span class="line">    getName: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="keyword">this</span>.name)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> getName = obj.getName</span><br><span class="line">getName()</span><br></pre></td></tr></table></figure>
+<p>我一开始觉得这个<code>getName</code>会输出的是 obj对象里面的 name,因为不是用obj.getName定义的嘛.<br>然而, 并不是的, 这都是属于定义的, 这个时候的调用还是window的,所以<code>log</code>出来的应该是Bob<br>还有一种特殊情况就是数组中的函数在数组中调用的情况,如下题目:<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> length = <span class="number">50</span></span><br><span class="line"><span class="keyword">var</span> fn = <span class="function"><span class="keyword">function</span> (<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span>.length)</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> arr = [fn,<span class="number">1</span>,<span class="number">2</span>]</span><br><span class="line">arr[<span class="number">0</span>]()</span><br></pre></td></tr></table></figure></p>
+<p>一开始以为这块的fn中的this应该会没有特殊指定会指向window,然而并不是的.<br>在数组中调用函数的话,this相当于是这个数组,所以返回的length是数组的length,所以返回的是3</p>
+<h3 id="箭头函数中的this"><a href="#箭头函数中的this" class="headerlink" title="箭头函数中的this"></a>箭头函数中的this</h3><p>箭头函数中没有作用域,也就没有this,this使用的是父级的this</p>
+<h2 id="bind-apply和-call-模拟实现一个bind-call-apply"><a href="#bind-apply和-call-模拟实现一个bind-call-apply" class="headerlink" title="bind,apply和 call, 模拟实现一个bind,call,apply"></a>bind,apply和 call, 模拟实现一个bind,call,apply</h2><p>三者对比:</p>
+<blockquote>
+<p>call 接受参数 [thisArg, arg1, arg2, …]<br>apply 接受参数 [thisArg, [argArr]]<br>bind 接受参数 [thisArg, arg1, arg2, …]<br>可以看出前两者的区别在于参数的提供方式 call是一个一个指定, 而apply 是用的数组<br>最后一个bind 接受的参数于call 相同,但是bind 会返回一个函数, 并不会直接执行函数, 这也是bind 与前两者的区别所在</p>
+</blockquote>
+<h3 id="call的实现"><a href="#call的实现" class="headerlink" title="call的实现"></a>call的实现</h3><p>先看call 到底做了什么.<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = &#123;<span class="attr">name</span>: <span class="string">'Jack'</span>&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn</span>(<span class="params"></span>) </span>&#123;<span class="built_in">console</span>.log(<span class="keyword">this</span>.name)&#125;</span><br><span class="line">fn.call(a) <span class="comment">// Jack</span></span><br></pre></td></tr></table></figure></p>
+<p>那么其实,上面的代码等同于:<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = &#123;</span><br><span class="line">    name: <span class="string">'Jack'</span>,</span><br><span class="line">    fn: fn <span class="comment">// 这块的fn的属性名任意都行</span></span><br><span class="line">&#125;</span><br><span class="line">a.fn()</span><br></pre></td></tr></table></figure></p>
+<p>有了这样的思路之后,我们发现实现call,就是将调用的方法增加到参数对象的属性中,然后运行就行了.为了不被污染,执行完成之后,还可以删除该属性<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Function</span>.prototype.MyCall = <span class="function"><span class="keyword">function</span> (<span class="params">thisArg</span>) </span>&#123;</span><br><span class="line">    thisArg.fn = thisArg</span><br><span class="line">    thisArg.fn()</span><br><span class="line">    <span class="keyword">delete</span> thisArg.fn</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这样的第一版的call就完成了,然后我们再继续优化它</p>
+<p>首先,对接受的参数是不是函数要进行判断.</p>
+<p>其次,除了接受thisArg参数之外,call 还可以接受函数执行时候的参数,</p>
+<p>如果函数有返回值的话,还应该将值返回出去,</p>
+<p>还需要保证添加的函数的属性名不会覆盖原有属性</p>
+<p>以及, 如果传的 thisArg是 null,应该使用window</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 考虑到多种环境下的使用</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getWindow</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">generateRandom</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">Date</span>.now()</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">Function</span>.prototype.MyCall = <span class="function"><span class="keyword">function</span> (<span class="params">thisArg, ...args</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">typeof</span> <span class="keyword">this</span> !=== <span class="string">'function'</span>) <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="keyword">this</span>+<span class="string">'must be a function'</span>)</span><br><span class="line">    <span class="keyword">if</span> (thisArg === <span class="literal">null</span>) thisArg = getWindow()</span><br><span class="line">    <span class="keyword">var</span> random = generateRandom()</span><br><span class="line">    thisArg[random] = <span class="keyword">this</span></span><br><span class="line">    <span class="keyword">var</span> result = thisArg[random](...args)</span><br><span class="line">    <span class="keyword">delete</span> thisArg[random]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这块使用了…args 来获取传过来的函数的参数,如果不让使用的话,可以使用<code>eval</code>来解析参数</p>
+<h3 id="apply的实现"><a href="#apply的实现" class="headerlink" title="apply的实现"></a>apply的实现</h3><blockquote>
+<p>实现了call之后 apply就是水到渠成的事情了.<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Function</span>.prototype.MyApply = <span class="function"><span class="keyword">function</span> (<span class="params">thisArg, args</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.MyCall(thisArg,...args)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<h3 id="bind的实现"><a href="#bind的实现" class="headerlink" title="bind的实现"></a>bind的实现</h3><p>bind的实现需要考虑到一些比较特殊的地方,就是在使用new的时候, 感觉这块的实现有点不懂.等会来补充</p>
+<p>待续~</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/03/13/HTML-CSS知识补充/" rel="next" title="HTML&CSS知识补充">
+                <i class="fa fa-chevron-left"></i> HTML&CSS知识补充
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/03/18/理解Promise/" rel="prev" title="理解Promise">
+                理解Promise <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="Yippee">
+          <p class="site-author-name" itemprop="name">Yippee</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">20</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">categories</span>
+              
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">tags</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#提纲"><span class="nav-number">1.</span> <span class="nav-text">提纲:</span></a></li></ol><li class="nav-item nav-level-2"><a class="nav-link" href="#this指向什么"><span class="nav-number"></span> <span class="nav-text">this指向什么</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#直接调用"><span class="nav-number">1.</span> <span class="nav-text">直接调用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#方法中-this-指向全局对象的情况"><span class="nav-number">2.</span> <span class="nav-text">方法中 this 指向全局对象的情况</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#箭头函数中的this"><span class="nav-number">3.</span> <span class="nav-text">箭头函数中的this</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#bind-apply和-call-模拟实现一个bind-call-apply"><span class="nav-number"></span> <span class="nav-text">bind,apply和 call, 模拟实现一个bind,call,apply</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#call的实现"><span class="nav-number">1.</span> <span class="nav-text">call的实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#apply的实现"><span class="nav-number">2.</span> <span class="nav-text">apply的实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#bind的实现"><span class="nav-number">3.</span> <span class="nav-text">bind的实现</span></a></li></ol></li></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2018 - 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Yippee</span>
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
