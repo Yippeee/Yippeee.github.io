@@ -405,7 +405,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yippee.ink/git-blog/2019/03/19/判断对象的层级数/">
+    <link itemprop="mainEntityOfPage" href="http://yippee.ink/git-blog/2019/03/25/几种常见的递归函数/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Yippee">
@@ -424,7 +424,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/03/19/判断对象的层级数/" itemprop="url">判断对象的层级数</a></h1>
+                <a class="post-title-link" href="/2019/03/25/几种常见的递归函数/" itemprop="url">几种常见的递归函数</a></h1>
         
 
         <div class="post-meta">
@@ -436,8 +436,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-03-19T15:53:22+08:00">
-                2019-03-19
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-03-25T15:53:22+08:00">
+                2019-03-25
               </time>
             
 
@@ -449,8 +449,8 @@
           
             <span class="post-updated">
               &nbsp; | &nbsp; post.updated
-              <time itemprop="dateUpdated" datetime="2019-03-19T15:53:22+08:00" content="2019-03-19">
-                2019-03-19
+              <time itemprop="dateUpdated" datetime="2019-03-26T14:51:40+08:00" content="2019-03-26">
+                2019-03-26
               </time>
             </span>
           
@@ -485,7 +485,59 @@
       
         
           
-            
+            <blockquote>
+<p>本文的主题是，常见的几种递归函数，以及如何用非递归的方式实现</p>
+</blockquote>
+<h2 id="树形结构对象的遍历"><a href="#树形结构对象的遍历" class="headerlink" title="树形结构对象的遍历"></a>树形结构对象的遍历</h2><p>完成一个函数，作用是返回对象的最大深度（其实就是树的深度）</p>
+<p>首先的思路，是从DP问题开始。位于N位置的最大深度，就是位于N-1位置的最大深度 + 1， 且如果没有子项了，深度就为1</p>
+<p>一个递归的原型就形成了</p>
+<ol>
+<li>相连项目之间的关系</li>
+<li>递归退出的条件</li>
+</ol>
+<p>所以递归的套路模板一般形如：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (基本情况) &#123;</span><br><span class="line">    直接返回，退出函数</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    继续调用(新的参数)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>那么，按照上面的描述，写出这个函数</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">traverse</span>(<span class="params">obj</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (obj === <span class="literal">null</span>) <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">    <span class="comment">// 判断是不是单层对象</span></span><br><span class="line">    <span class="keyword">const</span> getSons = <span class="function">(<span class="params">obj</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> getObjChildren(obj).every(<span class="function">(<span class="params">item</span>) =&gt;</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="built_in">Object</span>.prototype.toString.call(item) !== <span class="string">'[object Object]'</span> <span class="comment">// 对象类型判断</span></span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (getSons(obj)) <span class="keyword">return</span> <span class="number">1</span></span><br><span class="line">    <span class="keyword">let</span> max = <span class="number">0</span></span><br><span class="line">    getObjChildren(obj).forEach(<span class="function"><span class="params">item</span> =&gt;</span> &#123;</span><br><span class="line">        max = traverse(item) &gt; max ? traverse(item) : max</span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="keyword">return</span> max + <span class="number">1</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 获取对象的直接儿子元素，返回数组</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getObjChildren</span>(<span class="params">obj</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> result = []</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">const</span> key <span class="keyword">in</span> obj) &#123;</span><br><span class="line">        <span class="keyword">if</span> (obj.hasOwnProperty(key)) &#123;</span><br><span class="line">            <span class="keyword">const</span> element = obj[key];</span><br><span class="line">            result.push(element)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> result</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>使用递归就是这么做的，如果不能使用递归呢。</p>
+<p>我们将思维转化一下，不要江化。</p>
+<p>这样的每一个去遍历，做了很多的无用功，如果我们直接以层为单位，这一层只要有子元素就把层数加一，知道最后一层所有的元素都没有子元素了，那么最后不就是树的层数了嘛。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">layerTraverse</span>(<span class="params">obj</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (obj === <span class="literal">null</span>) <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">    <span class="keyword">let</span> layer = <span class="number">1</span></span><br><span class="line">    <span class="keyword">let</span> queues = [] <span class="comment">// 用于存放一层的所有数据</span></span><br><span class="line">    queues = getObjChildren(obj)</span><br><span class="line">    <span class="comment">// 如何通过两个while 完成对所有节点的遍历</span></span><br><span class="line">    <span class="comment">// 第一个while 作为外圈， 判断下一层是否还有数据</span></span><br><span class="line">    <span class="comment">// 第二个while 用来判断当层的数据是否全部都执行完（将子元素 push进入 queue</span></span><br><span class="line">    <span class="keyword">while</span> (queues.length &gt; <span class="number">0</span>) &#123;</span><br><span class="line">        layer++</span><br><span class="line">        <span class="keyword">let</span> length = queues.length</span><br><span class="line">        <span class="keyword">while</span> (length &gt; <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">let</span> item = queues.shift()</span><br><span class="line">            queues.push(...getObjChildren(item))</span><br><span class="line">            length--</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> layer</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>同时这还利用了堆的思想。  </p>
+<h2 id="阶乘、Fibonacci函数以及-HanoiTower-汉诺塔"><a href="#阶乘、Fibonacci函数以及-HanoiTower-汉诺塔" class="headerlink" title="阶乘、Fibonacci函数以及 HanoiTower(汉诺塔)"></a>阶乘、Fibonacci函数以及 HanoiTower(汉诺塔)</h2><p>明确这三个的定义：</p>
+<p>阶乘就是 6! = 6 x 5 x 4 x 3 x 2 x 1</p>
+<p>Fibonacci 函数就是 每一个数都是前两个数之和，第一个和第二个数都是1</p>
+<p>HanoiTower(汉诺塔)：<br>有三根杆子A，B，C。A杆上有 N 个 (N&gt;1) 穿孔圆盘，盘的尺寸由下到上依次变小。要求按下列规则将所有圆盘移至 C 杆：</p>
+<ol>
+<li>每次只能移动一个圆盘；</li>
+<li>大盘不能叠在小盘上面。</li>
+</ol>
+<p>提示：可将圆盘临时置于 B 杆，也可将从 A 杆移出的圆盘重新移回 A 杆，但都必须遵循上述两条规则。</p>
+<p>问：如何移？最少要移动多少次？</p>
+<h3 id="Fibonacci函数"><a href="#Fibonacci函数" class="headerlink" title="Fibonacci函数"></a>Fibonacci函数</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Fibonacci</span>(<span class="params">n</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (n === <span class="number">1</span> || n === <span class="number">2</span>) <span class="keyword">return</span> <span class="number">1</span></span><br><span class="line">    <span class="keyword">return</span> Fibonacci(n - <span class="number">1</span>) + Fibonacci(n - <span class="number">2</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这就是最简单的实现，这个实现基本上就很垃圾，因为运行一下就知道了，耗费的时间非常大。</p>
+<p>这里的解决办法很多，例如建一个缓存，每次先从缓存里面拿值，如果没有在调用，之后再更新缓存。</p>
+<p>我们不适用这些办法，我这里想做的是用循环代替递归。</p>
+<p>也就是适用DP的思想，只保存当前运算时需要的数据。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Fibonacci2</span>(<span class="params">n</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (n === <span class="number">1</span> || n === <span class="number">2</span>) <span class="keyword">return</span> <span class="number">1</span></span><br><span class="line">    <span class="keyword">let</span> result = <span class="number">1</span>, </span><br><span class="line">    a1 = <span class="number">1</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">3</span>; i &lt;= n; i++)&#123;</span><br><span class="line">        result = result + a1</span><br><span class="line">        a1 = result - a1</span><br><span class="line">    &#125;    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上面这种写法只用了一个a1， 是为了节省变量，如果用两个变量，一个代表前一个的值，另一个代表前两个的值，就会更容易看懂。</p>
+<h3 id="阶乘"><a href="#阶乘" class="headerlink" title="阶乘"></a>阶乘</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">factorial</span>(<span class="params">n</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (n == <span class="number">1</span>) <span class="keyword">return</span> <span class="number">1</span></span><br><span class="line">    <span class="keyword">return</span> factorial(n - <span class="number">1</span>) * n</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">factorial2</span>(<span class="params">n</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (n===<span class="number">1</span>) <span class="keyword">return</span> <span class="number">1</span></span><br><span class="line">    <span class="keyword">let</span> result = <span class="number">1</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">2</span>; i &lt;= n; i++)&#123;</span><br><span class="line">        result = i * result</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> result</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="HanoiTower-汉诺塔"><a href="#HanoiTower-汉诺塔" class="headerlink" title="HanoiTower(汉诺塔)"></a>HanoiTower(汉诺塔)</h3><p><img src="https://upload.wikimedia.org/wikipedia/commons/0/07/Tower_of_Hanoi.jpeg" alt="汉诺塔"></p>
+<p>思路就是如果得把N个全都移动C柱，那么分解一下，就是把N-1个移动BY柱，把第N个移到C柱，再把N-1个从by柱移到C柱去</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">HanoiTower</span>(<span class="params">n, from, by, to</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (n === <span class="number">1</span>) &#123;</span><br><span class="line">        move(<span class="number">1</span>, <span class="keyword">from</span>, to)</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        HanoiTower(n - <span class="number">1</span>, <span class="keyword">from</span>, by, to)</span><br><span class="line">        move(n, <span class="keyword">from</span>, to)</span><br><span class="line">        HanoiTower(n - <span class="number">1</span>, to, by, <span class="keyword">from</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">move</span>(<span class="params">n, from, to, index</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">`移动第<span class="subst">$&#123;n&#125;</span>个从<span class="subst">$&#123;<span class="keyword">from</span>&#125;</span> ----&gt; <span class="subst">$&#123;to&#125;</span>`</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="尾调用"><a href="#尾调用" class="headerlink" title="尾调用"></a>尾调用</h2><blockquote>
+<p>除了我们手动的去优化递归，ES6中本身也有对递归优化的方法。那就是尾调用。</p>
+</blockquote>
+<p>尾调用一定是在函数的最后一步，返回了一个没有进行任何操作的函数。</p>
+<p>只有这样，才能完全的丢弃外层函数的调用栈，只保留内部返回函数的调用记录。</p>
+<p>这是对Fibonacci函数的尾递归改造：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Fibonacci3</span>(<span class="params">n, val1, val2</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (n === <span class="number">1</span>) <span class="keyword">return</span> val2</span><br><span class="line">    <span class="keyword">return</span> Fibonacci3(n - <span class="number">1</span>, val1 + val2, val1)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>再对阶乘函数进行改造：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">factorial</span>(<span class="params">n, total</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (n === <span class="number">1</span>) <span class="keyword">return</span> total</span><br><span class="line">    <span class="keyword">return</span> factorial(n - <span class="number">1</span>, n * total)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>看以上两个尾递归的函数，我们在使用的时候，都得显试的传入 val1 或者 total 这种开始的值。</p>
+<p>会让函数的意义不容易懂。</p>
+<p>这里有两种办法，一种是<strong>柯里化</strong>，另一种是<strong>参数默认值</strong></p>
+<h3 id="柯里化"><a href="#柯里化" class="headerlink" title="柯里化"></a>柯里化</h3><p>需要在外圈再包一个函数，如果是Fibonacci 函数的话。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">currying</span>(<span class="params">fn, n</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params">val</span>) </span>&#123;</span><br><span class="line">        fn.call(<span class="keyword">this</span>, val, n)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> Fibonacci3_1 = currying(Fibonacci3, <span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="函数默认值"><a href="#函数默认值" class="headerlink" title="函数默认值"></a>函数默认值</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Fibonacci3</span>(<span class="params">n, val1 = <span class="number">1</span>, val2 = <span class="number">1</span></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (n === <span class="number">1</span>) <span class="keyword">return</span> val2</span><br><span class="line">    <span class="keyword">return</span> Fibonacci3(n - <span class="number">1</span>, val1 + val2, val1)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
           
         
       

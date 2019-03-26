@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="算法,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2">
+
+
+
+
+
+
+<meta name="description" content="本文的主题是，常见的几种递归函数，以及如何用非递归的方式实现  树形结构对象的遍历完成一个函数，作用是返回对象的最大深度（其实就是树的深度） 首先的思路，是从DP问题开始。位于N位置的最大深度，就是位于N-1位置的最大深度 + 1， 且如果没有子项了，深度就为1 一个递归的原型就形成了  相连项目之间的关系 递归退出的条件  所以递归的套路模板一般形如：12345if (基本情况) &amp;#123;">
+<meta name="keywords" content="算法">
+<meta property="og:type" content="article">
+<meta property="og:title" content="几种常见的递归函数">
+<meta property="og:url" content="http://yippee.ink/git-blog/2019/03/25/几种常见的递归函数/index.html">
+<meta property="og:site_name" content="依破缘">
+<meta property="og:description" content="本文的主题是，常见的几种递归函数，以及如何用非递归的方式实现  树形结构对象的遍历完成一个函数，作用是返回对象的最大深度（其实就是树的深度） 首先的思路，是从DP问题开始。位于N位置的最大深度，就是位于N-1位置的最大深度 + 1， 且如果没有子项了，深度就为1 一个递归的原型就形成了  相连项目之间的关系 递归退出的条件  所以递归的套路模板一般形如：12345if (基本情况) &amp;#123;">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://upload.wikimedia.org/wikipedia/commons/0/07/Tower_of_Hanoi.jpeg">
+<meta property="og:updated_time" content="2019-03-26T06:51:40.264Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="几种常见的递归函数">
+<meta name="twitter:description" content="本文的主题是，常见的几种递归函数，以及如何用非递归的方式实现  树形结构对象的遍历完成一个函数，作用是返回对象的最大深度（其实就是树的深度） 首先的思路，是从DP问题开始。位于N位置的最大深度，就是位于N-1位置的最大深度 + 1， 且如果没有子项了，深度就为1 一个递归的原型就形成了  相连项目之间的关系 递归退出的条件  所以递归的套路模板一般形如：12345if (基本情况) &amp;#123;">
+<meta name="twitter:image" content="https://upload.wikimedia.org/wikipedia/commons/0/07/Tower_of_Hanoi.jpeg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yippee.ink/git-blog/2019/03/25/几种常见的递归函数/">
+
+
+
+
+
+  <title>几种常见的递归函数 | 依破缘</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">依破缘</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yippee.ink/git-blog/2019/03/25/几种常见的递归函数/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yippee">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="依破缘">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">几种常见的递归函数</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-03-25T15:53:22+08:00">
+                2019-03-25
+              </time>
+            
+
+            
+
+            
+          </span>
+          
+          
+            <span class="post-updated">
+              &nbsp; | &nbsp; post.updated
+              <time itemprop="dateUpdated" datetime="2019-03-26T14:51:40+08:00" content="2019-03-26">
+                2019-03-26
+              </time>
+            </span>
+          
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>本文的主题是，常见的几种递归函数，以及如何用非递归的方式实现</p>
+</blockquote>
+<h2 id="树形结构对象的遍历"><a href="#树形结构对象的遍历" class="headerlink" title="树形结构对象的遍历"></a>树形结构对象的遍历</h2><p>完成一个函数，作用是返回对象的最大深度（其实就是树的深度）</p>
+<p>首先的思路，是从DP问题开始。位于N位置的最大深度，就是位于N-1位置的最大深度 + 1， 且如果没有子项了，深度就为1</p>
+<p>一个递归的原型就形成了</p>
+<ol>
+<li>相连项目之间的关系</li>
+<li>递归退出的条件</li>
+</ol>
+<p>所以递归的套路模板一般形如：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (基本情况) &#123;</span><br><span class="line">    直接返回，退出函数</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    继续调用(新的参数)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>那么，按照上面的描述，写出这个函数</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">traverse</span>(<span class="params">obj</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (obj === <span class="literal">null</span>) <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">    <span class="comment">// 判断是不是单层对象</span></span><br><span class="line">    <span class="keyword">const</span> getSons = <span class="function">(<span class="params">obj</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> getObjChildren(obj).every(<span class="function">(<span class="params">item</span>) =&gt;</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="built_in">Object</span>.prototype.toString.call(item) !== <span class="string">'[object Object]'</span> <span class="comment">// 对象类型判断</span></span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (getSons(obj)) <span class="keyword">return</span> <span class="number">1</span></span><br><span class="line">    <span class="keyword">let</span> max = <span class="number">0</span></span><br><span class="line">    getObjChildren(obj).forEach(<span class="function"><span class="params">item</span> =&gt;</span> &#123;</span><br><span class="line">        max = traverse(item) &gt; max ? traverse(item) : max</span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="keyword">return</span> max + <span class="number">1</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 获取对象的直接儿子元素，返回数组</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getObjChildren</span>(<span class="params">obj</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> result = []</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">const</span> key <span class="keyword">in</span> obj) &#123;</span><br><span class="line">        <span class="keyword">if</span> (obj.hasOwnProperty(key)) &#123;</span><br><span class="line">            <span class="keyword">const</span> element = obj[key];</span><br><span class="line">            result.push(element)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> result</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>使用递归就是这么做的，如果不能使用递归呢。</p>
+<p>我们将思维转化一下，不要江化。</p>
+<p>这样的每一个去遍历，做了很多的无用功，如果我们直接以层为单位，这一层只要有子元素就把层数加一，知道最后一层所有的元素都没有子元素了，那么最后不就是树的层数了嘛。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">layerTraverse</span>(<span class="params">obj</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (obj === <span class="literal">null</span>) <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">    <span class="keyword">let</span> layer = <span class="number">1</span></span><br><span class="line">    <span class="keyword">let</span> queues = [] <span class="comment">// 用于存放一层的所有数据</span></span><br><span class="line">    queues = getObjChildren(obj)</span><br><span class="line">    <span class="comment">// 如何通过两个while 完成对所有节点的遍历</span></span><br><span class="line">    <span class="comment">// 第一个while 作为外圈， 判断下一层是否还有数据</span></span><br><span class="line">    <span class="comment">// 第二个while 用来判断当层的数据是否全部都执行完（将子元素 push进入 queue</span></span><br><span class="line">    <span class="keyword">while</span> (queues.length &gt; <span class="number">0</span>) &#123;</span><br><span class="line">        layer++</span><br><span class="line">        <span class="keyword">let</span> length = queues.length</span><br><span class="line">        <span class="keyword">while</span> (length &gt; <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">let</span> item = queues.shift()</span><br><span class="line">            queues.push(...getObjChildren(item))</span><br><span class="line">            length--</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> layer</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>同时这还利用了堆的思想。  </p>
+<h2 id="阶乘、Fibonacci函数以及-HanoiTower-汉诺塔"><a href="#阶乘、Fibonacci函数以及-HanoiTower-汉诺塔" class="headerlink" title="阶乘、Fibonacci函数以及 HanoiTower(汉诺塔)"></a>阶乘、Fibonacci函数以及 HanoiTower(汉诺塔)</h2><p>明确这三个的定义：</p>
+<p>阶乘就是 6! = 6 x 5 x 4 x 3 x 2 x 1</p>
+<p>Fibonacci 函数就是 每一个数都是前两个数之和，第一个和第二个数都是1</p>
+<p>HanoiTower(汉诺塔)：<br>有三根杆子A，B，C。A杆上有 N 个 (N&gt;1) 穿孔圆盘，盘的尺寸由下到上依次变小。要求按下列规则将所有圆盘移至 C 杆：</p>
+<ol>
+<li>每次只能移动一个圆盘；</li>
+<li>大盘不能叠在小盘上面。</li>
+</ol>
+<p>提示：可将圆盘临时置于 B 杆，也可将从 A 杆移出的圆盘重新移回 A 杆，但都必须遵循上述两条规则。</p>
+<p>问：如何移？最少要移动多少次？</p>
+<h3 id="Fibonacci函数"><a href="#Fibonacci函数" class="headerlink" title="Fibonacci函数"></a>Fibonacci函数</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Fibonacci</span>(<span class="params">n</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (n === <span class="number">1</span> || n === <span class="number">2</span>) <span class="keyword">return</span> <span class="number">1</span></span><br><span class="line">    <span class="keyword">return</span> Fibonacci(n - <span class="number">1</span>) + Fibonacci(n - <span class="number">2</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这就是最简单的实现，这个实现基本上就很垃圾，因为运行一下就知道了，耗费的时间非常大。</p>
+<p>这里的解决办法很多，例如建一个缓存，每次先从缓存里面拿值，如果没有在调用，之后再更新缓存。</p>
+<p>我们不适用这些办法，我这里想做的是用循环代替递归。</p>
+<p>也就是适用DP的思想，只保存当前运算时需要的数据。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Fibonacci2</span>(<span class="params">n</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (n === <span class="number">1</span> || n === <span class="number">2</span>) <span class="keyword">return</span> <span class="number">1</span></span><br><span class="line">    <span class="keyword">let</span> result = <span class="number">1</span>, </span><br><span class="line">    a1 = <span class="number">1</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">3</span>; i &lt;= n; i++)&#123;</span><br><span class="line">        result = result + a1</span><br><span class="line">        a1 = result - a1</span><br><span class="line">    &#125;    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上面这种写法只用了一个a1， 是为了节省变量，如果用两个变量，一个代表前一个的值，另一个代表前两个的值，就会更容易看懂。</p>
+<h3 id="阶乘"><a href="#阶乘" class="headerlink" title="阶乘"></a>阶乘</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">factorial</span>(<span class="params">n</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (n == <span class="number">1</span>) <span class="keyword">return</span> <span class="number">1</span></span><br><span class="line">    <span class="keyword">return</span> factorial(n - <span class="number">1</span>) * n</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">factorial2</span>(<span class="params">n</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (n===<span class="number">1</span>) <span class="keyword">return</span> <span class="number">1</span></span><br><span class="line">    <span class="keyword">let</span> result = <span class="number">1</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">2</span>; i &lt;= n; i++)&#123;</span><br><span class="line">        result = i * result</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> result</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="HanoiTower-汉诺塔"><a href="#HanoiTower-汉诺塔" class="headerlink" title="HanoiTower(汉诺塔)"></a>HanoiTower(汉诺塔)</h3><p><img src="https://upload.wikimedia.org/wikipedia/commons/0/07/Tower_of_Hanoi.jpeg" alt="汉诺塔"></p>
+<p>思路就是如果得把N个全都移动C柱，那么分解一下，就是把N-1个移动BY柱，把第N个移到C柱，再把N-1个从by柱移到C柱去</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">HanoiTower</span>(<span class="params">n, from, by, to</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (n === <span class="number">1</span>) &#123;</span><br><span class="line">        move(<span class="number">1</span>, <span class="keyword">from</span>, to)</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        HanoiTower(n - <span class="number">1</span>, <span class="keyword">from</span>, by, to)</span><br><span class="line">        move(n, <span class="keyword">from</span>, to)</span><br><span class="line">        HanoiTower(n - <span class="number">1</span>, to, by, <span class="keyword">from</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">move</span>(<span class="params">n, from, to, index</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">`移动第<span class="subst">$&#123;n&#125;</span>个从<span class="subst">$&#123;<span class="keyword">from</span>&#125;</span> ----&gt; <span class="subst">$&#123;to&#125;</span>`</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="尾调用"><a href="#尾调用" class="headerlink" title="尾调用"></a>尾调用</h2><blockquote>
+<p>除了我们手动的去优化递归，ES6中本身也有对递归优化的方法。那就是尾调用。</p>
+</blockquote>
+<p>尾调用一定是在函数的最后一步，返回了一个没有进行任何操作的函数。</p>
+<p>只有这样，才能完全的丢弃外层函数的调用栈，只保留内部返回函数的调用记录。</p>
+<p>这是对Fibonacci函数的尾递归改造：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Fibonacci3</span>(<span class="params">n, val1, val2</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (n === <span class="number">1</span>) <span class="keyword">return</span> val2</span><br><span class="line">    <span class="keyword">return</span> Fibonacci3(n - <span class="number">1</span>, val1 + val2, val1)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>再对阶乘函数进行改造：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">factorial</span>(<span class="params">n, total</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (n === <span class="number">1</span>) <span class="keyword">return</span> total</span><br><span class="line">    <span class="keyword">return</span> factorial(n - <span class="number">1</span>, n * total)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>看以上两个尾递归的函数，我们在使用的时候，都得显试的传入 val1 或者 total 这种开始的值。</p>
+<p>会让函数的意义不容易懂。</p>
+<p>这里有两种办法，一种是<strong>柯里化</strong>，另一种是<strong>参数默认值</strong></p>
+<h3 id="柯里化"><a href="#柯里化" class="headerlink" title="柯里化"></a>柯里化</h3><p>需要在外圈再包一个函数，如果是Fibonacci 函数的话。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">currying</span>(<span class="params">fn, n</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params">val</span>) </span>&#123;</span><br><span class="line">        fn.call(<span class="keyword">this</span>, val, n)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> Fibonacci3_1 = currying(Fibonacci3, <span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="函数默认值"><a href="#函数默认值" class="headerlink" title="函数默认值"></a>函数默认值</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Fibonacci3</span>(<span class="params">n, val1 = <span class="number">1</span>, val2 = <span class="number">1</span></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (n === <span class="number">1</span>) <span class="keyword">return</span> val2</span><br><span class="line">    <span class="keyword">return</span> Fibonacci3(n - <span class="number">1</span>, val1 + val2, val1)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/算法/" rel="tag"># 算法</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/03/19/关于跨域/" rel="next" title="关于跨域">
+                <i class="fa fa-chevron-left"></i> 关于跨域
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="Yippee">
+          <p class="site-author-name" itemprop="name">Yippee</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">20</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">categories</span>
+              
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">tags</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#树形结构对象的遍历"><span class="nav-number">1.</span> <span class="nav-text">树形结构对象的遍历</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#阶乘、Fibonacci函数以及-HanoiTower-汉诺塔"><span class="nav-number">2.</span> <span class="nav-text">阶乘、Fibonacci函数以及 HanoiTower(汉诺塔)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Fibonacci函数"><span class="nav-number">2.1.</span> <span class="nav-text">Fibonacci函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#阶乘"><span class="nav-number">2.2.</span> <span class="nav-text">阶乘</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HanoiTower-汉诺塔"><span class="nav-number">2.3.</span> <span class="nav-text">HanoiTower(汉诺塔)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#尾调用"><span class="nav-number">3.</span> <span class="nav-text">尾调用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#柯里化"><span class="nav-number">3.1.</span> <span class="nav-text">柯里化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#函数默认值"><span class="nav-number">3.2.</span> <span class="nav-text">函数默认值</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2018 - 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Yippee</span>
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
