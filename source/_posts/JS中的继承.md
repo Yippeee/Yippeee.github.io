@@ -1,7 +1,7 @@
 ---
 title: JS中的继承
 date: 2019-01-10 14:33:09
-tags:
+tags: js
 ---
 
 > 文中方法全部来自<<JavaScript高级程序设计一书>>

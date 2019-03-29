@@ -260,6 +260,465 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yippee.ink/git-blog/2019/03/12/正则表达式/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yippee">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="依破缘">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/03/12/正则表达式/" itemprop="url">正则表达式</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-03-12T10:45:22+08:00">
+                2019-03-12
+              </time>
+            
+
+            
+
+            
+          </span>
+          
+          
+            <span class="post-updated">
+              &nbsp; | &nbsp; post.updated
+              <time itemprop="dateUpdated" datetime="2019-03-29T17:48:01+08:00" content="2019-03-29">
+                2019-03-29
+              </time>
+            </span>
+          
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <blockquote>
+<p>关于正则表达式也使用过很久了,但是总是会有点遗漏和本身就没有掌握的地方.在此做记录.</p>
+</blockquote>
+<h2 id="JS正则中的捕获元和非捕获元"><a href="#JS正则中的捕获元和非捕获元" class="headerlink" title="JS正则中的捕获元和非捕获元"></a>JS正则中的捕获元和非捕获元</h2><table>
+<thead>
+<tr>
+<th>字符</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>(pattern)</td>
+<td>匹配 pattern ,并且获取</td>
+</tr>
+<tr>
+<td>(?:pattern)</td>
+<td>匹配pattern, 但是不捕获结果, 就是在分组中不考虑pattern的分组</td>
+</tr>
+<tr>
+<td>(?=pattern)</td>
+<td>正向预查,也不捕获结果,同时还不获取pattern的结果,只是做一个预查(就是在P中, 都不会包含pattern匹配的结果,这也是?=和?:的差别所在)</td>
+</tr>
+<tr>
+<td>(?!pattern)</td>
+<td>正向预查的否定版</td>
+</tr>
+</tbody>
+</table>
+<p>这里用一道面试题作为例子: 将数值转化成千分位(00,000,000的形式)</p>
+<blockquote>
+<p>题外话,<code>toLocaleSting(&#39;en&#39;)</code>的方式也可以</p>
+</blockquote>
+<p>对比三种正则的获取情况<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> reg1 = <span class="regexp">/\d&#123;1,3&#125;(\d&#123;3&#125;)+$/</span></span><br><span class="line"><span class="keyword">var</span> reg2 = <span class="regexp">/\d&#123;1,3&#125;(?:(\d&#123;3&#125;)+)/g</span></span><br><span class="line"><span class="keyword">var</span> reg3 = <span class="regexp">/\d&#123;1,3&#125;(?=(\d&#123;3&#125;)+$)/g</span></span><br><span class="line"><span class="keyword">var</span> num = <span class="string">'1234567890'</span></span><br><span class="line">num.replace(reg1, <span class="function"><span class="keyword">function</span> (<span class="params">p, $<span class="number">1</span>, $<span class="number">2</span></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'p: '</span>, p); <span class="comment">// 1234567890</span></span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'$1: '</span>, $<span class="number">1</span>); <span class="comment">// 890</span></span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'$2: '</span>, $<span class="number">2</span>); <span class="comment">// 0</span></span><br><span class="line">&#125;)</span><br><span class="line">num.replace(reg2, <span class="function"><span class="keyword">function</span> (<span class="params">p, $<span class="number">1</span>, $<span class="number">2</span></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'p: '</span>, p); <span class="comment">// 1234567890</span></span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'$1: '</span>, $<span class="number">1</span>); <span class="comment">// 890</span></span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'$2: '</span>, $<span class="number">2</span>); <span class="comment">// 0</span></span><br><span class="line">&#125;)</span><br><span class="line">num.replace(reg3, <span class="function"><span class="keyword">function</span> (<span class="params">p, $<span class="number">1</span>, $<span class="number">2</span></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'p: '</span>, p);</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'$1: '</span>, $<span class="number">1</span>);</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'$2: '</span>, $<span class="number">2</span>);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></p>
+<p>首先看第一种正则的情况,虽然的确这就是最后千分位分割的样式,但是这样我们无法匹配以及获取到我们每次需要的数据,它只能讲整个结果返回出来.</p>
+<p>然后是第二种情况,首先说明,我们的匹配符都是用的正则中默认的规则也就是贪婪获取,所以可以看到第二种会和第一种得到一样的情况.如果我们这这种情况下进行优化呢.<br><code>reg2 = /(\d{1,3})(?:(\d{3})+?)/g</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">num.replace(reg2, <span class="function"><span class="keyword">function</span> (<span class="params">p, $<span class="number">1</span>, $<span class="number">2</span></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'p: '</span>, p); <span class="comment">// 123456   7890</span></span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'$1: '</span>, $<span class="number">1</span>); <span class="comment">// 123     7</span></span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'$2: '</span>, $<span class="number">2</span>); <span class="comment">// 456   890</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>这时候会进行两轮,但是因为<code>?:</code>非捕获元的特性, ?:后面的内容会进行消耗,也就是在P中会有消耗,所以下一轮的时候,会略过被消耗用掉的pattern.<br>这个时候肯定会说应该在最后加上$啊,是的,这只是为了举这个例而已,即便加上了$造成的结果还是一样的.</p>
+<p>第三种情况,当然就是正确的方法了.我们来分析这个为什么可以达到我们的效果.<br>因为?=不会消耗pattern匹配的内容,所以会保证每个值都会被捕获.同时由于第一次的匹配情况,保证了除了第一次之外的后面每次匹配都是{3}的情况.<br>同时P就是我们需要的数值的前面的部分,只需要 <code>return p + &#39;,&#39;</code>就可以了</p>
+<h3 id="实用情况"><a href="#实用情况" class="headerlink" title="实用情况"></a>实用情况</h3><h4 id="验证密码的复杂性和位数"><a href="#验证密码的复杂性和位数" class="headerlink" title="验证密码的复杂性和位数"></a>验证密码的复杂性和位数</h4><p>要求:位数大于6,而且包含有字母小写和大写,同时有特殊符号<br><code>/(?=.{6,})(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&amp;&amp;*()_+])/</code></p>
+<h4 id="验证邮箱"><a href="#验证邮箱" class="headerlink" title="验证邮箱"></a>验证邮箱</h4><p><code>/^[0-9a-zA-Z\-_]+@[0-9a-zA-Z\-_]+[\.0-9a-zA-Z\-_]+$/</code></p>
+<h4 id="匹配汉字"><a href="#匹配汉字" class="headerlink" title="匹配汉字"></a>匹配汉字</h4><p><code>[\u4e00-\u9fa5]</code></p>
+<h4 id="重学js中的正则表达式"><a href="#重学js中的正则表达式" class="headerlink" title="重学js中的正则表达式"></a>重学js中的正则表达式</h4><blockquote>
+<p>之前，自认为对正则的掌握已经有一丢丢的火候了。但是今天阅读了vue中对 template parse 形成 AST 过程中的原码。我哭了。so，重学正则。</p>
+</blockquote>
+<p>不要去看什么教程，走官网的 <a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/RegExp/n" target="_blank" rel="noopener">介绍</a></p>
+<ol>
+<li>正则基本API补充</li>
+</ol>
+<p>RegExp.$1~$9 可以直接获取当前正则表达式获取到的括号中的匹配项</p>
+<p>RegExp.prototype.source 获取去掉正则两侧的 <code>/</code> 以及标志字符的字符串</p>
+<ol start="2">
+<li>正则的工具使用</li>
+</ol>
+<p><a href="https://regex101.com/" target="_blank" rel="noopener">链接</a><br>这个网站分析的很不错，比一些什么可视化网站好用的多。</p>
+<ol start="3">
+<li>vue中案例的分析<blockquote>
+<p>这一部分不出意外，将会持续一段时间，将会记录我对其中的正则不断分析和领会的过程.<br><code>/\{\{((?:.|\n)+?)\}\}/</code> &amp; <code>^&lt;((?:[a-zA-Z_][\w\-\.]*\:)?[a-zA-Z_][\w\-\.]*)</code></p>
+</blockquote>
+</li>
+</ol>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yippee.ink/git-blog/2019/03/07/js函数式编程学习/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yippee">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="依破缘">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/03/07/js函数式编程学习/" itemprop="url">js函数式编程学习</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-03-07T15:23:19+08:00">
+                2019-03-07
+              </time>
+            
+
+            
+
+            
+          </span>
+          
+          
+            <span class="post-updated">
+              &nbsp; | &nbsp; post.updated
+              <time itemprop="dateUpdated" datetime="2019-03-29T17:07:00+08:00" content="2019-03-29">
+                2019-03-29
+              </time>
+            </span>
+          
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>03-08 现在对JS函数式编程最大的印象几个使用的特性,还是高阶函数.闭包,柯里化,组合</p>
+<p>什么是高阶函数, 参数或者返回是一个函数的函数就是一个高阶函数. 在JS中,数组中的map,filter…都是高阶函数,在函数式编程中高阶函数的使用是很基本的.</p>
+<p>什么是闭包. 似乎在很多面试中看过有人问这个.  我在想,如果是我,我会怎么回答这个问题呢.</p>
+<p>闭包就是在函数中暴露出来的时候又引用了这个函数作用域的变量,导致没有被回收,从而导致了闭包.这种思想,似乎在函数话编程,纯函数的情况会经常使用.</p>
+<p>柯里化</p>
+<p>未完待续~</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yippee.ink/git-blog/2019/03/07/Lodash-分析学习/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yippee">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="依破缘">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/03/07/Lodash-分析学习/" itemprop="url">Lodash 分析学习</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-03-07T15:22:17+08:00">
+                2019-03-07
+              </time>
+            
+
+            
+
+            
+          </span>
+          
+          
+            <span class="post-updated">
+              &nbsp; | &nbsp; post.updated
+              <time itemprop="dateUpdated" datetime="2019-03-29T17:54:28+08:00" content="2019-03-29">
+                2019-03-29
+              </time>
+            </span>
+          
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <blockquote>
+<p>稍微拿了几个函数研究了一下lodash的原码, 可以发现几个特点.</p>
+</blockquote>
+<p>一个是函数的防止意外性, 一般在写功能函数的时候,我不会去考虑如果传的参数不是我们想要的类型,会怎么处理.<br>然而在lodash中,功能函数都会对不是预料之中的类型做处理的.例如需要返回数组的情况,传参在不符合规范的情况下,函数就会默认的返回一个空数组.而不是直接的报错.</p>
+<p>还有就是对位操作符的使用, 两种情况, 一种是需要使用length的时候, 很多时候我们都需要置零,或者是转换成数值类型.<br>这个时候用位操作符就可以很方便的解决这个问题.(这个我在之前的位操作符的博客中有写到过,这里做一个大概的总结)</p>
+<p>使用&gt;&gt;&gt;0 右移0位,将其他类型置为0, 同时还会把正数转成正整数,一般都是对length使用,完全符合使用场景</p>
+<p>使用n &gt;&gt;&gt;1 等同于 parseInt(n / 2), 可以在取中间数的使用,  现在可以想到的使用场景就是二分法中取中间key的时候.</p>
+<p>未完待续~</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yippee.ink/git-blog/2019/03/07/计算机基础知识补充/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -304,8 +763,8 @@
           
             <span class="post-updated">
               &nbsp; | &nbsp; post.updated
-              <time itemprop="dateUpdated" datetime="2019-03-07T12:08:29+08:00" content="2019-03-07">
-                2019-03-07
+              <time itemprop="dateUpdated" datetime="2019-03-29T17:55:05+08:00" content="2019-03-29">
+                2019-03-29
               </time>
             </span>
           
@@ -349,6 +808,16 @@
 <blockquote>
 <p>若要安装 64 位版本的 Windows，你需要能够运行 64 位版本的 Windows 的 CPU。当你在计算机上安装了大量随机存取内存 (RAM)（通常为 4 GB RAM 或更多）时，使用 64 位操作系统的好处最明显。在此类情况下，由于 64 位操作系统可以比 32 位操作系统更高效地处理大量内存，因此在同时运行多个程序并在它们之间频繁切换时，64 位系统响应速度更快。</p>
 </blockquote>
+<h2 id="CPU-amp-GPU"><a href="#CPU-amp-GPU" class="headerlink" title="CPU &amp; GPU"></a>CPU &amp; GPU</h2><p>cpu的全称是 central processing unit</p>
+<p>gpu的全称是 graphics processing unit</p>
+<p>在 NVIDIA 的官网上看到一句描述： CPU常常被认为是电脑的大脑，但是这个大脑被电脑的另一个原件——GPU增强，我们认为这是电脑的灵魂。（翻译的有点水）</p>
+<p>知乎上的一句话对差异的解释：<a href="https://www.zhihu.com/question/19903344/answer/96081382" target="_blank" rel="noopener">link</a></p>
+<p>CPU 和 GPU 之所以大不相同，是由于其设计目标的不同，它们分别针对了两种不同的应用场景。CPU需要很强的通用性来处理各种不同的数据类型，同时又要逻辑判断又会引入大量的分支跳转和中断的处理。这些都使得CPU的内部结构异常复杂。而GPU面对的则是类型高度统一的、相互无依赖的大规模数据和不需要被打断的纯净的计算环境。</p>
+<h2 id="进程-process-与线程-thread"><a href="#进程-process-与线程-thread" class="headerlink" title="进程(process)与线程(thread)"></a>进程(process)与线程(thread)</h2><blockquote>
+<p>大二学机组的时候，明明记得这么清楚了。然而，现在突然看到竟然会有一阵恍惚..</p>
+</blockquote>
+<p>把CPU比做一个工厂，如果是单核CPU，那么这个的意思就是，一次只能一个运行一个车间，一个车间就是一个进程(process)</p>
+<p>车间里会有很多协同工作的工人，这些工人就看做是线程(thread)。在一个进程中就可以有多个线程。<br>同时一个进程中间的内存是共享的，但是是不能同时使用的。</p>
 
           
         
@@ -441,8 +910,8 @@
           
             <span class="post-updated">
               &nbsp; | &nbsp; post.updated
-              <time itemprop="dateUpdated" datetime="2019-03-19T09:21:14+08:00" content="2019-03-19">
-                2019-03-19
+              <time itemprop="dateUpdated" datetime="2019-03-26T14:56:11+08:00" content="2019-03-26">
+                2019-03-26
               </time>
             </span>
           
@@ -624,8 +1093,8 @@ BFC就是页面上的一个隔离的独立容器，容器里面的子元素不�
           
             <span class="post-updated">
               &nbsp; | &nbsp; post.updated
-              <time itemprop="dateUpdated" datetime="2019-03-25T15:35:38+08:00" content="2019-03-25">
-                2019-03-25
+              <time itemprop="dateUpdated" datetime="2019-03-29T17:54:52+08:00" content="2019-03-29">
+                2019-03-29
               </time>
             </span>
           
@@ -765,8 +1234,8 @@ BFC就是页面上的一个隔离的独立容器，容器里面的子元素不�
           
             <span class="post-updated">
               &nbsp; | &nbsp; post.updated
-              <time itemprop="dateUpdated" datetime="2019-03-19T11:13:45+08:00" content="2019-03-19">
-                2019-03-19
+              <time itemprop="dateUpdated" datetime="2019-03-29T17:54:22+08:00" content="2019-03-29">
+                2019-03-29
               </time>
             </span>
           
@@ -924,8 +1393,8 @@ BFC就是页面上的一个隔离的独立容器，容器里面的子元素不�
           
             <span class="post-updated">
               &nbsp; | &nbsp; post.updated
-              <time itemprop="dateUpdated" datetime="2019-01-09T11:16:27+08:00" content="2019-01-09">
-                2019-01-09
+              <time itemprop="dateUpdated" datetime="2019-03-26T14:56:11+08:00" content="2019-03-26">
+                2019-03-26
               </time>
             </span>
           
@@ -1072,8 +1541,8 @@ BFC就是页面上的一个隔离的独立容器，容器里面的子元素不�
           
             <span class="post-updated">
               &nbsp; | &nbsp; post.updated
-              <time itemprop="dateUpdated" datetime="2019-01-09T11:16:16+08:00" content="2019-01-09">
-                2019-01-09
+              <time itemprop="dateUpdated" datetime="2019-03-26T14:56:11+08:00" content="2019-03-26">
+                2019-03-26
               </time>
             </span>
           
@@ -1227,8 +1696,8 @@ BFC就是页面上的一个隔离的独立容器，容器里面的子元素不�
           
             <span class="post-updated">
               &nbsp; | &nbsp; post.updated
-              <time itemprop="dateUpdated" datetime="2019-01-09T11:16:16+08:00" content="2019-01-09">
-                2019-01-09
+              <time itemprop="dateUpdated" datetime="2019-03-29T17:07:00+08:00" content="2019-03-29">
+                2019-03-29
               </time>
             </span>
           
@@ -1334,576 +1803,11 @@ BFC就是页面上的一个隔离的独立容器，容器里面的子元素不�
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yippee.ink/git-blog/2019/01/07/JS中的位操作符/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Yippee">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="依破缘">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/01/07/JS中的位操作符/" itemprop="url">JS中的位操作符</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-01-07T11:39:05+08:00">
-                2019-01-07
-              </time>
-            
-
-            
-
-            
-          </span>
-          
-          
-            <span class="post-updated">
-              &nbsp; | &nbsp; post.updated
-              <time itemprop="dateUpdated" datetime="2019-03-07T12:08:33+08:00" content="2019-03-07">
-                2019-03-07
-              </time>
-            </span>
-          
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/笔记/" itemprop="url" rel="index">
-                    <span itemprop="name">笔记</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <blockquote>
-<p>位操作符在数字逻辑课程中,曾经系统的学习过,但是在JS中对应的是什么,往往好像不是很可以一次说的清楚.</p>
-</blockquote>
-<p>刚刚看到位操作的英语 bit operation </p>
-<p>在看mdn中的Polyfill中,常常可以看到这样的做法: length = length &gt;&gt;&gt; 0 google一下, 在使用 &gt;&gt;&gt;0的时候,基本上保证了参数不会为负数,但是可能会为其他类型的数值,这样就会把其他类型的都变成0.作用和~~是一样的.</p>
-<blockquote>
-<p>这里再吐槽一句js吧.这设计的啥玩意啊,有点太混乱的了.上面的原因都是位操作符会把参数全部转成32位的2进制的补码进行操作,而且对参数没有限制, 所以是非数组的数值,都被当成了0进行的操作.同时还会忽略掉62位浮点型的精度,所以对于数字也只会保留数字的整数部分.</p>
-</blockquote>
-<p>先总结这样使用的作用 <strong>1.把非数字的字符转化成0 2.把数字取大于等于零的整数部分</strong> </p>
-<p>为了整理清楚上述结果产生的原因,我们需要对JS中的位操作符有一个基本的认识: <a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Guide/Expressions_and_Operators#%E4%BD%8D%E8%BF%90%E7%AE%97%E7%AC%A6" target="_blank" rel="noopener">位操作符</a> </p>
-<p>说一点基础的知识,位操作符是给电脑内存中二进制运算使用的.所以在使用位操作运算的时候,一定得把数字转化成2进制来运算.同时数值在计算机中存储都是用的补码,然后再转回到10进制呈现. </p>
-<p>对于负数的操作,记录一下.  当发现数值的首位是1的时候, 说明此时数为负数. 所以就不能直接转成10进制的数值. 需要取反,然后加一(就是补码操作).然后再把<strong>负数符号加上去</strong>.反之,如果本身首位都是0了,则说明是正数, 直接转成10进制就完事了.</p>
-<p><strong>同时在js中,</strong></p>
-<table>
-<thead>
-<tr>
-<th>名称</th>
-<th>操作</th>
-<th>举例</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>&lt;&lt;(左移位)</td>
-<td>将第一个操作数向左移动指定数量的位. 左边移出位被抛弃. <strong>左边移出的几位被丢弃.右边多出的空位由0补齐</strong></td>
-<td>9&lt;&lt;2产生36，因为1001移位2比特向左变为100100，它是36。</td>
-</tr>
-<tr>
-<td>>&gt;(带符号右移)</td>
-<td>将第一个操作数向右移动指定数量的位. 右边移出位被抛弃. <strong>左边多出的空位由原值的最左边数字补齐</strong>.</td>
-<td>9&gt;&gt;2产生2，因为1001移位2位向右变为10，其是2。同样，-9&gt;&gt;2产生-3，由于符号被保留。</td>
-</tr>
-<tr>
-<td>>&gt;&gt;(补零右移)</td>
-<td>将第一个操作数向右移动指定数量的位. 右边移出位被抛弃. <strong>左边多出的空位由0补齐</strong>.</td>
-<td>19&gt;&gt;&gt;2产生4，因为10011移位2位向右变为100，它是4。对非负数值，补零右移和带符号右移产生相同结果。</td>
-</tr>
-</tbody>
-</table>
-<p>左移中,正数和负数的逻辑是一样的,只是符号会不一样而已. </p>
-<p>例如 19 &lt;&lt; 2 -&gt; 76 -19 &lt;&lt; 2 -&gt; 76 而对于右移,结果就会有所不同,使用带符号右移或者是补零右移的结果会完全不一样 带符号的移动: 19 &gt;&gt; 2 -&gt; 4 10010 变成了 100 -&gt; 4 -19 &gt;&gt; 4 -&gt; -5 </p>
-<p>-19的原码: 110011 补码:101101 移位: (注意这个地方需要高位用1补齐) 111011 补码:100101 -&gt; -5 </p>
-<p>两点注意事项: 负数在计算移位的使用用的补码移位; 移位中左边的补齐是用的最左边的符号数字(负数的话也就是1)来补齐 对于正数,两种右移的方式是一样的 19 &gt;&gt;&gt; 2 -&gt; 4 而对于负数来说就不一样了,产生的原因则是移动补位的数值不同导致的,在补零右移中,无论正数负数都是用的0来补齐(或者这正是为什么叫做补零右移的原因吧),所以对于正数来说就是一样的结果,而对于负数来说差异就会很大了. -19 &gt;&gt;&gt; 2 -&gt; 1073741819 正是因为补零右移的特性,所以才可以使用这个方法来讲数字强行取整,或者是把非数字转成0</p>
-<hr>
-<p>接下来再对其他的位操作对理解 先看一道题:</p>
-<p><a href="https://i.loli.net/2019/01/07/5c32efafcf701.png" target="_blank" rel="noopener"><img src="https://i.loli.net/2019/01/07/5c32efafcf701.png" alt=""></a> </p>
-<p>大意如下:如何不使用+完成加法 意思很明显了就是适用位操作来完成加法,这个地方就得提到一下异或(XOR),在JS中用^来表示.<a href="https://baike.baidu.com/item/%E5%BC%82%E6%88%96" target="_blank" rel="noopener">异或</a>,在百科中就可以知道,异或的名称又叫做半加运算,因为它实现的逻辑法则和加法是一样的,只是不进位,所以也叫做不进位加法. 理一下我的思路,有点乱了.a^b得到的是a+b在二进制的情况下没有进位得到的结果 eg. 9 + 5 -&gt; 1001 + 101 1001 ^ 101 = 1100 竟然我们知道了在没有进位的情况下获得的值,那么现在只需要知道哪些地方进位了,再加上不就是加法的最终结果了嘛 什么情况下才会进位呢,当然是都为1的情况啊. 什么? 都为1,这不就是与操作吗,但是还要想到的是,在与操作的时候,获取到的都为1的位置,但是在真实的加法的情况下,进位的数值应该在都是1的左边的位置 所以,将a &amp; b &gt;&gt; 1就可以得到a b相加的情况下,进位的位置了 现在思路有了,那怎么实现这个加法呢. 可以看到在上面思路中, a + b = (a ^ b) + (a &amp; b &lt;&lt; 1) 前一个部分是a b不进位的加法的结果,后一部分是进位的数值,也就是说,如果后一部分不为0那么怎么都需要加法. 那么,如果后一部分为0的话,也就是a b不进位的加法正好等于 a+b 的时候,就不需要用到+号了.<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">tc_add</span> (<span class="params">a, b</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">while</span> (b != <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">let</span> _a = a ^ b</span><br><span class="line">        <span class="keyword">let</span> _b = (a &amp; b) &lt;&lt; <span class="number">1</span></span><br><span class="line">        a = _a</span><br><span class="line">        b = _b</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">'a:'</span>, a)</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">'b:'</span>, b)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> a</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(tc_add(<span class="number">9</span>, <span class="number">5</span>))</span><br><span class="line"><span class="comment">// 其实看来就像是一个递归,直到b等于0的时候就完成了加法运算</span></span><br></pre></td></tr></table></figure></p>
-<p>再写一个不用临时变量来交换变量的方法 a = a ^ b b = a ^ b a = a ^ b 并不提倡这么使用,但是可以搞懂一下这个的原理. b = a ^ b ^ b = a ^ 0 = a a = a ^ b ^ a = b ^ 0 = b 就是因为,任何数和0异或还是本身</p>
-<blockquote>
-<p>这还真的是巧了,从来没哟这么觉得这个异或有这么多功能,今天本来想做一下这块的记录.结果又看到了一道关于异或的题</p>
-</blockquote>
-<p>题目描述: 给定一个非空整数数组，除了某个元素只出现一次以外，其余每个元素均出现两次。找出那个只出现了一次的元素。 </p>
-<p>看这个题目, 想法有没有和这个交换变量的题的思想一模一样… 你可能会说为啥,两次就是偶数次,一次的就是奇数次. 还记得上面的那个 a ^ b ^ a = b 吧,所以这道题直接把所有的元素异或一道剩下的就是那个只有一次的元素了..</p>
-<blockquote>
-<p>2019 - 03 - 06 add</p>
-</blockquote>
-<h3 id="按位逻辑操作符"><a href="#按位逻辑操作符" class="headerlink" title="按位逻辑操作符"></a>按位逻辑操作符</h3><blockquote>
-<p>操作数被转换成32位整数，用比特序列（0和1组成）表示。超过32位的数字会被丢弃。例如, 以下具有32位以上的整数将转换为32位整数:</p>
-</blockquote>
-<p>同时 | &amp; 是js中的位比较符号, 也是对其数的二进制进行的位操作.</p>
-<p>| 是或, &amp;是与 , ~ 是非 </p>
-<p>举一个使用&amp;的栗子,在 js中的 Node的 API - compareDocumentPosition<br>在这个 API中, 返回值都是二进制</p>
-<p><code>node.compareDocumentPosition( otherNode )</code></p>
-<table>
-<thead>
-<tr>
-<th>返回值</th>
-<th>含义</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>1</td>
-<td>不在同一个文档中</td>
-</tr>
-<tr>
-<td>2</td>
-<td>otherNode 在 node 之前</td>
-</tr>
-<tr>
-<td>4</td>
-<td>otherNode 在 node 之后</td>
-</tr>
-<tr>
-<td>8</td>
-<td>otherNode 包含 node</td>
-</tr>
-<tr>
-<td>16</td>
-<td>otherNode 被 node 包含</td>
-</tr>
-</tbody>
-</table>
-<p><strong>注意:这个compare是 other和 node之间的关系</strong></p>
-<p>而且,关系并存的情况下,返回的值是和.<br>所以,这个地方就是用到的&amp; 来进行判断了.</p>
-<p><code>node.compareDocumentPosition( otherNode ) &amp; 4</code>返回的如果是false,则说明other不在 node 之后,反之则反.</p>
-<p>~也是按位操作符,按位取反<br>对于是数值的情况下, ~x = -(x + 1)</p>
-<p>使用情景:<br>和indexOf 一起使用, <figure class="highlight plain"><figcaption><span>&#123;</span><a href="//">包含&#125; ```</a></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">同时还可以使用 ~~ 将操作符转化成32位有符号正数</span><br><span class="line">```js</span><br><span class="line">~~ null // 0</span><br><span class="line">~~ undefined // 0</span><br><span class="line">~~ NaN // 0</span><br><span class="line">~~ &#123;&#125; // 0</span><br><span class="line">~~ true // 1</span><br><span class="line">~~ &apos;&apos; // 0</span><br><span class="line">~~ &apos;string&apos; // 0</span><br><span class="line">~~ &apos;1&apos; // 1</span><br><span class="line">~~ Number.POSITIVE_INFINITY // 0</span><br><span class="line"></span><br><span class="line">~~ 1.2 // 1</span><br><span class="line">~~ -1.2 // -1</span><br><span class="line">~~ 1.6 // 1</span><br><span class="line">~~ -1.6 // -1</span><br><span class="line">~~ (Math.pow(2, 31) - 1) // 2147483647 = 2^31-1</span><br><span class="line">~~ (Math.pow(2, 31)) // -2147483648 = -2^31</span><br><span class="line">~~ (-Math.pow(2, 31)) // -2147483648 = -2^31</span><br><span class="line">~~ (-Math.pow(2, 31) - 1) // 2147483647 = 2^31-1</span><br><span class="line">~~ (Math.pow(2, 32)) // 0</span><br></pre></td></tr></table></figure></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yippee.ink/git-blog/2019/01/01/2018-e5-b9-b4-e5-b9-b4-e7-bb-88-e6-80-bb-e7-bb-93/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Yippee">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="依破缘">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/01/01/2018-e5-b9-b4-e5-b9-b4-e7-bb-88-e6-80-bb-e7-bb-93/" itemprop="url">2018年年终总结</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-01-01T22:24:53+08:00">
-                2019-01-01
-              </time>
-            
-
-            
-
-            
-          </span>
-          
-          
-            <span class="post-updated">
-              &nbsp; | &nbsp; post.updated
-              <time itemprop="dateUpdated" datetime="2019-01-09T11:16:16+08:00" content="2019-01-09">
-                2019-01-09
-              </time>
-            </span>
-          
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/总结/" itemprop="url" rel="index">
-                    <span itemprop="name">总结</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>2011 2014 2018 初中，高中，大学，就是这三个数字。现在2018也过完了，我的学生生涯也就结束了。这一年真的经历的很多呢。</p>
-<h2 id=""><a href="#" class="headerlink" title=""></a><a href="https://i.loli.net/2019/01/01/5c2b7744327a6.jpg" target="_blank" rel="noopener"><img src="https://i.loli.net/2019/01/01/5c2b7744327a6.jpg" alt=""></a></h2><h2 id="LOCATION："><a href="#LOCATION：" class="headerlink" title="LOCATION："></a>LOCATION：</h2><hr>
-<p>长沙、成都、深圳、西安、无锡、苏州、香港、珠海<br>在6月回校期间，啵啵来找了我，还一起去了一趟西安。第一次一起和啵啵出去旅游，安排的密密麻麻。有点充实。<br>刚去看了一眼days matter 来深圳其实也才308天，而且今年也是第一次来深圳，但是现在就是莫名的觉得自己都是个深圳人了。怎么说吧，深圳啊，基本上没有我没有去过的地方了。基本把足迹留在了深圳的每一个地方。当然，这得感谢小许。<br>无锡，完全去的时候心情沉重，是去加班的，而且还牺牲了国庆7天和啵啵玩的时间。<br>在无锡的时候，国庆就顺带去了苏州。<br>年末，啵啵回到深圳，一起去了趟香港迪士尼。<br>公司组织去了珠海长隆<br>长沙，成都，就不赘述了。</p>
-<h2 id="EVENT："><a href="#EVENT：" class="headerlink" title="EVENT："></a>EVENT：</h2><hr>
-<p>上班、毕业、见家长 </p>
-<p>年初来深圳上班的时候，还是对职场充满了好奇的。可是，也不过如此，很快就习惯了。<br>在去年年底，就已经觉得电子科大似乎就和自己已经没有啥关系了，5月回学校，又呆了一个半月，解决了毕业的相关事项后，就毕业了。没有什么，就是结束了而已，我想了想什么可以感动自己的，好像没有。 啵啵父母一直都是在深圳的，刚来的时候没有这个念头，然后12月啵啵从学校回来之后，这件事就被提上了日程。在啵啵生日前一周，一起吃了个饭。并且，这连着两周周末都有趣她家。觉得自己表现的很不好，有点过于紧张，不知道该做什么好。</p>
-<h2 id="GOODS"><a href="#GOODS" class="headerlink" title="GOODS"></a>GOODS</h2><hr>
-<p><a href="https://i.loli.net/2019/01/01/5c2b77dacdb7f.jpeg" target="_blank" rel="noopener"><img src="https://i.loli.net/2019/01/01/5c2b77dacdb7f.jpeg" alt=""></a> AirPods、 apple watch4，空军一号、reebok pure黑白 </p>
-<p>这一年虽然自己开始赚钱了，但是赚的有点过于少了。没有买什么东西，耳机是有线是在是太难的用了就换了，然后手表是见啵啵妈妈的时候送的。鞋就是5月和12月，自己买的。和啵啵送的。</p>
-<h2 id="AFFAIR"><a href="#AFFAIR" class="headerlink" title="AFFAIR"></a>AFFAIR</h2><hr>
-<p>400多天了，我们现在还能这么好，而且完全的习惯对方的存在，并且对对方的生活情绪完全的了解，是我一开始很难预料到的。</p>
-<p>2018最幸运的还是和你在一起。</p>
-<h2 id="skill"><a href="#skill" class="headerlink" title="skill"></a>skill</h2><hr>
-<p>为什么会去做前端，是一开始冲忙决定的。没有想到这就成为了现在的工作领域。我还是想把它做好的，但是还是遗憾自己开始的这么晚。我始终坚信着自己的，但是还是会踟蹰于自己的前进。竟然热爱，只有坚持。</p>
-<h2 id="MUSIC-amp-FILM-amp-ANIME-amp-VARIETY-SHOW"><a href="#MUSIC-amp-FILM-amp-ANIME-amp-VARIETY-SHOW" class="headerlink" title="MUSIC &amp; FILM &amp; ANIME &amp; VARIETY SHOW"></a>MUSIC &amp; FILM &amp; ANIME &amp; VARIETY SHOW</h2><hr>
-<p>任然是单曲着周杰伦，最近有迷上电音。（续费了QQ音乐，突然后悔了，想用apple music了。）<br>电影看了蛮多，基本都是电影院看的，自己平常在家倒是看得蛮少的。<br>动漫基本没有怎么看了，猪头少年还没有看完，我们的英雄学院也有点快忘了。<br>综艺都是看了不少，吃饭必备的赶脚，吐槽大会，101。其他的都是偶尔看看。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yippee.ink/git-blog/2018/11/20/to-be-my-hero/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Yippee">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="依破缘">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/11/20/to-be-my-hero/" itemprop="url">TO BE MY HERO</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-11-20T22:02:16+08:00">
-                2018-11-20
-              </time>
-            
-
-            
-
-            
-          </span>
-          
-          
-            <span class="post-updated">
-              &nbsp; | &nbsp; post.updated
-              <time itemprop="dateUpdated" datetime="2019-01-09T11:16:16+08:00" content="2019-01-09">
-                2019-01-09
-              </time>
-            </span>
-          
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/未分类/" itemprop="url" rel="index">
-                    <span itemprop="name">未分类</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>愿我可以做我自己的英雄</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1947,7 +1851,7 @@ BFC就是页面上的一个隔离的独立容器，容器里面的子元素不�
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">20</span>
+                <span class="site-state-item-count">23</span>
                 <span class="site-state-item-name">posts</span>
               </a>
             </div>
@@ -1958,7 +1862,7 @@ BFC就是页面上的一个隔离的独立容器，容器里面的子元素不�
             
             <div class="site-state-item site-state-categories">
               
-                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-count">4</span>
                 <span class="site-state-item-name">categories</span>
               
             </div>
@@ -1968,10 +1872,10 @@ BFC就是页面上的一个隔离的独立容器，容器里面的子元素不�
             
             
             <div class="site-state-item site-state-tags">
-              
-                <span class="site-state-item-count">2</span>
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">9</span>
                 <span class="site-state-item-name">tags</span>
-              
+              </a>
             </div>
           
 

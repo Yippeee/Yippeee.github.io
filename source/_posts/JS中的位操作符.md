@@ -1,7 +1,6 @@
 ---
 title: JS中的位操作符
-tags:
-  - 算法
+tags: js
 url: 61.html
 id: 61
 categories:

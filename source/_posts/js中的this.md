@@ -1,7 +1,7 @@
 ---
 title: js中的this
 date: 2019-03-14 18:19:09
-tags:
+tags: JS
 ---
 ### 提纲: 
 1. this指向什么? 什么时候 this指向 window? 
@@ -109,6 +109,7 @@ Function.prototype.MyCall = function (thisArg, ...args) {
     thisArg[random] = this
     var result = thisArg[random](...args)
     delete thisArg[random]
+    return result
 }
 ```
 这块使用了...args 来获取传过来的函数的参数,如果不让使用的话,可以使用`eval`来解析参数

@@ -1,7 +1,7 @@
 ---
 title: CSS布局
 date: 2019-03-13 11:16:24
-tags:
+tags: css
 ---
 
 ### 两栏布局
@@ -15,6 +15,7 @@ tags:
 </body>
 ```
 #### float方法
+
 ```css
 body{
     height:100px;
@@ -30,6 +31,7 @@ body{
 }
 ```
 #### flex方法
+
 ```css
 body {
     height: 300px;
@@ -51,10 +53,13 @@ body {
 ```
 
 ### 三栏布局
+
 >三栏布局同时也是经常出现的考点之一.一般的情形是,两边的模块是固定的,中间的模块随着浏览器的宽度适应.
 
 ### margin 和 利用BFC布局
+
 >这两种布局都有一个确定,就是主体元素需要最后加载.
+
 ```html
 <div id="parent">
     <div id="left"></div>
@@ -101,6 +106,7 @@ body {
   <div id="right"></div>
 </div>
 ```
+
 ```css
 #parent {
     height: 200px;
@@ -119,6 +125,7 @@ body {
     background-color: blue;
 }
 ```
+
 ### 垂直水平居中
 
 ```html
@@ -132,6 +139,7 @@ body {
 >水平居中分为两种情况,一种是DIV宽度一定的,一种是宽度不定的
 
 ##### 对于宽度已知的水平居中
+
 ```css
 #main{
     display: inline-block;
@@ -163,10 +171,11 @@ body {
     transform: translate(-50%, -50%)
 }
 ```
+
 绝对定位的思想就是让子元素基于父元素进行绝对定位
 
 ##### flex布局
- 
+
 ```css
 #main{
     height: 300px;
@@ -176,7 +185,7 @@ body {
     align-items: center;
 }
 #parent{
-    
+
 }
 ```
 

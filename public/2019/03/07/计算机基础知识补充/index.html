@@ -78,7 +78,7 @@
 <link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css">
 
 
-  <meta name="keywords" content="Hexo, NexT">
+  <meta name="keywords" content="基础,">
 
 
 
@@ -95,13 +95,14 @@
 
 
 <meta name="description" content="自己好歹也是软件对口专业毕业的, 好多计算机的基础知识还是来补充一下吧  什么是镜像来自百度百科的解释: 镜像是一种冗余的类型, 一个磁盘的数据在另一个磁盘完全相同的存在的副本就是一个镜像.总之镜像也是一种文件类型. 32位机器和64位机器的差别首先这个位数是说的 CPU的设计, 64位的设计就会有: 更大的寻址空间,  更多可用的寄存器, 更多可用的CPU指令。 下面是windows官网对于6">
+<meta name="keywords" content="基础">
 <meta property="og:type" content="article">
 <meta property="og:title" content="计算机基础知识补充">
 <meta property="og:url" content="http://yippee.ink/git-blog/2019/03/07/计算机基础知识补充/index.html">
 <meta property="og:site_name" content="依破缘">
 <meta property="og:description" content="自己好歹也是软件对口专业毕业的, 好多计算机的基础知识还是来补充一下吧  什么是镜像来自百度百科的解释: 镜像是一种冗余的类型, 一个磁盘的数据在另一个磁盘完全相同的存在的副本就是一个镜像.总之镜像也是一种文件类型. 32位机器和64位机器的差别首先这个位数是说的 CPU的设计, 64位的设计就会有: 更大的寻址空间,  更多可用的寄存器, 更多可用的CPU指令。 下面是windows官网对于6">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-03-07T04:08:29.732Z">
+<meta property="og:updated_time" content="2019-03-29T09:55:05.855Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="计算机基础知识补充">
 <meta name="twitter:description" content="自己好歹也是软件对口专业毕业的, 好多计算机的基础知识还是来补充一下吧  什么是镜像来自百度百科的解释: 镜像是一种冗余的类型, 一个磁盘的数据在另一个磁盘完全相同的存在的副本就是一个镜像.总之镜像也是一种文件类型. 32位机器和64位机器的差别首先这个位数是说的 CPU的设计, 64位的设计就会有: 更大的寻址空间,  更多可用的寄存器, 更多可用的CPU指令。 下面是windows官网对于6">
@@ -304,8 +305,8 @@
           
             <span class="post-updated">
               &nbsp; | &nbsp; post.updated
-              <time itemprop="dateUpdated" datetime="2019-03-07T12:08:29+08:00" content="2019-03-07">
-                2019-03-07
+              <time itemprop="dateUpdated" datetime="2019-03-29T17:55:05+08:00" content="2019-03-29">
+                2019-03-29
               </time>
             </span>
           
@@ -347,6 +348,16 @@
 <blockquote>
 <p>若要安装 64 位版本的 Windows，你需要能够运行 64 位版本的 Windows 的 CPU。当你在计算机上安装了大量随机存取内存 (RAM)（通常为 4 GB RAM 或更多）时，使用 64 位操作系统的好处最明显。在此类情况下，由于 64 位操作系统可以比 32 位操作系统更高效地处理大量内存，因此在同时运行多个程序并在它们之间频繁切换时，64 位系统响应速度更快。</p>
 </blockquote>
+<h2 id="CPU-amp-GPU"><a href="#CPU-amp-GPU" class="headerlink" title="CPU &amp; GPU"></a>CPU &amp; GPU</h2><p>cpu的全称是 central processing unit</p>
+<p>gpu的全称是 graphics processing unit</p>
+<p>在 NVIDIA 的官网上看到一句描述： CPU常常被认为是电脑的大脑，但是这个大脑被电脑的另一个原件——GPU增强，我们认为这是电脑的灵魂。（翻译的有点水）</p>
+<p>知乎上的一句话对差异的解释：<a href="https://www.zhihu.com/question/19903344/answer/96081382" target="_blank" rel="noopener">link</a></p>
+<p>CPU 和 GPU 之所以大不相同，是由于其设计目标的不同，它们分别针对了两种不同的应用场景。CPU需要很强的通用性来处理各种不同的数据类型，同时又要逻辑判断又会引入大量的分支跳转和中断的处理。这些都使得CPU的内部结构异常复杂。而GPU面对的则是类型高度统一的、相互无依赖的大规模数据和不需要被打断的纯净的计算环境。</p>
+<h2 id="进程-process-与线程-thread"><a href="#进程-process-与线程-thread" class="headerlink" title="进程(process)与线程(thread)"></a>进程(process)与线程(thread)</h2><blockquote>
+<p>大二学机组的时候，明明记得这么清楚了。然而，现在突然看到竟然会有一阵恍惚..</p>
+</blockquote>
+<p>把CPU比做一个工厂，如果是单核CPU，那么这个的意思就是，一次只能一个运行一个车间，一个车间就是一个进程(process)</p>
+<p>车间里会有很多协同工作的工人，这些工人就看做是线程(thread)。在一个进程中就可以有多个线程。<br>同时一个进程中间的内存是共享的，但是是不能同时使用的。</p>
 
       
     </div>
@@ -361,6 +372,12 @@
     
 
     <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/基础/" rel="tag"># 基础</a>
+          
+        </div>
       
 
       
@@ -458,7 +475,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">20</span>
+                <span class="site-state-item-count">23</span>
                 <span class="site-state-item-name">posts</span>
               </a>
             </div>
@@ -469,7 +486,7 @@
             
             <div class="site-state-item site-state-categories">
               
-                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-count">4</span>
                 <span class="site-state-item-name">categories</span>
               
             </div>
@@ -479,10 +496,10 @@
             
             
             <div class="site-state-item site-state-tags">
-              
-                <span class="site-state-item-count">2</span>
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">9</span>
                 <span class="site-state-item-name">tags</span>
-              
+              </a>
             </div>
           
 
@@ -515,7 +532,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是镜像"><span class="nav-number">1.</span> <span class="nav-text">什么是镜像</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#32位机器和64位机器的差别"><span class="nav-number">2.</span> <span class="nav-text">32位机器和64位机器的差别</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是镜像"><span class="nav-number">1.</span> <span class="nav-text">什么是镜像</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#32位机器和64位机器的差别"><span class="nav-number">2.</span> <span class="nav-text">32位机器和64位机器的差别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CPU-amp-GPU"><span class="nav-number">3.</span> <span class="nav-text">CPU &amp; GPU</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#进程-process-与线程-thread"><span class="nav-number">4.</span> <span class="nav-text">进程(process)与线程(thread)</span></a></li></ol></div>
             
 
           </div>

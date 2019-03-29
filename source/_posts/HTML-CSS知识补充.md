@@ -1,7 +1,7 @@
 ---
 title: HTML&CSS知识补充
 date: 2019-03-13 15:35:34
-tags:
+tags: css
 ---
 CSS 渐变属性使用
 使用渐变属性(gradient)可以一个元素多种颜色

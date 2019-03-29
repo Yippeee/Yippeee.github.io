@@ -304,8 +304,8 @@
           
             <span class="post-updated">
               &nbsp; | &nbsp; post.updated
-              <time itemprop="dateUpdated" datetime="2019-03-19T10:47:09+08:00" content="2019-03-19">
-                2019-03-19
+              <time itemprop="dateUpdated" datetime="2019-03-29T11:43:21+08:00" content="2019-03-29">
+                2019-03-29
               </time>
             </span>
           
@@ -357,6 +357,463 @@
 <li>http 缓存知识复习</li>
 <li>promise 再现</li>
 </ol>
+<p>2019-03-29</p>
+<blockquote>
+<p>首先，上述的学习任务基本完成，当然规划那两个是长期任务。</p>
+</blockquote>
+<p>去年七月份就刷了这篇(博客)[<a href="http://www.dailichun.com/2018/03/12/whenyouenteraurl.html]，当时看完之后基本上没有什么理解的内容，半年之后重新回顾，很多知识已经有所熟悉，但是还是有很多根本没有听说过，在此记录。" target="_blank" rel="noopener">http://www.dailichun.com/2018/03/12/whenyouenteraurl.html]，当时看完之后基本上没有什么理解的内容，半年之后重新回顾，很多知识已经有所熟悉，但是还是有很多根本没有听说过，在此记录。</a></p>
+<p>浏览器的机制，到如何打开一个tab页。（涉及到进程和线程）</p>
+<p>其中有很多后台的和服务器端的内容，暂时不作为我的学习内容，在这里只对其中出现的前端的内容，而我都不是很了解的内容做一个to-learn-list。</p>
+<p>简单层与复合层，都是什么，这个完全不了解。(已经做了总结)<br>(看这个)[<a href="https://segmentfault.com/a/1190000012925872#articleHeader16]" target="_blank" rel="noopener">https://segmentfault.com/a/1190000012925872#articleHeader16]</a></p>
+<p>没事多看看这篇博客，对其中不太了解的知识体系做一个梳理。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yippee.ink/git-blog/2019/03/29/普通图层和复合图层/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yippee">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="依破缘">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/03/29/普通图层和复合图层/" itemprop="url">普通图层和复合图层</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-03-29T10:36:23+08:00">
+                2019-03-29
+              </time>
+            
+
+            
+
+            
+          </span>
+          
+          
+            <span class="post-updated">
+              &nbsp; | &nbsp; post.updated
+              <time itemprop="dateUpdated" datetime="2019-03-29T17:22:19+08:00" content="2019-03-29">
+                2019-03-29
+              </time>
+            </span>
+          
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <blockquote>
+<p>理解浏览器渲染的图层，有利于我们去分析更加复杂的css渲染问题。<br>由于本人学艺暂时不精，本博客只对我所了解的片面知识做一个记录以及总结</p>
+</blockquote>
+<p>浏览器渲染的图层一般包含两大类：普通图层以及复合图层</p>
+<p>首先这个图层是对于硬件来说的，也就是GPU。在默认的渲染过程中，都只有一个图层，就是一个默认的复合层。</p>
+<p>无论有几个文档流，怎么添加元素都是在这个复合层中渲染的。</p>
+<p>当然，我们可以通过开启硬件加速，开启一个新的复合图层。这样在GPU中，会对这个新的图层进行单独绘制。</p>
+<p>不同的图层的绘制也是互不影响的，同时这样也是会脱离文档流的。</p>
+<h3 id="如何开启硬件加速"><a href="#如何开启硬件加速" class="headerlink" title="如何开启硬件加速"></a>如何开启硬件加速</h3><p>在浏览器中，如果打开的3d变化，浏览器会自动开启硬件加速(开启一个新的复合图层)。<br>最常用的方式：<code>translate3d</code>、<code>translateZ</code>。</p>
+<p>很多时候在本身没有使用3D变化的时候，可以用<code>transform: translateZ(0)</code>来使用。</p>
+<p>还有就是<code>opacity属性/过渡动画</code></p>
+<h3 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h3><p>在使用硬件加速的时候，我们应该尽可能的规定index，防止后面的元素也创建复合图层。</p>
+<p>因为如果开启硬件加速的元素图层index较低，在它之后的index层级的元素也会创建复合图层。我们应该避免这种情况的出现</p>
+<h3 id="作用"><a href="#作用" class="headerlink" title="作用"></a>作用</h3><p>开启硬件加速，当然可以使页面的动画效果加载的更加流畅。但是，也不能过度的使用，浪费资源，造成卡顿。</p>
+<p>同时本身还脱离的文档流，大量的变动也不会引起整个页面重绘，回流</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>图层知识的掌握，就对为什么在做css动画的时候，要去做硬件加速，以及其中的原理，有了一个基础的了解。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yippee.ink/git-blog/2019/03/27/http缓存/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yippee">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="依破缘">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/03/27/http缓存/" itemprop="url">http缓存</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-03-27T16:18:20+08:00">
+                2019-03-27
+              </time>
+            
+
+            
+
+            
+          </span>
+          
+          
+            <span class="post-updated">
+              &nbsp; | &nbsp; post.updated
+              <time itemprop="dateUpdated" datetime="2019-03-29T17:21:29+08:00" content="2019-03-29">
+                2019-03-29
+              </time>
+            </span>
+          
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <blockquote>
+<p>这篇博客纯粹是搬运，因为这些知识都是看来的，没有实践过。</p>
+</blockquote>
+<p>原先的时候http缓存(强缓存)是直接设定缓存的时间，如果时间过了，就去服务器请求新的数据。</p>
+<p>如果时间没有过，就直接从缓存数据中读取数据，<strong>不会发送请求</strong>。</p>
+<p>用到的字段有： </p>
+<p>Expire： 设置缓存过期时间，使用的是GMT(格林尼治时间)，这个时间是相对于服务器的</p>
+<p>而由于时间是对于服务器的，无法统一。 就使用了一个新的字段： <strong>cache-control</strong></p>
+<p>cache-control：设置 max-age=t 直接设置绝对过期时间<br>同时，还有其他的属性：</p>
+<table>
+<thead>
+<tr>
+<th>字段名称</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>no-cache</td>
+<td>代理服务器不能缓存数据，如果是在请求阶段就是，直接向服务器发送请求</td>
+</tr>
+<tr>
+<td>no-store</td>
+<td>所有的内容都不能被缓存</td>
+</tr>
+<tr>
+<td>private [= ‘field-name’]</td>
+<td>指定的用户或者缓存服务器才能缓存数据 </td>
+</tr>
+<tr>
+<td>public</td>
+<td><strong>只出现在响应头中</strong>，任何情况下都需要缓存数据</td>
+</tr>
+<tr>
+<td>max-age=t</td>
+<td>请求时：告知服务器接收一个在t时间之内的数据; 返回时，告知t时间内，数据不同再请求</td>
+</tr>
+</tbody>
+</table>
+<p>cache-control 中的属性可以设置多个，自由组合</p>
+<p>上面的字段决定了是否会发出请求，但是请求发出之后，也不是一定会再次发送数据的。还需要进行验证</p>
+<h3 id="缓存校验字段"><a href="#缓存校验字段" class="headerlink" title="缓存校验字段"></a>缓存校验字段</h3>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yippee.ink/git-blog/2019/03/27/人生不需要马奇诺防线/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yippee">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="依破缘">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/03/27/人生不需要马奇诺防线/" itemprop="url">人生不需要马奇诺防线</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-03-27T09:34:57+08:00">
+                2019-03-27
+              </time>
+            
+
+            
+
+            
+          </span>
+          
+          
+            <span class="post-updated">
+              &nbsp; | &nbsp; post.updated
+              <time itemprop="dateUpdated" datetime="2019-03-29T17:21:57+08:00" content="2019-03-29">
+                2019-03-29
+              </time>
+            </span>
+          
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>最近闲时在看关于二战欧洲战场的一些历史。起由有点意外，我在看6月22我生日这天发生的事情的时候，偶然看到1941年的今天，就是德军开始巴巴罗萨计划，进攻苏联的日子。</p>
+<p>突然就对这段感觉很熟悉但是对其中的细节完全不太了解的历史，充满了好奇。</p>
+<p>德军之所以能抽出这么大的兵力去进攻苏联，自然是在西面已经没有什么有进攻能力的敌人了。</p>
+<p>那这个时候，号称拥有世界最强的法兰西的军队呢。</p>
+<p>在历史书中，就记得写了是以进攻波兰的闪电战开始，以莫斯科战役发生逆转，最后直到柏林被红军占领。</p>
+<p>而这个对于德国来说最大的高潮，法国战役却没有怎么提起。话说在这个时候，才是希特勒作为首领在德国声望最盛之时。</p>
+<p>提到法国战役，就不自然的会想到马奇诺防线和敦刻尔克。</p>
 
           
         
@@ -449,8 +906,8 @@
           
             <span class="post-updated">
               &nbsp; | &nbsp; post.updated
-              <time itemprop="dateUpdated" datetime="2019-03-26T14:51:40+08:00" content="2019-03-26">
-                2019-03-26
+              <time itemprop="dateUpdated" datetime="2019-03-29T17:22:11+08:00" content="2019-03-29">
+                2019-03-29
               </time>
             </span>
           
@@ -520,6 +977,11 @@
 <p>也就是适用DP的思想，只保存当前运算时需要的数据。</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Fibonacci2</span>(<span class="params">n</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (n === <span class="number">1</span> || n === <span class="number">2</span>) <span class="keyword">return</span> <span class="number">1</span></span><br><span class="line">    <span class="keyword">let</span> result = <span class="number">1</span>, </span><br><span class="line">    a1 = <span class="number">1</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">3</span>; i &lt;= n; i++)&#123;</span><br><span class="line">        result = result + a1</span><br><span class="line">        a1 = result - a1</span><br><span class="line">    &#125;    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>上面这种写法只用了一个a1， 是为了节省变量，如果用两个变量，一个代表前一个的值，另一个代表前两个的值，就会更容易看懂。</p>
+<blockquote>
+<p>update: 2019-03-29</p>
+</blockquote>
+<p>发现了一种更优雅的实现<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Fibonacci3</span>(<span class="params">n</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> [prev, curr] = [<span class="number">0</span>, <span class="number">1</span>]</span><br><span class="line">    <span class="keyword">while</span>(n-- &gt; <span class="number">1</span>) &#123;</span><br><span class="line">        [prev, curr] = [curr, curr + prev]</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> curr</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>代码量更少，更容易阅读。思路来自于MDN迭代器中的实现。</p>
 <h3 id="阶乘"><a href="#阶乘" class="headerlink" title="阶乘"></a>阶乘</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">factorial</span>(<span class="params">n</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (n == <span class="number">1</span>) <span class="keyword">return</span> <span class="number">1</span></span><br><span class="line">    <span class="keyword">return</span> factorial(n - <span class="number">1</span>) * n</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">factorial2</span>(<span class="params">n</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (n===<span class="number">1</span>) <span class="keyword">return</span> <span class="number">1</span></span><br><span class="line">    <span class="keyword">let</span> result = <span class="number">1</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">2</span>; i &lt;= n; i++)&#123;</span><br><span class="line">        result = i * result</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> result</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h3 id="HanoiTower-汉诺塔"><a href="#HanoiTower-汉诺塔" class="headerlink" title="HanoiTower(汉诺塔)"></a>HanoiTower(汉诺塔)</h3><p><img src="https://upload.wikimedia.org/wikipedia/commons/0/07/Tower_of_Hanoi.jpeg" alt="汉诺塔"></p>
@@ -532,7 +994,7 @@
 <p>只有这样，才能完全的丢弃外层函数的调用栈，只保留内部返回函数的调用记录。</p>
 <p>这是对Fibonacci函数的尾递归改造：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Fibonacci3</span>(<span class="params">n, val1, val2</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (n === <span class="number">1</span>) <span class="keyword">return</span> val2</span><br><span class="line">    <span class="keyword">return</span> Fibonacci3(n - <span class="number">1</span>, val1 + val2, val1)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>再对阶乘函数进行改造：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">factorial</span>(<span class="params">n, total</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (n === <span class="number">1</span>) <span class="keyword">return</span> total</span><br><span class="line">    <span class="keyword">return</span> factorial(n - <span class="number">1</span>, n * total)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>看以上两个尾递归的函数，我们在使用的时候，都得显试的传入 val1 或者 total 这种开始的值。</p>
+<p>看以上两个尾递归的函数，我们在使用的时候，都得显视的传入 val1 或者 total 这种开始的值。</p>
 <p>会让函数的意义不容易懂。</p>
 <p>这里有两种办法，一种是<strong>柯里化</strong>，另一种是<strong>参数默认值</strong></p>
 <h3 id="柯里化"><a href="#柯里化" class="headerlink" title="柯里化"></a>柯里化</h3><p>需要在外圈再包一个函数，如果是Fibonacci 函数的话。</p>
@@ -629,8 +1091,8 @@
           
             <span class="post-updated">
               &nbsp; | &nbsp; post.updated
-              <time itemprop="dateUpdated" datetime="2019-03-19T11:22:59+08:00" content="2019-03-19">
-                2019-03-19
+              <time itemprop="dateUpdated" datetime="2019-03-29T17:07:00+08:00" content="2019-03-29">
+                2019-03-29
               </time>
             </span>
           
@@ -828,8 +1290,8 @@
           
             <span class="post-updated">
               &nbsp; | &nbsp; post.updated
-              <time itemprop="dateUpdated" datetime="2019-03-19T11:21:54+08:00" content="2019-03-19">
-                2019-03-19
+              <time itemprop="dateUpdated" datetime="2019-03-29T17:54:47+08:00" content="2019-03-29">
+                2019-03-29
               </time>
             </span>
           
@@ -961,8 +1423,8 @@
           
             <span class="post-updated">
               &nbsp; | &nbsp; post.updated
-              <time itemprop="dateUpdated" datetime="2019-03-19T11:22:02+08:00" content="2019-03-19">
-                2019-03-19
+              <time itemprop="dateUpdated" datetime="2019-03-29T17:21:41+08:00" content="2019-03-29">
+                2019-03-29
               </time>
             </span>
           
@@ -1023,7 +1485,7 @@
 <p>如果函数有返回值的话,还应该将值返回出去,</p>
 <p>还需要保证添加的函数的属性名不会覆盖原有属性</p>
 <p>以及, 如果传的 thisArg是 null,应该使用window</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 考虑到多种环境下的使用</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getWindow</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">generateRandom</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">Date</span>.now()</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">Function</span>.prototype.MyCall = <span class="function"><span class="keyword">function</span> (<span class="params">thisArg, ...args</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">typeof</span> <span class="keyword">this</span> !=== <span class="string">'function'</span>) <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="keyword">this</span>+<span class="string">'must be a function'</span>)</span><br><span class="line">    <span class="keyword">if</span> (thisArg === <span class="literal">null</span>) thisArg = getWindow()</span><br><span class="line">    <span class="keyword">var</span> random = generateRandom()</span><br><span class="line">    thisArg[random] = <span class="keyword">this</span></span><br><span class="line">    <span class="keyword">var</span> result = thisArg[random](...args)</span><br><span class="line">    <span class="keyword">delete</span> thisArg[random]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 考虑到多种环境下的使用</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getWindow</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">generateRandom</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">Date</span>.now()</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">Function</span>.prototype.MyCall = <span class="function"><span class="keyword">function</span> (<span class="params">thisArg, ...args</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">typeof</span> <span class="keyword">this</span> !=== <span class="string">'function'</span>) <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="keyword">this</span>+<span class="string">'must be a function'</span>)</span><br><span class="line">    <span class="keyword">if</span> (thisArg === <span class="literal">null</span>) thisArg = getWindow()</span><br><span class="line">    <span class="keyword">var</span> random = generateRandom()</span><br><span class="line">    thisArg[random] = <span class="keyword">this</span></span><br><span class="line">    <span class="keyword">var</span> result = thisArg[random](...args)</span><br><span class="line">    <span class="keyword">delete</span> thisArg[random]</span><br><span class="line">    <span class="keyword">return</span> result</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>这块使用了…args 来获取传过来的函数的参数,如果不让使用的话,可以使用<code>eval</code>来解析参数</p>
 <h3 id="apply的实现"><a href="#apply的实现" class="headerlink" title="apply的实现"></a>apply的实现</h3><blockquote>
 <p>实现了call之后 apply就是水到渠成的事情了.<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Function</span>.prototype.MyApply = <span class="function"><span class="keyword">function</span> (<span class="params">thisArg, args</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.MyCall(thisArg,...args)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
@@ -1122,8 +1584,8 @@
           
             <span class="post-updated">
               &nbsp; | &nbsp; post.updated
-              <time itemprop="dateUpdated" datetime="2019-03-13T15:43:21+08:00" content="2019-03-13">
-                2019-03-13
+              <time itemprop="dateUpdated" datetime="2019-03-29T17:54:01+08:00" content="2019-03-29">
+                2019-03-29
               </time>
             </span>
           
@@ -1250,6 +1712,13 @@
           </span>
           
           
+            <span class="post-updated">
+              &nbsp; | &nbsp; post.updated
+              <time itemprop="dateUpdated" datetime="2019-03-29T17:39:17+08:00" content="2019-03-29">
+                2019-03-29
+              </time>
+            </span>
+          
 
           
 
@@ -1291,8 +1760,9 @@
 <p>三栏布局同时也是经常出现的考点之一.一般的情形是,两边的模块是固定的,中间的模块随着浏览器的宽度适应.</p>
 </blockquote>
 <h3 id="margin-和-利用BFC布局"><a href="#margin-和-利用BFC布局" class="headerlink" title="margin 和 利用BFC布局"></a>margin 和 利用BFC布局</h3><blockquote>
-<p>这两种布局都有一个确定,就是主体元素需要最后加载.<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"parent"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"left"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"right"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"main"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>这两种布局都有一个确定,就是主体元素需要最后加载.</p>
 </blockquote>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"parent"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"left"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"right"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"main"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#parent</span>&#123;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">200px</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-id">#left</span>&#123;</span><br><span class="line">    <span class="attribute">display</span>: float;</span><br><span class="line">    <span class="attribute">float</span>: left;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">300px</span>;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">100%</span>;</span><br><span class="line">    <span class="attribute">background-color</span>: red;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-id">#right</span>&#123;</span><br><span class="line">    <span class="attribute">display</span>: float;</span><br><span class="line">    <span class="attribute">float</span>: right;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">300px</span>;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">100%</span>;</span><br><span class="line">    <span class="attribute">background-color</span>: green;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-id">#main</span>&#123;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">100%</span>;</span><br><span class="line">    <span class="attribute">background-color</span>: blue;</span><br><span class="line">    <span class="comment">/* 这里有两种做法,一种是用margin,一种是用BFC */</span></span><br><span class="line">    <span class="comment">/* margin: 0 300px; */</span></span><br><span class="line">    <span class="attribute">overflow</span>: hidden;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h4 id="flex布局"><a href="#flex布局" class="headerlink" title="flex布局"></a>flex布局</h4><blockquote>
 <p>使用flex布局就看起来易用,舒适多了<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"parent"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"left"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"main"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span> <span class="attr">style</span>=<span class="string">"text-align:center"</span>&gt;</span>我们是中间的啊<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"right"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
@@ -1307,448 +1777,8 @@
 <h5 id="对于宽度未知的水平居中"><a href="#对于宽度未知的水平居中" class="headerlink" title="对于宽度未知的水平居中"></a>对于宽度未知的水平居中</h5><p>使用 <code>margin: 0 auto</code>;</p>
 <h4 id="水平垂直居中"><a href="#水平垂直居中" class="headerlink" title="水平垂直居中"></a>水平垂直居中</h4><h5 id="绝对定位"><a href="#绝对定位" class="headerlink" title="绝对定位"></a>绝对定位</h5><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#main</span>&#123;</span><br><span class="line">    <span class="attribute">position</span>: relative;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-id">#parent</span>&#123;</span><br><span class="line">    <span class="attribute">position</span>: absolute;</span><br><span class="line">    <span class="attribute">left</span>: <span class="number">50%</span>;</span><br><span class="line">    <span class="attribute">top</span>: <span class="number">50%</span>;</span><br><span class="line">    <span class="attribute">transform</span>: <span class="built_in">translate</span>(-50%, -50%)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>绝对定位的思想就是让子元素基于父元素进行绝对定位</p>
-<h5 id="flex布局-1"><a href="#flex布局-1" class="headerlink" title="flex布局"></a>flex布局</h5><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#main</span>&#123;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">300px</span>;</span><br><span class="line">    <span class="attribute">background-color</span>: grey;</span><br><span class="line">    <span class="attribute">display</span>: flex;</span><br><span class="line">    <span class="attribute">justify-content</span>: center;</span><br><span class="line">    <span class="attribute">align-items</span>: center;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-id">#parent</span>&#123;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="flex布局-1"><a href="#flex布局-1" class="headerlink" title="flex布局"></a>flex布局</h5><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#main</span>&#123;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">300px</span>;</span><br><span class="line">    <span class="attribute">background-color</span>: grey;</span><br><span class="line">    <span class="attribute">display</span>: flex;</span><br><span class="line">    <span class="attribute">justify-content</span>: center;</span><br><span class="line">    <span class="attribute">align-items</span>: center;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-id">#parent</span>&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>使用flex布局在对对齐的设置就是主要在父元素上的设置,看的文章都是以前的,都会提到兼容性的问题,但是感觉现在都兼容的很好了.那些之前的hack的方法,实在是不想用了</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yippee.ink/git-blog/2019/03/12/正则表达式/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Yippee">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="依破缘">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/03/12/正则表达式/" itemprop="url">正则表达式</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-03-12T10:45:22+08:00">
-                2019-03-12
-              </time>
-            
-
-            
-
-            
-          </span>
-          
-          
-            <span class="post-updated">
-              &nbsp; | &nbsp; post.updated
-              <time itemprop="dateUpdated" datetime="2019-03-12T15:17:45+08:00" content="2019-03-12">
-                2019-03-12
-              </time>
-            </span>
-          
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <blockquote>
-<p>关于正则表达式也使用过很久了,但是总是会有点遗漏和本身就没有掌握的地方.在此做记录.</p>
-</blockquote>
-<h2 id="JS正则中的捕获元和非捕获元"><a href="#JS正则中的捕获元和非捕获元" class="headerlink" title="JS正则中的捕获元和非捕获元"></a>JS正则中的捕获元和非捕获元</h2><table>
-<thead>
-<tr>
-<th>字符</th>
-<th>描述</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>(pattern)</td>
-<td>匹配 pattern ,并且获取</td>
-</tr>
-<tr>
-<td>(?:pattern)</td>
-<td>匹配pattern, 但是不捕获结果, 就是在分组中不考虑pattern的分组</td>
-</tr>
-<tr>
-<td>(?=pattern)</td>
-<td>正向预查,也不捕获结果,同时还不获取pattern的结果,只是做一个预查(就是在P中, 都不会包含pattern匹配的结果,这也是?=和?:的差别所在)</td>
-</tr>
-<tr>
-<td>(?!pattern)</td>
-<td>正向预查的否定版</td>
-</tr>
-</tbody>
-</table>
-<p>这里用一道面试题作为例子: 将数值转化成千分位(00,000,000的形式)</p>
-<blockquote>
-<p>题外话,<code>toLocaleSting(&#39;en&#39;)</code>的方式也可以</p>
-</blockquote>
-<p>对比三种正则的获取情况<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> reg1 = <span class="regexp">/\d&#123;1,3&#125;(\d&#123;3&#125;)+$/</span></span><br><span class="line"><span class="keyword">var</span> reg2 = <span class="regexp">/\d&#123;1,3&#125;(?:(\d&#123;3&#125;)+)/g</span></span><br><span class="line"><span class="keyword">var</span> reg3 = <span class="regexp">/\d&#123;1,3&#125;(?=(\d&#123;3&#125;)+$)/g</span></span><br><span class="line"><span class="keyword">var</span> num = <span class="string">'1234567890'</span></span><br><span class="line">num.replace(reg1, <span class="function"><span class="keyword">function</span> (<span class="params">p, $<span class="number">1</span>, $<span class="number">2</span></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'p: '</span>, p); <span class="comment">// 1234567890</span></span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'$1: '</span>, $<span class="number">1</span>); <span class="comment">// 890</span></span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'$2: '</span>, $<span class="number">2</span>); <span class="comment">// 0</span></span><br><span class="line">&#125;)</span><br><span class="line">num.replace(reg2, <span class="function"><span class="keyword">function</span> (<span class="params">p, $<span class="number">1</span>, $<span class="number">2</span></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'p: '</span>, p); <span class="comment">// 1234567890</span></span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'$1: '</span>, $<span class="number">1</span>); <span class="comment">// 890</span></span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'$2: '</span>, $<span class="number">2</span>); <span class="comment">// 0</span></span><br><span class="line">&#125;)</span><br><span class="line">num.replace(reg3, <span class="function"><span class="keyword">function</span> (<span class="params">p, $<span class="number">1</span>, $<span class="number">2</span></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'p: '</span>, p);</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'$1: '</span>, $<span class="number">1</span>);</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'$2: '</span>, $<span class="number">2</span>);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></p>
-<p>首先看第一种正则的情况,虽然的确这就是最后千分位分割的样式,但是这样我们无法匹配以及获取到我们每次需要的数据,它只能讲整个结果返回出来.</p>
-<p>然后是第二种情况,首先说明,我们的匹配符都是用的正则中默认的规则也就是贪婪获取,所以可以看到第二种会和第一种得到一样的情况.如果我们这这种情况下进行优化呢.<br><code>reg2 = /(\d{1,3})(?:(\d{3})+?)/g</code></p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">num.replace(reg2, <span class="function"><span class="keyword">function</span> (<span class="params">p, $<span class="number">1</span>, $<span class="number">2</span></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'p: '</span>, p); <span class="comment">// 123456   7890</span></span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'$1: '</span>, $<span class="number">1</span>); <span class="comment">// 123     7</span></span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'$2: '</span>, $<span class="number">2</span>); <span class="comment">// 456   890</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-<p>这时候会进行两轮,但是因为<code>?:</code>非捕获元的特性, ?:后面的内容会进行消耗,也就是在P中会有消耗,所以下一轮的时候,会略过被消耗用掉的pattern.<br>这个时候肯定会说应该在最后加上$啊,是的,这只是为了举这个例而已,即便加上了$造成的结果还是一样的.</p>
-<p>第三种情况,当然就是正确的方法了.我们来分析这个为什么可以达到我们的效果.<br>因为?=不会消耗pattern匹配的内容,所以会保证每个值都会被捕获.同时由于第一次的匹配情况,保证了除了第一次之外的后面每次匹配都是{3}的情况.<br>同时P就是我们需要的数值的前面的部分,只需要 <code>return p + &#39;,&#39;</code>就可以了</p>
-<h3 id="实用情况"><a href="#实用情况" class="headerlink" title="实用情况"></a>实用情况</h3><h4 id="验证密码的复杂性和位数"><a href="#验证密码的复杂性和位数" class="headerlink" title="验证密码的复杂性和位数"></a>验证密码的复杂性和位数</h4><p>要求:位数大于6,而且包含有字母小写和大写,同时有特殊符号<br><code>/(?=.{6,})(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&amp;&amp;*()_+])/</code></p>
-<h4 id="验证邮箱"><a href="#验证邮箱" class="headerlink" title="验证邮箱"></a>验证邮箱</h4><p><code>/^[0-9a-zA-Z\-_]+@[0-9a-zA-Z\-_]+[\.0-9a-zA-Z\-_]+$/</code></p>
-<h4 id="匹配汉字"><a href="#匹配汉字" class="headerlink" title="匹配汉字"></a>匹配汉字</h4><p><code>[\u4e00-\u9fa5]</code></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yippee.ink/git-blog/2019/03/07/js函数式编程学习/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Yippee">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="依破缘">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/03/07/js函数式编程学习/" itemprop="url">js函数式编程学习</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-03-07T15:23:19+08:00">
-                2019-03-07
-              </time>
-            
-
-            
-
-            
-          </span>
-          
-          
-            <span class="post-updated">
-              &nbsp; | &nbsp; post.updated
-              <time itemprop="dateUpdated" datetime="2019-03-12T15:18:26+08:00" content="2019-03-12">
-                2019-03-12
-              </time>
-            </span>
-          
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>03-08 现在对JS函数式编程最大的印象几个使用的特性,还是高阶函数.闭包,柯里化,组合</p>
-<p>什么是高阶函数, 参数或者返回是一个函数的函数就是一个高阶函数. 在JS中,数组中的map,filter…都是高阶函数,在函数式编程中高阶函数的使用是很基本的.</p>
-<p>什么是闭包. 似乎在很多面试中看过有人问这个.  我在想,如果是我,我会怎么回答这个问题呢.</p>
-<p>闭包就是在函数中暴露出来的时候又引用了这个函数作用域的变量,导致没有被回收,从而导致了闭包.这种思想,似乎在函数话编程,纯函数的情况会经常使用.</p>
-<p>柯里化</p>
-<p>未完待续~</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yippee.ink/git-blog/2019/03/07/Lodash-分析学习/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Yippee">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="依破缘">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/03/07/Lodash-分析学习/" itemprop="url">Lodash 分析学习</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-03-07T15:22:17+08:00">
-                2019-03-07
-              </time>
-            
-
-            
-
-            
-          </span>
-          
-          
-            <span class="post-updated">
-              &nbsp; | &nbsp; post.updated
-              <time itemprop="dateUpdated" datetime="2019-03-12T15:18:30+08:00" content="2019-03-12">
-                2019-03-12
-              </time>
-            </span>
-          
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <blockquote>
-<p>稍微拿了几个函数研究了一下lodash的原码, 可以发现几个特点.</p>
-</blockquote>
-<p>一个是函数的防止意外性, 一般在写功能函数的时候,我不会去考虑如果传的参数不是我们想要的类型,会怎么处理.<br>然而在lodash中,功能函数都会对不是预料之中的类型做处理的.例如需要返回数组的情况,传参在不符合规范的情况下,函数就会默认的返回一个空数组.而不是直接的报错.</p>
-<p>还有就是对位操作符的使用, 两种情况, 一种是需要使用length的时候, 很多时候我们都需要置零,或者是转换成数值类型.<br>这个时候用位操作符就可以很方便的解决这个问题.(这个我在之前的位操作符的博客中有写到过,这里做一个大概的总结)</p>
-<p>使用&gt;&gt;&gt;0 右移0位,将其他类型置为0, 同时还会把正数转成正整数,一般都是对length使用,完全符合使用场景</p>
-<p>使用n &gt;&gt;&gt;1 等同于 parseInt(n / 2), 可以在取中间数的使用,  现在可以想到的使用场景就是二分法中取中间key的时候.</p>
-<p>未完待续~</p>
 
           
         
@@ -1788,7 +1818,7 @@
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1832,7 +1862,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">20</span>
+                <span class="site-state-item-count">23</span>
                 <span class="site-state-item-name">posts</span>
               </a>
             </div>
@@ -1843,7 +1873,7 @@
             
             <div class="site-state-item site-state-categories">
               
-                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-count">4</span>
                 <span class="site-state-item-name">categories</span>
               
             </div>
@@ -1853,10 +1883,10 @@
             
             
             <div class="site-state-item site-state-tags">
-              
-                <span class="site-state-item-count">2</span>
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">9</span>
                 <span class="site-state-item-name">tags</span>
-              
+              </a>
             </div>
           
 
