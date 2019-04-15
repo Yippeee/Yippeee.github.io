@@ -260,6 +260,454 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yippee.ink/git-blog/2019/03/14/js中的this/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yippee">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="依破缘">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/03/14/js中的this/" itemprop="url">js中的this</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-03-14T18:19:09+08:00">
+                2019-03-14
+              </time>
+            
+
+            
+
+            
+          </span>
+          
+          
+            <span class="post-updated">
+              &nbsp; | &nbsp; post.updated
+              <time itemprop="dateUpdated" datetime="2019-03-29T17:21:41+08:00" content="2019-03-29">
+                2019-03-29
+              </time>
+            </span>
+          
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="提纲"><a href="#提纲" class="headerlink" title="提纲:"></a>提纲:</h3><ol>
+<li>this指向什么? 什么时候 this指向 window? </li>
+<li>箭头函数中的this</li>
+<li>bind,apply和 call, 模拟实现一个bind,call,apply</li>
+</ol>
+<h2 id="this指向什么"><a href="#this指向什么" class="headerlink" title="this指向什么"></a>this指向什么</h2><blockquote>
+<p>刚开始了解this的时候, 看到过一句话, 谁调用函数, 函数中的this就执行谁.我也把这句话奉为圭臬.<br>但是,随着深入的了解, 有些时候就更蒙蔽了.到底是谁调用的这个函数呢..</p>
+</blockquote>
+<h3 id="直接调用"><a href="#直接调用" class="headerlink" title="直接调用"></a>直接调用</h3><p>直接通过函数名调用, 无论在哪个作用域下返回的都是全局对象, 直接声明的函数就是在全局对象上声明的.<br>note: 浏览器下和node下的全局对象是不同的</p>
+<h3 id="方法中-this-指向全局对象的情况"><a href="#方法中-this-指向全局对象的情况" class="headerlink" title="方法中 this 指向全局对象的情况"></a>方法中 this 指向全局对象的情况</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> name = <span class="string">'Bob'</span></span><br><span class="line"><span class="keyword">var</span> obj = &#123;</span><br><span class="line">    name: <span class="string">'Jack'</span>,</span><br><span class="line">    getName: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="keyword">this</span>.name)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> getName = obj.getName</span><br><span class="line">getName()</span><br></pre></td></tr></table></figure>
+<p>我一开始觉得这个<code>getName</code>会输出的是 obj对象里面的 name,因为不是用obj.getName定义的嘛.<br>然而, 并不是的, 这都是属于定义的, 这个时候的调用还是window的,所以<code>log</code>出来的应该是Bob<br>还有一种特殊情况就是数组中的函数在数组中调用的情况,如下题目:<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> length = <span class="number">50</span></span><br><span class="line"><span class="keyword">var</span> fn = <span class="function"><span class="keyword">function</span> (<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span>.length)</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> arr = [fn,<span class="number">1</span>,<span class="number">2</span>]</span><br><span class="line">arr[<span class="number">0</span>]()</span><br></pre></td></tr></table></figure></p>
+<p>一开始以为这块的fn中的this应该会没有特殊指定会指向window,然而并不是的.<br>在数组中调用函数的话,this相当于是这个数组,所以返回的length是数组的length,所以返回的是3</p>
+<h3 id="箭头函数中的this"><a href="#箭头函数中的this" class="headerlink" title="箭头函数中的this"></a>箭头函数中的this</h3><p>箭头函数中没有作用域,也就没有this,this使用的是父级的this</p>
+<h2 id="bind-apply和-call-模拟实现一个bind-call-apply"><a href="#bind-apply和-call-模拟实现一个bind-call-apply" class="headerlink" title="bind,apply和 call, 模拟实现一个bind,call,apply"></a>bind,apply和 call, 模拟实现一个bind,call,apply</h2><p>三者对比:</p>
+<blockquote>
+<p>call 接受参数 [thisArg, arg1, arg2, …]<br>apply 接受参数 [thisArg, [argArr]]<br>bind 接受参数 [thisArg, arg1, arg2, …]<br>可以看出前两者的区别在于参数的提供方式 call是一个一个指定, 而apply 是用的数组<br>最后一个bind 接受的参数于call 相同,但是bind 会返回一个函数, 并不会直接执行函数, 这也是bind 与前两者的区别所在</p>
+</blockquote>
+<h3 id="call的实现"><a href="#call的实现" class="headerlink" title="call的实现"></a>call的实现</h3><p>先看call 到底做了什么.<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = &#123;<span class="attr">name</span>: <span class="string">'Jack'</span>&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn</span>(<span class="params"></span>) </span>&#123;<span class="built_in">console</span>.log(<span class="keyword">this</span>.name)&#125;</span><br><span class="line">fn.call(a) <span class="comment">// Jack</span></span><br></pre></td></tr></table></figure></p>
+<p>那么其实,上面的代码等同于:<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = &#123;</span><br><span class="line">    name: <span class="string">'Jack'</span>,</span><br><span class="line">    fn: fn <span class="comment">// 这块的fn的属性名任意都行</span></span><br><span class="line">&#125;</span><br><span class="line">a.fn()</span><br></pre></td></tr></table></figure></p>
+<p>有了这样的思路之后,我们发现实现call,就是将调用的方法增加到参数对象的属性中,然后运行就行了.为了不被污染,执行完成之后,还可以删除该属性<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Function</span>.prototype.MyCall = <span class="function"><span class="keyword">function</span> (<span class="params">thisArg</span>) </span>&#123;</span><br><span class="line">    thisArg.fn = thisArg</span><br><span class="line">    thisArg.fn()</span><br><span class="line">    <span class="keyword">delete</span> thisArg.fn</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这样的第一版的call就完成了,然后我们再继续优化它</p>
+<p>首先,对接受的参数是不是函数要进行判断.</p>
+<p>其次,除了接受thisArg参数之外,call 还可以接受函数执行时候的参数,</p>
+<p>如果函数有返回值的话,还应该将值返回出去,</p>
+<p>还需要保证添加的函数的属性名不会覆盖原有属性</p>
+<p>以及, 如果传的 thisArg是 null,应该使用window</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 考虑到多种环境下的使用</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getWindow</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">generateRandom</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">Date</span>.now()</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">Function</span>.prototype.MyCall = <span class="function"><span class="keyword">function</span> (<span class="params">thisArg, ...args</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">typeof</span> <span class="keyword">this</span> !=== <span class="string">'function'</span>) <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="keyword">this</span>+<span class="string">'must be a function'</span>)</span><br><span class="line">    <span class="keyword">if</span> (thisArg === <span class="literal">null</span>) thisArg = getWindow()</span><br><span class="line">    <span class="keyword">var</span> random = generateRandom()</span><br><span class="line">    thisArg[random] = <span class="keyword">this</span></span><br><span class="line">    <span class="keyword">var</span> result = thisArg[random](...args)</span><br><span class="line">    <span class="keyword">delete</span> thisArg[random]</span><br><span class="line">    <span class="keyword">return</span> result</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这块使用了…args 来获取传过来的函数的参数,如果不让使用的话,可以使用<code>eval</code>来解析参数</p>
+<h3 id="apply的实现"><a href="#apply的实现" class="headerlink" title="apply的实现"></a>apply的实现</h3><blockquote>
+<p>实现了call之后 apply就是水到渠成的事情了.<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Function</span>.prototype.MyApply = <span class="function"><span class="keyword">function</span> (<span class="params">thisArg, args</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.MyCall(thisArg,...args)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<h3 id="bind的实现"><a href="#bind的实现" class="headerlink" title="bind的实现"></a>bind的实现</h3><p>bind的实现需要考虑到一些比较特殊的地方,就是在使用new的时候, 感觉这块的实现有点不懂.等会来补充</p>
+<p>待续~</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yippee.ink/git-blog/2019/03/13/HTML-CSS知识补充/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yippee">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="依破缘">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/03/13/HTML-CSS知识补充/" itemprop="url">HTML&CSS知识补充</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-03-13T15:35:34+08:00">
+                2019-03-13
+              </time>
+            
+
+            
+
+            
+          </span>
+          
+          
+            <span class="post-updated">
+              &nbsp; | &nbsp; post.updated
+              <time itemprop="dateUpdated" datetime="2019-03-29T17:54:01+08:00" content="2019-03-29">
+                2019-03-29
+              </time>
+            </span>
+          
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>CSS 渐变属性使用<br>使用渐变属性(gradient)可以一个元素多种颜色<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">div</span>&#123;</span><br><span class="line">    <span class="attribute">background-image</span>:<span class="built_in">linear-gradient</span>(to bottom,red 0%,red 50%,blue 50%,blue 100%)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>因为本身属性是渐变的,所有需要对同一个位置(除了首位之外)需要把结束和开始的颜色都标注出来,就可以达到锐化的效果.</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yippee.ink/git-blog/2019/03/13/CSS布局/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yippee">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="依破缘">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/03/13/CSS布局/" itemprop="url">CSS布局</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-03-13T11:16:24+08:00">
+                2019-03-13
+              </time>
+            
+
+            
+
+            
+          </span>
+          
+          
+            <span class="post-updated">
+              &nbsp; | &nbsp; post.updated
+              <time itemprop="dateUpdated" datetime="2019-03-29T17:39:17+08:00" content="2019-03-29">
+                2019-03-29
+              </time>
+            </span>
+          
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="两栏布局"><a href="#两栏布局" class="headerlink" title="两栏布局"></a>两栏布局</h3><blockquote>
+<p>两栏布局的要求一般是要求一左一右铺满整个界面,同时,左边(或者是右边)的元素固定宽度,另一边的元素随着浏览器的变化而变化</p>
+</blockquote>
+<p>页面布局:(左侧固定300px)<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"left"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"right"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<h4 id="float方法"><a href="#float方法" class="headerlink" title="float方法"></a>float方法</h4><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">body</span>&#123;</span><br><span class="line">    <span class="attribute">height</span>:<span class="number">100px</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-id">#left</span>&#123;</span><br><span class="line">    <span class="attribute">float</span>:left;</span><br><span class="line">    <span class="attribute">height</span>:<span class="number">100%</span>;</span><br><span class="line">    <span class="attribute">width</span>:<span class="number">300px</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-id">#right</span>&#123;</span><br><span class="line">    <span class="attribute">margin-right</span>:<span class="number">300px</span>;</span><br><span class="line">    <span class="attribute">height</span>:<span class="number">100%</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="flex方法"><a href="#flex方法" class="headerlink" title="flex方法"></a>flex方法</h4><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">body</span> &#123;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">300px</span>;</span><br><span class="line">    <span class="attribute">display</span>: flex;</span><br><span class="line">    <span class="attribute">flex-direction</span>: row;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-id">#left</span> &#123;</span><br><span class="line">    <span class="attribute">flex</span>: <span class="number">0</span> <span class="number">0</span> <span class="number">300px</span>;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">100%</span>;</span><br><span class="line">    <span class="attribute">background-color</span>: red;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-id">#right</span> &#123;</span><br><span class="line">    <span class="attribute">flex</span>: <span class="number">1</span> <span class="number">1</span> auto;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">100%</span>;</span><br><span class="line">    <span class="attribute">background-color</span>: blue;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="三栏布局"><a href="#三栏布局" class="headerlink" title="三栏布局"></a>三栏布局</h3><blockquote>
+<p>三栏布局同时也是经常出现的考点之一.一般的情形是,两边的模块是固定的,中间的模块随着浏览器的宽度适应.</p>
+</blockquote>
+<h3 id="margin-和-利用BFC布局"><a href="#margin-和-利用BFC布局" class="headerlink" title="margin 和 利用BFC布局"></a>margin 和 利用BFC布局</h3><blockquote>
+<p>这两种布局都有一个确定,就是主体元素需要最后加载.</p>
+</blockquote>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"parent"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"left"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"right"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"main"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#parent</span>&#123;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">200px</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-id">#left</span>&#123;</span><br><span class="line">    <span class="attribute">display</span>: float;</span><br><span class="line">    <span class="attribute">float</span>: left;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">300px</span>;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">100%</span>;</span><br><span class="line">    <span class="attribute">background-color</span>: red;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-id">#right</span>&#123;</span><br><span class="line">    <span class="attribute">display</span>: float;</span><br><span class="line">    <span class="attribute">float</span>: right;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">300px</span>;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">100%</span>;</span><br><span class="line">    <span class="attribute">background-color</span>: green;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-id">#main</span>&#123;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">100%</span>;</span><br><span class="line">    <span class="attribute">background-color</span>: blue;</span><br><span class="line">    <span class="comment">/* 这里有两种做法,一种是用margin,一种是用BFC */</span></span><br><span class="line">    <span class="comment">/* margin: 0 300px; */</span></span><br><span class="line">    <span class="attribute">overflow</span>: hidden;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="flex布局"><a href="#flex布局" class="headerlink" title="flex布局"></a>flex布局</h4><blockquote>
+<p>使用flex布局就看起来易用,舒适多了<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"parent"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"left"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"main"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span> <span class="attr">style</span>=<span class="string">"text-align:center"</span>&gt;</span>我们是中间的啊<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"right"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#parent</span> &#123;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">200px</span>;</span><br><span class="line">    <span class="attribute">display</span>: flex;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-id">#left</span> &#123;</span><br><span class="line">    <span class="attribute">flex</span>: <span class="number">0</span> <span class="number">0</span> <span class="number">300px</span>;</span><br><span class="line">    <span class="attribute">background-color</span>: red;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-id">#right</span> &#123;</span><br><span class="line">    <span class="attribute">flex</span>: <span class="number">0</span> <span class="number">0</span> <span class="number">300px</span>;</span><br><span class="line">    <span class="attribute">background-color</span>: green;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-id">#main</span> &#123;</span><br><span class="line">    <span class="attribute">flex</span>: <span class="number">1</span> <span class="number">1</span> auto;</span><br><span class="line">    <span class="attribute">background-color</span>: blue;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="垂直水平居中"><a href="#垂直水平居中" class="headerlink" title="垂直水平居中"></a>垂直水平居中</h3><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"parent"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"main"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h4 id="水平居中"><a href="#水平居中" class="headerlink" title="水平居中"></a>水平居中</h4><blockquote>
+<p>水平居中分为两种情况,一种是DIV宽度一定的,一种是宽度不定的</p>
+</blockquote>
+<h5 id="对于宽度已知的水平居中"><a href="#对于宽度已知的水平居中" class="headerlink" title="对于宽度已知的水平居中"></a>对于宽度已知的水平居中</h5><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#main</span>&#123;</span><br><span class="line">    <span class="attribute">display</span>: inline-block;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">200px</span>;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">200px</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-id">#parent</span>&#123;</span><br><span class="line">    <span class="attribute">test-align</span>:center;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在宽度已知的情况,只需要在父元素上加上<code>test-align:center;</code>,甚至没有父元素也可以加一个div</p>
+<h5 id="对于宽度未知的水平居中"><a href="#对于宽度未知的水平居中" class="headerlink" title="对于宽度未知的水平居中"></a>对于宽度未知的水平居中</h5><p>使用 <code>margin: 0 auto</code>;</p>
+<h4 id="水平垂直居中"><a href="#水平垂直居中" class="headerlink" title="水平垂直居中"></a>水平垂直居中</h4><h5 id="绝对定位"><a href="#绝对定位" class="headerlink" title="绝对定位"></a>绝对定位</h5><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#main</span>&#123;</span><br><span class="line">    <span class="attribute">position</span>: relative;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-id">#parent</span>&#123;</span><br><span class="line">    <span class="attribute">position</span>: absolute;</span><br><span class="line">    <span class="attribute">left</span>: <span class="number">50%</span>;</span><br><span class="line">    <span class="attribute">top</span>: <span class="number">50%</span>;</span><br><span class="line">    <span class="attribute">transform</span>: <span class="built_in">translate</span>(-50%, -50%)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>绝对定位的思想就是让子元素基于父元素进行绝对定位</p>
+<h5 id="flex布局-1"><a href="#flex布局-1" class="headerlink" title="flex布局"></a>flex布局</h5><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#main</span>&#123;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">300px</span>;</span><br><span class="line">    <span class="attribute">background-color</span>: grey;</span><br><span class="line">    <span class="attribute">display</span>: flex;</span><br><span class="line">    <span class="attribute">justify-content</span>: center;</span><br><span class="line">    <span class="attribute">align-items</span>: center;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-id">#parent</span>&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>使用flex布局在对对齐的设置就是主要在父元素上的设置,看的文章都是以前的,都会提到兼容性的问题,但是感觉现在都兼容的很好了.那些之前的hack的方法,实在是不想用了</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yippee.ink/git-blog/2019/03/12/正则表达式/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -304,8 +752,8 @@
           
             <span class="post-updated">
               &nbsp; | &nbsp; post.updated
-              <time itemprop="dateUpdated" datetime="2019-03-29T17:48:01+08:00" content="2019-03-29">
-                2019-03-29
+              <time itemprop="dateUpdated" datetime="2019-04-12T15:51:56+08:00" content="2019-04-12">
+                2019-04-12
               </time>
             </span>
           
@@ -396,11 +844,46 @@
 </ol>
 <p><a href="https://regex101.com/" target="_blank" rel="noopener">链接</a><br>这个网站分析的很不错，比一些什么可视化网站好用的多。</p>
 <ol start="3">
-<li>vue中案例的分析<blockquote>
+<li>案例分析</li>
+</ol>
+<blockquote>
 <p>这一部分不出意外，将会持续一段时间，将会记录我对其中的正则不断分析和领会的过程.<br><code>/\{\{((?:.|\n)+?)\}\}/</code> &amp; <code>^&lt;((?:[a-zA-Z_][\w\-\.]*\:)?[a-zA-Z_][\w\-\.]*)</code></p>
 </blockquote>
-</li>
-</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">isPrimeNum2</span>(<span class="params">num</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> !<span class="regexp">/^.?$|^(..+?)\1+$/</span>.test(<span class="built_in">Array</span>(num + <span class="number">1</span>).join(<span class="string">'1'</span>))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>看到一个用正则判断是不是质数的函数，呆了，这是啥玩意。容我细细品味下…</p>
+<p>update：2019-04-09</p>
+<blockquote>
+<p>自我解答来了..</p>
+</blockquote>
+<p>先把正则之外的部分解决一下，<code>Array(num + 1).join(&#39;1&#39;)</code> 返回的是由1组成的num个的字符串。 之所以需要加一，是因为这里用的是join，个数会被减一。</p>
+<p>然后才是重头戏，正则部分。</p>
+<p>正则分成了两部分，前面的 <code>^.?$</code> 是对是否有内容的一个检查，不做多余的说明。</p>
+<p>后面的部分才是对真正的判断，这里我们只能判断是否是非素数，然后求反。</p>
+<p><code>^(..+?)\1+$</code>, 是对非素数的判断。</p>
+<p>非素数，就是除了1之外还有其他因子的数。</p>
+<p>这里，我们就来构造这样的情况。</p>
+<p><code>(..+?)</code> 这里是一个非贪婪的捕获，会先用 <code>(..)</code> 的情况来进行匹配，后面是<code>\1+$</code>对第一次捕获分组的帅选，如果满足条件，容易发现其实在就满足了被2整除的条件，那么就不是质数了。如果2没有匹配到，因为是<code>..+</code>会继续用3,4..etc</p>
+<p>这样，被3,4等等的情况，就都考虑进去了，就满足了对一个非素数的判断。</p>
+<blockquote>
+<p>TODO: 有限状态机，在正则中对倍数的判断的使用。</p>
+</blockquote>
+<p>这块有点复杂，有空闲时间再来研究吧。</p>
+<h2 id="ES9-中正则表达式的更新"><a href="#ES9-中正则表达式的更新" class="headerlink" title="ES9 中正则表达式的更新"></a>ES9 中正则表达式的更新</h2><h3 id="支持分组命名"><a href="#支持分组命名" class="headerlink" title="支持分组命名"></a>支持分组命名</h3><p>使用 <code>?&lt;name&gt;</code> 放于 <code>(</code> 后面，对分组进行命名。<br>例如：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> str = <span class="string">'2019-04-11'</span></span><br><span class="line"><span class="keyword">const</span> reg = <span class="regexp">/(?&lt;year&gt;....)-(?&lt;month&gt;..)-(?&lt;day&gt;..)/</span></span><br><span class="line"><span class="keyword">const</span> group = reg.exec(str).groups</span><br><span class="line"><span class="keyword">let</span> &#123;year, month, day&#125; = group</span><br></pre></td></tr></table></figure></p>
+<h3 id="反向断言"><a href="#反向断言" class="headerlink" title="反向断言"></a>反向断言</h3><p>之前的版本js中的正则是不支持反向断言的，不过现在支持了。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> regex = <span class="regexp">/(?&lt;=2019)-(..)-(..)/</span></span><br></pre></td></tr></table></figure>
+<p>只会匹配2019后面的月份和日期。<br><em>注意一点: 反向断言中不能使用捕获组</em> 就是这样使用是不行的： <code>(?&lt;=\1)(..)</code></p>
+<h3 id="dotAll"><a href="#dotAll" class="headerlink" title="dotAll"></a>dotAll</h3><p>这个属性是针对于 <code>.</code> 匹配符的，是使用 dotAll 的情况下，<code>.</code> 实现了真正的 all 匹配，换行(\n)，回车(\r)， 行分隔，段分隔，都可以匹配。<br>使用的方式，是使用新增的修饰符 /s</p>
+<p>其实完全的 all 匹配，还得加上 /u 修饰符，考虑Unicode的情况</p>
+<h3 id="Unicode-转义"><a href="#Unicode-转义" class="headerlink" title="Unicode 转义"></a>Unicode 转义</h3><p><code>var regex = new RegExp(&#39;\u{61}&#39;, &#39;u&#39;);</code></p>
+<h2 id="反向非贪婪匹配"><a href="#反向非贪婪匹配" class="headerlink" title="反向非贪婪匹配"></a>反向非贪婪匹配</h2><p>一个这样的字符串<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> str = <span class="string">"&lt;option value='2'&gt;default user group&lt;/option&gt;&lt;option value='8'&gt;默认用户组&lt;/option&gt;&lt;option value='11'&gt;OTT默认用户组&lt;/option&gt;&lt;option value='3418'&gt;黑名单用户组&lt;/option&gt;&lt;option value='3433'&gt;zhonggp测试用户组&lt;/option&gt;&lt;option value='14063'&gt;yangcongtest&lt;/option&gt;&lt;option value='14106'&gt;portal_test&lt;/option&gt;&lt;option value='14126'&gt;大连用户组&lt;/option&gt;"</span></span><br></pre></td></tr></table></figure></p>
+<p>要找出 大连用户组 的标签的value是多少。<br>本来觉得很简单，一个普通的正则就搞定了， <code>value\=&#39;(.*?)&#39;&gt;大连用户组</code>.</p>
+<p>然而，匹配到的结果是 </p>
+<p><code>2&#39;&gt;default user group&lt;/option&gt;&lt;option value=&#39;8&#39;&gt;默认用户组&lt;/option&gt;&lt;option value=&#39;11&#39;&gt;OTT默认用户组&lt;/option&gt;&lt;option value=&#39;3418&#39;&gt;黑名单用户组&lt;/option&gt;&lt;option value=&#39;3433&#39;&gt;zhonggp测试用户组&lt;/option&gt;&lt;option value=&#39;14063&#39;&gt;yangcongtest&lt;/option&gt;&lt;option value=&#39;14106&#39;&gt;portal_test&lt;/option&gt;&lt;option value=&#39;14126&#39;</code></p>
+<p>我就蒙蔽了.我不是用了?了啊，应该是非贪婪的啊，怎么会这样呢。</p>
+<p>后面查阅了资料才发现，贪婪是对应的正向的匹配，对于一个正向的匹配没有第一次匹配到就放手的情况。。</p>
+<p>既然是反向的，我们的思维也反向一下吧。</p>
+<p>在前面加一个贪婪的匹配，那后面的不就是非贪婪的了嘛。</p>
+<p><code>.*value\=&#39;(.*?)&#39;&gt;大连用户组</code> 这样就bingo啦。</p>
 
           
         
@@ -763,8 +1246,8 @@
           
             <span class="post-updated">
               &nbsp; | &nbsp; post.updated
-              <time itemprop="dateUpdated" datetime="2019-03-29T17:55:05+08:00" content="2019-03-29">
-                2019-03-29
+              <time itemprop="dateUpdated" datetime="2019-04-02T19:00:33+08:00" content="2019-04-02">
+                2019-04-02
               </time>
             </span>
           
@@ -818,6 +1301,7 @@
 </blockquote>
 <p>把CPU比做一个工厂，如果是单核CPU，那么这个的意思就是，一次只能一个运行一个车间，一个车间就是一个进程(process)</p>
 <p>车间里会有很多协同工作的工人，这些工人就看做是线程(thread)。在一个进程中就可以有多个线程。<br>同时一个进程中间的内存是共享的，但是是不能同时使用的。</p>
+<h3 id="浏览器最小宽度"><a href="#浏览器最小宽度" class="headerlink" title="浏览器最小宽度"></a>浏览器最小宽度</h3><p>窗口缩小最小宽度是400px(来自Google)</p>
 
           
         
@@ -910,8 +1394,8 @@
           
             <span class="post-updated">
               &nbsp; | &nbsp; post.updated
-              <time itemprop="dateUpdated" datetime="2019-03-26T14:56:11+08:00" content="2019-03-26">
-                2019-03-26
+              <time itemprop="dateUpdated" datetime="2019-04-04T13:47:22+08:00" content="2019-04-04">
+                2019-04-04
               </time>
             </span>
           
@@ -1336,473 +1820,6 @@ BFC就是页面上的一个隔离的独立容器，容器里面的子元素不�
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yippee.ink/git-blog/2019/01/09/如何使用hexo-新手向/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Yippee">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="依破缘">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/01/09/如何使用hexo-新手向/" itemprop="url">如何使用hexo(新手向)</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-01-09T09:45:04+08:00">
-                2019-01-09
-              </time>
-            
-
-            
-
-            
-          </span>
-          
-          
-            <span class="post-updated">
-              &nbsp; | &nbsp; post.updated
-              <time itemprop="dateUpdated" datetime="2019-03-26T14:56:11+08:00" content="2019-03-26">
-                2019-03-26
-              </time>
-            </span>
-          
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <blockquote>
-<p>大误  这是一篇通用文档<br>这是一篇告诉女朋友怎么使用我给她搭建的博客的说明</p>
-</blockquote>
-<p>hexo的搭建过程就不说明了, 关键是现在怎么使用.</p>
-<h3 id="拉取源码"><a href="#拉取源码" class="headerlink" title="拉取源码"></a>拉取源码</h3><blockquote>
-<p>建议使用SSH</p>
-</blockquote>
-<p><img src="https://ws2.sinaimg.cn/large/006tNc79gy1fz03zrlcpjj30o80diwgj.jpg" alt=""></p>
-<p><code>git clone git@github.com:pumpkinnan97/pumpkinnan97.github.io.git</code><br>拉取下来了了之后, 切换到blog分支<br><code>git checkout blog</code><br>安装依赖<br><code>npm i</code></p>
-<h4 id="添加SSH"><a href="#添加SSH" class="headerlink" title="添加SSH"></a>添加SSH</h4><blockquote>
-<p>要是我没有记错的话,你电脑之前肯定是配过SSH钥匙的.</p>
-</blockquote>
-<p>那么<br><code>cat ~/.ssh/id_rsa.pub</code><br><strong>command + c</strong><br>点击GitHub右上角进入 <strong>Setting</strong><br>然后点击 左方的SSH<br><code>New SSH key</code><br><strong>command + v</strong><br>完毕即可</p>
-<h3 id="hexo博客管理"><a href="#hexo博客管理" class="headerlink" title="hexo博客管理"></a>hexo博客管理</h3><p>hexo g : Generate static files. 就是生成静态资源,在发布之前需要进行<br>hexo s : Start the server.  这个的作用是在本地可以查看现在博客<br>hexo d : Deploy your website. 发布</p>
-<p>使用<code>hexo new [your blog name]</code><br>然后进入<code>source</code>中的<code>_posts</code>就可以看到新建的博客,在已经存在的内容下面加上你的博客内容就可以了<br>最后使用上面的<code>hexo g</code> <code>hexo d</code> 就完成了发布</p>
-<h3 id="hexo-主题以及配置"><a href="#hexo-主题以及配置" class="headerlink" title="hexo 主题以及配置"></a>hexo 主题以及配置</h3><blockquote>
-<p>这一块都在<strong>_config.yml</strong>文件中,<br><code>theme: next</code>选择主题,前提是先需要把主题下载到博客根目录的 themes 文件中</p>
-</blockquote>
-<p><a href="https://hexo.io/themes/" target="_blank" rel="noopener">主题</a><br><a href="https://hexo.io/plugins/" target="_blank" rel="noopener">插件</a></p>
-<p>就可以像QQ空间一样的愉快的玩耍了</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yippee.ink/git-blog/2019/01/08/what-am-i-thinking/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Yippee">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="依破缘">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/01/08/what-am-i-thinking/" itemprop="url">What am I thinking?</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-01-08T10:43:43+08:00">
-                2019-01-08
-              </time>
-            
-
-            
-
-            
-          </span>
-          
-          
-            <span class="post-updated">
-              &nbsp; | &nbsp; post.updated
-              <time itemprop="dateUpdated" datetime="2019-03-26T14:56:11+08:00" content="2019-03-26">
-                2019-03-26
-              </time>
-            </span>
-          
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/未分类/" itemprop="url" rel="index">
-                    <span itemprop="name">未分类</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <blockquote>
-<blockquote>
-<p>哦? 我在想啥</p>
-</blockquote>
-</blockquote>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yippee.ink/git-blog/2019/01/08/e4-b8-80-e4-ba-9b-e5-b8-b8-e8-a7-81-e7-9a-84-e9-9d-a2-e8-af-95-e9-a2-98/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Yippee">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="依破缘">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/01/08/e4-b8-80-e4-ba-9b-e5-b8-b8-e8-a7-81-e7-9a-84-e9-9d-a2-e8-af-95-e9-a2-98/" itemprop="url">一些常见的面试题</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-01-08T10:33:09+08:00">
-                2019-01-08
-              </time>
-            
-
-            
-
-            
-          </span>
-          
-          
-            <span class="post-updated">
-              &nbsp; | &nbsp; post.updated
-              <time itemprop="dateUpdated" datetime="2019-03-29T17:07:00+08:00" content="2019-03-29">
-                2019-03-29
-              </time>
-            </span>
-          
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/总结/" itemprop="url" rel="index">
-                    <span itemprop="name">总结</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <blockquote>
-<p>这里记录都是一些很常见的面试题 经常遇到,但是搞得并不是很清楚</p>
-</blockquote>
-<ol>
-<li>[“1”, “2”, “3”].map(parseInt); 先看上面这道题,很常见吧.结果是什么呢,反正不是[1,2,3]就是了 正确的应该是[1, NaN, NaN]. 刚开始我不知道为什么,只是记到parentInt接受的参数有两个所以.. <code>js console.log(parseInt.length) // 2</code> 第二个参数是指定传入参数的进制,默认是10进制的 而返回都是10进制的 我开始以为是因为把 数组中’1’,’2’一起传过去了.并不是这样滴 看map函数<pre><code class="js">[<span class="string">"1"</span>, <span class="string">"2"</span>, <span class="string">"3"</span>].map(<span class="built_in">console</span>.log)
-<span class="comment">/**</span>
-<span class="comment">1 0 [ '1', '2', '3' ]</span>
-<span class="comment">2 1 [ '1', '2', '3' ]</span>
-<span class="comment">3 2 [ '1', '2', '3' ]</span>
-<span class="comment">*/</span>
-</code></pre>
-</li>
-</ol>
-<p>可以看到还是因为map本身参数是有三个的,所以上面的题目中传入的值是 ‘1’ 0 ‘2’ 1 ‘3’ 2 2并不是一个1进制的树,3也不是.return NaN 当参数 radix 的值为 0，或没有设置该参数时，parseInt() 会根据 string 来判断数字的基数。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1851,7 +1868,7 @@ BFC就是页面上的一个隔离的独立容器，容器里面的子元素不�
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">23</span>
+                <span class="site-state-item-count">26</span>
                 <span class="site-state-item-name">posts</span>
               </a>
             </div>
