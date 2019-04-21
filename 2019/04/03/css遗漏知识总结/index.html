@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2">
+
+
+
+
+
+
+<meta name="description" content="class匹配符1234567[class$=&apos;xxx&apos;]&amp;#123;&amp;#125;[class^=&apos;xxx&apos;]&amp;#123;    &amp;#125; 这两种对类匹配都可以对名称进行帅选。 sticky 布局使用sticky可以轻易的实现固定表头类似的需求。使用方法: 1234.demo&amp;#123;    position:sticky;    top: 200px&amp;#125; 在使用position 为">
+<meta property="og:type" content="article">
+<meta property="og:title" content="css遗漏知识总结">
+<meta property="og:url" content="http://yippee.ink/git-blog/2019/04/03/css遗漏知识总结/index.html">
+<meta property="og:site_name" content="依破缘">
+<meta property="og:description" content="class匹配符1234567[class$=&apos;xxx&apos;]&amp;#123;&amp;#125;[class^=&apos;xxx&apos;]&amp;#123;    &amp;#125; 这两种对类匹配都可以对名称进行帅选。 sticky 布局使用sticky可以轻易的实现固定表头类似的需求。使用方法: 1234.demo&amp;#123;    position:sticky;    top: 200px&amp;#125; 在使用position 为">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-04-21T02:21:22.588Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="css遗漏知识总结">
+<meta name="twitter:description" content="class匹配符1234567[class$=&apos;xxx&apos;]&amp;#123;&amp;#125;[class^=&apos;xxx&apos;]&amp;#123;    &amp;#125; 这两种对类匹配都可以对名称进行帅选。 sticky 布局使用sticky可以轻易的实现固定表头类似的需求。使用方法: 1234.demo&amp;#123;    position:sticky;    top: 200px&amp;#125; 在使用position 为">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yippee.ink/git-blog/2019/04/03/css遗漏知识总结/">
+
+
+
+
+
+  <title>css遗漏知识总结 | 依破缘</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">依破缘</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yippee.ink/git-blog/2019/04/03/css遗漏知识总结/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yippee">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="依破缘">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">css遗漏知识总结</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-04-03T10:04:22+08:00">
+                2019-04-03
+              </time>
+            
+
+            
+
+            
+          </span>
+          
+          
+            <span class="post-updated">
+              &nbsp; | &nbsp; post.updated
+              <time itemprop="dateUpdated" datetime="2019-04-21T10:21:22+08:00" content="2019-04-21">
+                2019-04-21
+              </time>
+            </span>
+          
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="class匹配符"><a href="#class匹配符" class="headerlink" title="class匹配符"></a>class匹配符</h2><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-attr">[class$='xxx']</span>&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-attr">[class^='xxx']</span>&#123;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这两种对类匹配都可以对名称进行帅选。</p>
+<h2 id="sticky-布局"><a href="#sticky-布局" class="headerlink" title="sticky 布局"></a>sticky 布局</h2><p>使用sticky可以轻易的实现固定表头类似的需求。使用方法:</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.demo</span>&#123;</span><br><span class="line">    <span class="attribute">position</span>:sticky;</span><br><span class="line">    <span class="attribute">top</span>: <span class="number">200px</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在使用position 为 sticky的时候，还需要指定 <code>left</code> <code>right</code> <code>top</code> <code>bottom</code> 四个值中的任意一个。</p>
+<p>指定的这个值，会作为一个阈值，当到达这个值之后，就会被固定在这个位置。</p>
+<h3 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h3><ol>
+<li><p>sticky 的元素不会脱离其父元素的，就是会一直在父元素内部。如果父元素不在可视范围之内，也是会消失的。</p>
+</li>
+<li><p>sticky 的元素没有脱离文档流，不会导致后面的元素占用其位置。</p>
+</li>
+<li><p>其父元素必须得可以scroll，才可以生效。</p>
+</li>
+<li><p>左边(left)的优先级大于右边(right)，上面(top)的大于下面(bottom)的</p>
+</li>
+</ol>
+<p>其实看上来，sticky 的效果像是 absolute 和 fixed 的结合，在判断阈值的时候，是通过和视窗的距离判断；但是在过阈值之后又变成绝对定位。</p>
+<h2 id="window-getComputedStyle-方法"><a href="#window-getComputedStyle-方法" class="headerlink" title="window.getComputedStyle() 方法"></a>window.getComputedStyle() 方法</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> style = <span class="built_in">window</span>.getComputedStyle(ele, [pseudoElement])</span><br></pre></td></tr></table></figure>
+<p>pseudoElement 是伪元素，没有可以不传或者传null。</p>
+<p>返回的值是实时的 <code>CSSStyleDeclaration</code> 对象，该对象会实时更新属性。</p>
+<p><em>这个返回的CSSStyleDeclaration对象是只读的，不能修改。</em></p>
+<h3 id="CSSStyleDeclaration-对象"><a href="#CSSStyleDeclaration-对象" class="headerlink" title="CSSStyleDeclaration 对象"></a>CSSStyleDeclaration 对象</h3><p>除了上面的getComputedStyle 方法会返回 CSSStyleDeclaration 外， style 属性返回的也是一个 CSSStyleDeclaration 对象。</p>
+<p>但是，差别在于，style 只能获取内联的样式（也就是直接写在HTML 标签中的），不过这个对象是<em>可以修改</em>的</p>
+<h4 id="CSSStyleDeclaration-getPropertyPriority-property-name"><a href="#CSSStyleDeclaration-getPropertyPriority-property-name" class="headerlink" title="CSSStyleDeclaration.getPropertyPriority(property_name)"></a>CSSStyleDeclaration.getPropertyPriority(property_name)</h4><p>返回可选的优先级，”Important”, 例如： priString= styleObj.getPropertyPriority(‘color’)</p>
+<h4 id="CSSStyleDeclaration-getPropertyValue-property-name"><a href="#CSSStyleDeclaration-getPropertyValue-property-name" class="headerlink" title="CSSStyleDeclaration.getPropertyValue(property_name)"></a>CSSStyleDeclaration.getPropertyValue(property_name)</h4><p>属性名可以使用驼峰命名法。</p>
+<p>返回属性值。例如: valString= styleObj.getPropertyValue(‘color’)</p>
+<h4 id="CSSStyleDeclaration-removeProperty-property-name"><a href="#CSSStyleDeclaration-removeProperty-property-name" class="headerlink" title="CSSStyleDeclaration.removeProperty(property_name)"></a>CSSStyleDeclaration.removeProperty(property_name)</h4><p>返回被删除的属性。</p>
+<h3 id="CSSStyleDeclaration-setProperty-property-name-property-val-property-priority"><a href="#CSSStyleDeclaration-setProperty-property-name-property-val-property-priority" class="headerlink" title="CSSStyleDeclaration.setProperty(property_name.property_val[, property_priority])"></a>CSSStyleDeclaration.setProperty(property_name.property_val[, property_priority])</h3><p>没有返回值。设置属性值。</p>
+<p><em>后面两个方法都只有在 style 方法中获取的对象可以使用</em></p>
+<h3 id="影响"><a href="#影响" class="headerlink" title="影响"></a>影响</h3><p>使用这个方法会导致页面回流。</p>
+<h2 id="可以继承的css属性"><a href="#可以继承的css属性" class="headerlink" title="可以继承的css属性"></a>可以继承的css属性</h2><blockquote>
+<p>这个问题，记不住啊..得想个办法</p>
+</blockquote>
+<p>继承属性就是，当一个元素没有设定这个属性的值的时候，则取父元素同属性的计算值。</p>
+<p>而非继承属性就是，属性没有设定值的时候，就设为属性的初始值。</p>
+<p>不可继承的：display、margin、border、padding、background、height、min-height、max-height、width、min-width、max-width、overflow、position、left、right、top、bottom、z-index、float、clear、table-layout、vertical-align、page-break-after、page-bread-before和unicode-bidi。</p>
+<p>所有元素可继承：visibility 和 cursor。</p>
+<p>内联元素可继承：letter-spacing、word-spacing、white-space、line-height、color、font、font-family、font-size、font-style、font-variant、font-weight、text-decoration、text-transform、direction。</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>可以发现，元素可以继承的属性都是内部样式的属性。例如：颜色，字距，字体，字体顺序。<br>暂时来个总结，一般可以继承的属性，都是元素内容字体的属性，包括颜色，字体，排版，风格。</p>
+<p>visibility 和 cursor 可以继承，也是可以理解的，外部的都不可见了，里面的怎么还能看见呢。</p>
+<p>想来也是，如果子元素的这些元素都与父元素不一致，看上去很不舒畅。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/03/29/普通图层和复合图层/" rel="next" title="普通图层和复合图层">
+                <i class="fa fa-chevron-left"></i> 普通图层和复合图层
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/04/05/Regex-Golf闯关记录/" rel="prev" title="Regex Golf闯关记录">
+                Regex Golf闯关记录 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="Yippee">
+          <p class="site-author-name" itemprop="name">Yippee</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">27</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">categories</span>
+              
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#class匹配符"><span class="nav-number">1.</span> <span class="nav-text">class匹配符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sticky-布局"><span class="nav-number">2.</span> <span class="nav-text">sticky 布局</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#注意事项"><span class="nav-number">2.1.</span> <span class="nav-text">注意事项</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#window-getComputedStyle-方法"><span class="nav-number">3.</span> <span class="nav-text">window.getComputedStyle() 方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#CSSStyleDeclaration-对象"><span class="nav-number">3.1.</span> <span class="nav-text">CSSStyleDeclaration 对象</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#CSSStyleDeclaration-getPropertyPriority-property-name"><span class="nav-number">3.1.1.</span> <span class="nav-text">CSSStyleDeclaration.getPropertyPriority(property_name)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#CSSStyleDeclaration-getPropertyValue-property-name"><span class="nav-number">3.1.2.</span> <span class="nav-text">CSSStyleDeclaration.getPropertyValue(property_name)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#CSSStyleDeclaration-removeProperty-property-name"><span class="nav-number">3.1.3.</span> <span class="nav-text">CSSStyleDeclaration.removeProperty(property_name)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CSSStyleDeclaration-setProperty-property-name-property-val-property-priority"><span class="nav-number">3.2.</span> <span class="nav-text">CSSStyleDeclaration.setProperty(property_name.property_val[, property_priority])</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#影响"><span class="nav-number">3.3.</span> <span class="nav-text">影响</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#可以继承的css属性"><span class="nav-number">4.</span> <span class="nav-text">可以继承的css属性</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#总结"><span class="nav-number">4.1.</span> <span class="nav-text">总结</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2018 - 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Yippee</span>
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

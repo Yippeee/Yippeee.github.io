@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2">
+
+
+
+
+
+
+<meta name="description" content="记得在18年年中天天临时抱佛脚,在看过很多关于跨域的问题,但是都是在浅尝辄止之后就完事了对于现阶段的学习,我不应该是不求甚解啊,对于技术的学习应该得越深入越好啊  什么是跨域在早期为了防止跨域请求伪造,浏览器引入了同源策略来提高安全.首先同源政策是浏览器引入的,再者什么是同域名呢,同域名,同端口,同协议的才算是同源 同源策略的影响不同的域名下,跨域获取另一个域名的脚本,css,图片等资源,但是不">
+<meta property="og:type" content="article">
+<meta property="og:title" content="关于跨域">
+<meta property="og:url" content="http://yippee.ink/git-blog/2019/03/19/关于跨域/index.html">
+<meta property="og:site_name" content="依破缘">
+<meta property="og:description" content="记得在18年年中天天临时抱佛脚,在看过很多关于跨域的问题,但是都是在浅尝辄止之后就完事了对于现阶段的学习,我不应该是不求甚解啊,对于技术的学习应该得越深入越好啊  什么是跨域在早期为了防止跨域请求伪造,浏览器引入了同源策略来提高安全.首先同源政策是浏览器引入的,再者什么是同域名呢,同域名,同端口,同协议的才算是同源 同源策略的影响不同的域名下,跨域获取另一个域名的脚本,css,图片等资源,但是不">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-04-05T02:41:52.699Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="关于跨域">
+<meta name="twitter:description" content="记得在18年年中天天临时抱佛脚,在看过很多关于跨域的问题,但是都是在浅尝辄止之后就完事了对于现阶段的学习,我不应该是不求甚解啊,对于技术的学习应该得越深入越好啊  什么是跨域在早期为了防止跨域请求伪造,浏览器引入了同源策略来提高安全.首先同源政策是浏览器引入的,再者什么是同域名呢,同域名,同端口,同协议的才算是同源 同源策略的影响不同的域名下,跨域获取另一个域名的脚本,css,图片等资源,但是不">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yippee.ink/git-blog/2019/03/19/关于跨域/">
+
+
+
+
+
+  <title>关于跨域 | 依破缘</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">依破缘</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yippee.ink/git-blog/2019/03/19/关于跨域/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yippee">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="依破缘">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">关于跨域</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-03-19T11:22:47+08:00">
+                2019-03-19
+              </time>
+            
+
+            
+
+            
+          </span>
+          
+          
+            <span class="post-updated">
+              &nbsp; | &nbsp; post.updated
+              <time itemprop="dateUpdated" datetime="2019-04-05T10:41:52+08:00" content="2019-04-05">
+                2019-04-05
+              </time>
+            </span>
+          
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>记得在18年年中天天临时抱佛脚,在看过很多关于跨域的问题,但是都是在浅尝辄止之后就完事了<br>对于现阶段的学习,我不应该是不求甚解啊,对于技术的学习应该得越深入越好啊</p>
+</blockquote>
+<h3 id="什么是跨域"><a href="#什么是跨域" class="headerlink" title="什么是跨域"></a>什么是跨域</h3><p>在早期为了防止跨域请求伪造,浏览器引入了同源策略来提高安全.<br>首先同源政策是浏览器引入的,再者什么是同域名呢,同域名,同端口,同协议的才算是同源</p>
+<h4 id="同源策略的影响"><a href="#同源策略的影响" class="headerlink" title="同源策略的影响"></a>同源策略的影响</h4><p>不同的域名下,跨域获取另一个域名的脚本,css,图片等资源,但是不可以发起请求,也不可以操作cookie/localStorage</p>
+<h3 id="js解决跨域的方法"><a href="#js解决跨域的方法" class="headerlink" title="js解决跨域的方法"></a>js解决跨域的方法</h3><h4 id="JSONP"><a href="#JSONP" class="headerlink" title="JSONP"></a>JSONP</h4><p>jsonp的意思就是JSON + callback,利用script请求资源不受同源策略影响的hack.<br>来,手写一个<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">addScript</span> (<span class="params">src</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> script = <span class="built_in">document</span>.createElement(<span class="string">'script'</span>)</span><br><span class="line">    script.src = src</span><br><span class="line">    <span class="built_in">document</span>.appendChild(script)</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">window</span>.onload = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  addScriptTag(<span class="string">'http://example.com/ip?callback=foo'</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span> (<span class="params">fata</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(data)</span><br><span class="line">&#125;v</span><br></pre></td></tr></table></figure></p>
+<p>jsonP的关键就在于两点</p>
+<ul>
+<li>动态添加script发起请求</li>
+<li>请求的回调callback一定是一个函数</li>
+</ul>
+<h4 id="document-domain"><a href="#document-domain" class="headerlink" title="document.domain"></a>document.domain</h4><blockquote>
+<p>这个方法只使用于共享cookie, LocalStorage 和 IndexDB 无法通过这种方法,而且只适用于一级域名/二级域名相同的情况下(因为document.domain的限制)<br>document.domain只能设置成为当前domain的suffix(后缀)</p>
+</blockquote>
+<p>eg:<br>A网页是<code>https://www.zhihu.com</code><br>B网页是<code>https://zhihu.com</code></p>
+<p>在B中设置了cookie, <code>document.cookie = &#39;name = tony&#39;</code><br>只需要在A中设置<code>document.domain = &#39;zhihu.com&#39;</code><br>然后就可以获取B中的cookie</p>
+<p>除了这种方法还可以通过服务端设置cookie的时候指定<br><code>Set-Cookie: key=value; domain=.example.com; path=/</code></p>
+<blockquote>
+<p>除此之外还有很多关于iframe的解决的办法,我觉得这个ifame实在没有在怎么使用了就不做记录了</p>
+</blockquote>
+<h3 id="服务器跨域"><a href="#服务器跨域" class="headerlink" title="服务器跨域"></a>服务器跨域</h3><h4 id="跨域资源共享-CORS"><a href="#跨域资源共享-CORS" class="headerlink" title="跨域资源共享 CORS"></a>跨域资源共享 CORS</h4><p>跨域资源共享允许浏览器向跨域服务器发出请求,从而克服了AJAX只能同源使用的限制</p>
+<blockquote>
+<p>以下信息来自我自己对<a href="http://www.ruanyifeng.com/blog/2016/04/cors.html" target="_blank" rel="noopener">阮一峰</a>的博客和<a href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Access_control_CORS" target="_blank" rel="noopener">MDN</a>理解</p>
+</blockquote>
+<p>cors需要服务器和浏览器同时支持,整个CORS通信的过程都是浏览器自动完成的.开发者不需要做什么其他的操作.<br>所以关键在于服务器</p>
+<h5 id="两种请求"><a href="#两种请求" class="headerlink" title="两种请求"></a>两种请求</h5><p>浏览器会将请求分为两种: 简单请求 和 非简单请求</p>
+<h6 id="简单请求"><a href="#简单请求" class="headerlink" title="简单请求"></a>简单请求</h6><p>满足的条件:</p>
+<blockquote>
+<p>请求是以下三个之一:</p>
+<ol>
+<li>GET</li>
+<li>POST</li>
+<li>HEAD<br>http的头部信息也不超过以下几种字段:</li>
+</ol>
+<ul>
+<li>Accept</li>
+<li>Accept-Language</li>
+<li>Content-Language</li>
+<li>Last-Event-ID</li>
+<li>Content-Type：只限于三个值application/x-www-form-urlencoded、multipart/form-data、text/plain</li>
+</ul>
+</blockquote>
+<p>如果是简单请求,浏览器会在头部加上一个<code>Origin</code>字段用于说明,本次请求来自哪个源.<br>服务器就可以根据这个值,判断是否同意这次请求.<br>如果服务器不同意这次请求,在返回头里面就没有<code>Access-Control-Allow-Origin</code>,浏览器就会知道请求出错了.<br>如果返回头中有<code>Access-Control-Allow-Origin</code>,就说明此次请求的源在服务器的origin中.<br>返回信息会加上</p>
+<ol>
+<li><p>Access-Control-Allow-Origin</p>
+<p><code>Access-Control-Allow-Origin: &lt;origin&gt; | *</code><br>origin会指定允许访问的url,还可以设置<code>*</code>为通配符</p>
+</li>
+<li><p>Access-Control-Allow-Credentials</p>
+<p> 该字段表明是否允许浏览器读取response中的内容.</p>
+<blockquote>
+<p>这句话实在是看不懂啥意思.有啥内容要去读啊.</p>
+</blockquote>
+<p> 阮一峰的说法: 就是cookie是否可以包含在请求中.<br> 默认情况下的cors是不包含cookies的,设置为true的情况才会发送出去</p>
+<p> <a href="https://stackoverflow.com/questions/24687313/what-exactly-does-the-access-control-allow-credentials-header-do" target="_blank" rel="noopener">stackoverflow</a>上也有一篇文章解释的很清楚</p>
+<p> 要想在cors中使用cookie同时还需要客户端设置 <code>withCredentials</code> 为 <code>true</code></p>
+</li>
+<li><p>Access-Control-Expose-Headers</p>
+<p> 在跨域访问时，XMLHttpRequest对象的getResponseHeader()方法只能拿到一些最基本的响应头，Cache-Control、Content-Language、Content-Type、Expires、Last-Modified、Pragma，如果要访问其他头，则需要服务器设置本响应头。</p>
+<p> 如果想要获取其他的响应头,就需要这个属性中说明</p>
+</li>
+<li><p>Content-Type</p>
+<p> 说明资源的类型 </p>
+<blockquote>
+<p>Content-Type标头告诉客户端实际返回的内容的内容类型</p>
+</blockquote>
+</li>
+</ol>
+<h6 id="非简单请求"><a href="#非简单请求" class="headerlink" title="非简单请求"></a>非简单请求</h6><blockquote>
+<p>只要不是简单请求那就是非简单请求</p>
+</blockquote>
+<p>在非简单请求的时候,浏览器会先发送一个预探请求, 该请求的method是<code>OPTIONS</code><br>关键参数是origin, 说明了请求的源<br>其次还会带上两个参数:<code>Access-Control-Request-Method</code> 和 <code>Access-Control-Request-Headers</code><br>第一个参数用于指明请求的方式,<br>第二个参数,<code>Access-Control-Request-Headers</code>,首部字段用于预检请求的响应。其指明了实际请求中允许携带的首部字段。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/03/18/理解Promise/" rel="next" title="理解Promise">
+                <i class="fa fa-chevron-left"></i> 理解Promise
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/03/25/几种常见的递归函数/" rel="prev" title="几种常见的递归函数">
+                几种常见的递归函数 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="Yippee">
+          <p class="site-author-name" itemprop="name">Yippee</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">27</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">categories</span>
+              
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#什么是跨域"><span class="nav-number">1.</span> <span class="nav-text">什么是跨域</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#同源策略的影响"><span class="nav-number">1.1.</span> <span class="nav-text">同源策略的影响</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#js解决跨域的方法"><span class="nav-number">2.</span> <span class="nav-text">js解决跨域的方法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#JSONP"><span class="nav-number">2.1.</span> <span class="nav-text">JSONP</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#document-domain"><span class="nav-number">2.2.</span> <span class="nav-text">document.domain</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#服务器跨域"><span class="nav-number">3.</span> <span class="nav-text">服务器跨域</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#跨域资源共享-CORS"><span class="nav-number">3.1.</span> <span class="nav-text">跨域资源共享 CORS</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#两种请求"><span class="nav-number">3.1.1.</span> <span class="nav-text">两种请求</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#简单请求"><span class="nav-number">3.1.1.1.</span> <span class="nav-text">简单请求</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#非简单请求"><span class="nav-number">3.1.1.2.</span> <span class="nav-text">非简单请求</span></a></li></ol></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2018 - 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Yippee</span>
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

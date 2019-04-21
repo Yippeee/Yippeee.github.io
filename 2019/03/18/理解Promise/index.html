@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="js,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2">
+
+
+
+
+
+
+<meta name="description" content="看到很多对博客的探讨的说法，认为博客应该是对网上没有的知识技能的补充。我不能认同，每个人记录的目的是不一样的，我就是为了记录自己学习的过程，很多文章，现在看来对其他人的作用可能很小，甚至没有什么用。但是这是我记录，加深印象的过程。暂时地步还没有到达补充的看法。  从promise的实现说起既然我们想实现一个promise，至少要明白promise是什么。一句话解释promise，对异步事件的最终">
+<meta name="keywords" content="js">
+<meta property="og:type" content="article">
+<meta property="og:title" content="理解Promise">
+<meta property="og:url" content="http://yippee.ink/git-blog/2019/03/18/理解Promise/index.html">
+<meta property="og:site_name" content="依破缘">
+<meta property="og:description" content="看到很多对博客的探讨的说法，认为博客应该是对网上没有的知识技能的补充。我不能认同，每个人记录的目的是不一样的，我就是为了记录自己学习的过程，很多文章，现在看来对其他人的作用可能很小，甚至没有什么用。但是这是我记录，加深印象的过程。暂时地步还没有到达补充的看法。  从promise的实现说起既然我们想实现一个promise，至少要明白promise是什么。一句话解释promise，对异步事件的最终">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-03-31T02:31:52.257Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="理解Promise">
+<meta name="twitter:description" content="看到很多对博客的探讨的说法，认为博客应该是对网上没有的知识技能的补充。我不能认同，每个人记录的目的是不一样的，我就是为了记录自己学习的过程，很多文章，现在看来对其他人的作用可能很小，甚至没有什么用。但是这是我记录，加深印象的过程。暂时地步还没有到达补充的看法。  从promise的实现说起既然我们想实现一个promise，至少要明白promise是什么。一句话解释promise，对异步事件的最终">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yippee.ink/git-blog/2019/03/18/理解Promise/">
+
+
+
+
+
+  <title>理解Promise | 依破缘</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">依破缘</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yippee.ink/git-blog/2019/03/18/理解Promise/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yippee">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="依破缘">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">理解Promise</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-03-18T09:03:13+08:00">
+                2019-03-18
+              </time>
+            
+
+            
+
+            
+          </span>
+          
+          
+            <span class="post-updated">
+              &nbsp; | &nbsp; post.updated
+              <time itemprop="dateUpdated" datetime="2019-03-31T10:31:52+08:00" content="2019-03-31">
+                2019-03-31
+              </time>
+            </span>
+          
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>看到很多对博客的探讨的说法，认为博客应该是对网上没有的知识技能的补充。我不能认同，每个人记录的目的是不一样的，我就是为了记录自己学习的过程，很多文章，现在看来对其他人的作用可能很小，甚至没有什么用。但是这是我记录，加深印象的过程。暂时地步还没有到达补充的看法。</p>
+</blockquote>
+<h3 id="从promise的实现说起"><a href="#从promise的实现说起" class="headerlink" title="从promise的实现说起"></a>从promise的实现说起</h3><p>既然我们想实现一个promise，至少要明白promise是什么。<br>一句话解释promise，对异步事件的最终状态的描述。</p>
+<p>一个简单的，可以代表实现历程的promise：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> PENDING = <span class="string">'PENDING'</span></span><br><span class="line"><span class="keyword">const</span> FULFILLED = <span class="string">'FULFILLED'</span></span><br><span class="line"><span class="keyword">const</span> REJECTED = <span class="string">'REJECTED'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> isFunction = <span class="function"><span class="params">fn</span> =&gt;</span> <span class="keyword">typeof</span> fn === <span class="string">'function'</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyPromise</span> </span>&#123;</span><br><span class="line">    <span class="keyword">constructor</span>(handle) &#123;</span><br><span class="line">        <span class="keyword">if</span> (!isFunction(handle)) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'must be a function'</span>)</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 初始化状态</span></span><br><span class="line">        <span class="keyword">this</span>._status = PENDING</span><br><span class="line">        <span class="comment">// 初始化返回值</span></span><br><span class="line">        <span class="keyword">this</span>._value = <span class="literal">undefined</span></span><br><span class="line">        <span class="comment">// 执行队列</span></span><br><span class="line">        <span class="keyword">this</span>._fulfilledQueues = []</span><br><span class="line">        <span class="keyword">this</span>._rejectedQueues = []</span><br><span class="line"></span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            handle(<span class="keyword">this</span>._resolved.bind(<span class="keyword">this</span>), <span class="keyword">this</span>._rejected.bind(<span class="keyword">this</span>))</span><br><span class="line">        &#125; <span class="keyword">catch</span> (error) &#123;</span><br><span class="line">            <span class="keyword">this</span>._rejected(error)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    _resolved(val) &#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">this</span>._status !== PENDING) <span class="keyword">return</span></span><br><span class="line">        <span class="comment">// 还需要处理如果resolve 接受的还是 promise的情况， 接受就是promise的话， 状态会由接受的promise的状态来决定</span></span><br><span class="line">        <span class="comment">// 上述的解决方法，和then中的设计思路是一样的</span></span><br><span class="line">        <span class="keyword">const</span> run = <span class="function">(<span class="params">value</span>) =&gt;</span> &#123;</span><br><span class="line">            <span class="keyword">const</span> fulfilled = <span class="function">(<span class="params">value</span>) =&gt;</span> &#123;</span><br><span class="line">                <span class="keyword">let</span> cb</span><br><span class="line">                <span class="keyword">while</span> (cb = <span class="keyword">this</span>._fulfilledQueues.shift()) &#123;</span><br><span class="line">                    cb(value)</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">const</span> rejected = <span class="function">(<span class="params">err</span>) =&gt;</span> &#123;</span><br><span class="line">                <span class="keyword">let</span> cb</span><br><span class="line">                <span class="keyword">while</span> (cb = <span class="keyword">this</span>._rejectedQueues.shift()) &#123;</span><br><span class="line">                    cb(err)</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (val <span class="keyword">instanceof</span> MyPromise) &#123;</span><br><span class="line">                val.then(<span class="function"><span class="params">value</span> =&gt;</span> &#123;</span><br><span class="line">                    <span class="keyword">this</span>._status = FULFILLED</span><br><span class="line">                    <span class="keyword">this</span>._value = value</span><br><span class="line">                    fulfilled(value)</span><br><span class="line">                &#125;, err =&gt; &#123;</span><br><span class="line">                    <span class="keyword">this</span>._status = REJECTED</span><br><span class="line">                    <span class="keyword">this</span>._value = err</span><br><span class="line">                    rejected(err)</span><br><span class="line">                &#125;)</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">this</span>._status = FULFILLED</span><br><span class="line">                <span class="keyword">this</span>._value = value</span><br><span class="line">                fulfilled(value)</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">        setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> run(val), <span class="number">0</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    _rejected(err) &#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">this</span>._status !== PENDING) <span class="keyword">return</span></span><br><span class="line">        <span class="keyword">const</span> run = <span class="function">(<span class="params">error</span>) =&gt;</span> &#123;</span><br><span class="line">            <span class="keyword">this</span>._status = REJECTED</span><br><span class="line">            <span class="keyword">this</span>._value = error</span><br><span class="line">            <span class="keyword">let</span> cb</span><br><span class="line">            <span class="keyword">while</span> (cb = <span class="keyword">this</span>._rejectedQueues.shift()) &#123;</span><br><span class="line">                cb(error)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> run(err), <span class="number">0</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    then(onFulfilled, onRejected) &#123;</span><br><span class="line">        <span class="keyword">const</span> &#123; _status, _value &#125; = <span class="keyword">this</span></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> MyPromise(<span class="function">(<span class="params">onFulfilledNext, onRejectedNext</span>) =&gt;</span> &#123;</span><br><span class="line">            <span class="keyword">const</span> fulfilled = <span class="function">(<span class="params">val</span>) =&gt;</span> &#123;</span><br><span class="line">                <span class="keyword">if</span> (!isFunction(onFulfilled)) &#123; <span class="comment">//值穿透 ，如果 then中的值不是函数，会忽略这个值，将上一个的value继续传下去</span></span><br><span class="line">                    onFulfilledNext(val)</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">let</span> res = onFulfilled(val)</span><br><span class="line">                <span class="keyword">if</span> (res <span class="keyword">instanceof</span> MyPromise) &#123; <span class="comment">// 如果返回的还是一个promise的话，需要等待这个promise的结束，所以把 handle 函数直接then 在其后面</span></span><br><span class="line">                    res.then(onFulfilledNext, onRejectedNext)</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    onFulfilledNext(res) <span class="comment">// 一般的情况</span></span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">// 失败的执行函数</span></span><br><span class="line">            <span class="keyword">const</span> rejected = <span class="function">(<span class="params">err</span>) =&gt;</span> &#123;</span><br><span class="line">                <span class="keyword">if</span> (!isFunction(onRejected)) &#123;</span><br><span class="line">                    onRejectedNext(err)</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="built_in">console</span>.trace()</span><br><span class="line">                <span class="keyword">let</span> res = onRejected(err)</span><br><span class="line">                <span class="keyword">if</span> (res <span class="keyword">instanceof</span> MyPromise) &#123;</span><br><span class="line">                    res.then(onFulfilledNext, onRejectedNext)</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    onFulfilledNext(res) <span class="comment">//  在失败队列中，没有错误的执行完了，进行的还是下一个的成功回调</span></span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">switch</span> (_status) &#123;</span><br><span class="line">                <span class="keyword">case</span> PENDING:</span><br><span class="line">                    <span class="keyword">this</span>._fulfilledQueues.push(fulfilled)</span><br><span class="line">                    <span class="keyword">this</span>._rejectedQueues.push(rejected)</span><br><span class="line">                    <span class="keyword">break</span></span><br><span class="line">                <span class="keyword">case</span> FULFILLED:</span><br><span class="line">                    fulfilled(_value)</span><br><span class="line">                    <span class="keyword">break</span></span><br><span class="line">                <span class="keyword">case</span> REJECTED:</span><br><span class="line">                    rejected(_value)</span><br><span class="line">                    <span class="keyword">break</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">catch</span>(fn) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.then(<span class="literal">undefined</span>, fn)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">static</span> resolve(value) &#123; <span class="comment">// resolve reject 返回的是一个具有成功处理函数（失败处理函数）的promise</span></span><br><span class="line">        <span class="keyword">if</span> (value <span class="keyword">instanceof</span> MyPromise) <span class="keyword">return</span> value</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> MyPromise(<span class="function"><span class="params">resolve</span> =&gt;</span> resolve(value))</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">static</span> rejected(val) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> MyPromise(<span class="function">(<span class="params">resolve, rejected</span>) =&gt;</span> rejected(val))</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">static</span> all(lists) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> MyPromise(<span class="function">(<span class="params">resolve, rejected</span>) =&gt;</span> &#123;</span><br><span class="line">            <span class="keyword">let</span> result = []</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">let</span> p <span class="keyword">of</span> lists) &#123;</span><br><span class="line">                MyPromise.resolve(p).then(<span class="function"><span class="params">val</span> =&gt;</span> &#123;</span><br><span class="line">                    result.push(val)</span><br><span class="line">                    <span class="built_in">console</span>.log(<span class="string">'val: '</span>, val);</span><br><span class="line">                    <span class="keyword">if</span> (result.length === lists.length) &#123;</span><br><span class="line">                        resolve(result)</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;, err =&gt; &#123;</span><br><span class="line">                    rejected(err)</span><br><span class="line">                &#125;)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">static</span> race(lists) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> MyPromise(<span class="function">(<span class="params">resolve, rejected</span>) =&gt;</span> &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">let</span> p <span class="keyword">in</span> lists) &#123;</span><br><span class="line">                p.then(<span class="function"><span class="params">val</span> =&gt;</span> &#123;</span><br><span class="line">                    resolve(val)</span><br><span class="line">                &#125;, err =&gt; &#123;</span><br><span class="line">                    rejected(err)</span><br><span class="line">                &#125;)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/js/" rel="tag"># js</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/03/14/js中的this/" rel="next" title="js中的this">
+                <i class="fa fa-chevron-left"></i> js中的this
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/03/19/关于跨域/" rel="prev" title="关于跨域">
+                关于跨域 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="Yippee">
+          <p class="site-author-name" itemprop="name">Yippee</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">27</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">categories</span>
+              
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#从promise的实现说起"><span class="nav-number">1.</span> <span class="nav-text">从promise的实现说起</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2018 - 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Yippee</span>
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
