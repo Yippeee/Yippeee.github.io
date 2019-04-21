@@ -260,7 +260,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yippee.ink/git-blog/2019/03/07/置顶文章/">
+    <link itemprop="mainEntityOfPage" href="http://yippee.ink/git-blog/2019/04/18/babel初探/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Yippee">
@@ -279,7 +279,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/03/07/置顶文章/" itemprop="url">置顶文章</a></h1>
+                <a class="post-title-link" href="/2019/04/18/babel初探/" itemprop="url">babel初探</a></h1>
         
 
         <div class="post-meta">
@@ -291,8 +291,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-03-07T15:33:56+08:00">
-                2019-03-07
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-04-18T11:07:01+08:00">
+                2019-04-18
               </time>
             
 
@@ -304,8 +304,8 @@
           
             <span class="post-updated">
               &nbsp; | &nbsp; post.updated
-              <time itemprop="dateUpdated" datetime="2019-03-29T11:43:21+08:00" content="2019-03-29">
-                2019-03-29
+              <time itemprop="dateUpdated" datetime="2019-04-21T10:21:22+08:00" content="2019-04-21">
+                2019-04-21
               </time>
             </span>
           
@@ -340,32 +340,29 @@
       
         
           
-            <h1 id="博客现在的规划"><a href="#博客现在的规划" class="headerlink" title="博客现在的规划"></a>博客现在的规划</h1><ul>
-<li style="list-style: none"><input type="checkbox"> js函数式编程学习</li>
-<li style="list-style: none"><input type="checkbox"> Lodash-分析学习<blockquote>
-<p>上面第一个进行的有点困难现在.</p>
-</blockquote>
-</li>
-</ul>
-<p>2019-03-14: </p>
+            <h1 id="babel"><a href="#babel" class="headerlink" title="babel"></a>babel</h1><h2 id="babel-做了什么"><a href="#babel-做了什么" class="headerlink" title="babel 做了什么"></a>babel 做了什么</h2><p>babel 就是将js中新的语法转化成低版本的JS，一般转成ES5大部分浏览器就够了。</p>
+<h2 id="运行方式"><a href="#运行方式" class="headerlink" title="运行方式"></a>运行方式</h2><p>分为三个阶段：解析，转换，生成。 其中的具体功能是利用AST实现的。</p>
+<h3 id="插件"><a href="#插件" class="headerlink" title="插件"></a>插件</h3><p>babel本身不具有转化的功能，转化的功能都被分解到plugin中去了。这样利用控制，同时在使用babel时候，配置就是必不可少的了。</p>
+<p>同时，插件还分为两种：</p>
 <ol>
-<li>Promise模仿,手写了一遍实现</li>
-<li>准备完整的搞一遍 js中的 this的问题</li>
+<li>语法插件</li>
 </ol>
-<p>2019-03-18:</p>
+<p>语法插件主要是用于新语法中一些新提供的语法，在老版本中，会认为是错误的语法，而在新版中认为是可以使用的语法。使用语法插件后，就不会报错，会认为这样是正确的。</p>
+<p>和转译插件的差别在于是<strong>否转化</strong>，语法插件只是改变了<strong>解析</strong>的规则</p>
+<ol start="2">
+<li>转译插件</li>
+</ol>
+<p>转译插件插件则是为了支持新式的代码，将它转化成浏览器支持的版本。例如箭头函数：</p>
+<p>In:<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="function"><span class="params">()</span> =&gt;</span> &#123;&#125;;</span><br><span class="line"><span class="keyword">var</span> b = <span class="function"><span class="params">()</span> =&gt;</span> b;</span><br></pre></td></tr></table></figure></p>
+<p>经过转译插件之后，Out:<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;&#125;;</span><br><span class="line"><span class="keyword">var</span> b = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;<span class="keyword">return</span> b;&#125;;</span><br></pre></td></tr></table></figure></p>
+<p><strong>注意的是，转译插件中会用到语法插件的情况，转译插件会直接启动，不同我们同时制定了</strong></p>
+<h3 id="使用插件的方式"><a href="#使用插件的方式" class="headerlink" title="使用插件的方式"></a>使用插件的方式</h3><p>就是NPM包引入标准的步骤：</p>
 <ol>
-<li>http 缓存知识复习</li>
-<li>promise 再现</li>
+<li>npm i babel-plugin-xxx 安装</li>
+<li>把插件名字增加到配置文件中</li>
 </ol>
-<p>2019-03-29</p>
-<blockquote>
-<p>首先，上述的学习任务基本完成，当然规划那两个是长期任务。</p>
-</blockquote>
-<p>去年七月份就刷了这篇(博客)[<a href="http://www.dailichun.com/2018/03/12/whenyouenteraurl.html]，当时看完之后基本上没有什么理解的内容，半年之后重新回顾，很多知识已经有所熟悉，但是还是有很多根本没有听说过，在此记录。" target="_blank" rel="noopener">http://www.dailichun.com/2018/03/12/whenyouenteraurl.html]，当时看完之后基本上没有什么理解的内容，半年之后重新回顾，很多知识已经有所熟悉，但是还是有很多根本没有听说过，在此记录。</a></p>
-<p>浏览器的机制，到如何打开一个tab页。（涉及到进程和线程）</p>
-<p>其中有很多后台的和服务器端的内容，暂时不作为我的学习内容，在这里只对其中出现的前端的内容，而我都不是很了解的内容做一个to-learn-list。</p>
-<p>简单层与复合层，都是什么，这个完全不了解。(已经做了总结)<br>(看这个)[<a href="https://segmentfault.com/a/1190000012925872#articleHeader16]" target="_blank" rel="noopener">https://segmentfault.com/a/1190000012925872#articleHeader16]</a></p>
-<p>没事多看看这篇博客，对其中不太了解的知识体系做一个梳理。</p>
+<p>这个时候肯定会觉得，那一个项目得用到的插件肯定很多啊，这么一个一个的配置肯定很麻烦啊。</p>
+<p>so，preset(预设)就出来啦。 其实preset就是一整套插件的方案。</p>
 
           
         
@@ -458,8 +455,8 @@
           
             <span class="post-updated">
               &nbsp; | &nbsp; post.updated
-              <time itemprop="dateUpdated" datetime="2019-04-15T20:38:05+08:00" content="2019-04-15">
-                2019-04-15
+              <time itemprop="dateUpdated" datetime="2019-04-21T10:21:22+08:00" content="2019-04-21">
+                2019-04-21
               </time>
             </span>
           
@@ -641,8 +638,8 @@
           
             <span class="post-updated">
               &nbsp; | &nbsp; post.updated
-              <time itemprop="dateUpdated" datetime="2019-04-11T10:38:11+08:00" content="2019-04-11">
-                2019-04-11
+              <time itemprop="dateUpdated" datetime="2019-04-21T10:21:22+08:00" content="2019-04-21">
+                2019-04-21
               </time>
             </span>
           
@@ -688,6 +685,172 @@
 <p>区别在于defer 会在文档解析完成之后，也就是DOMContentLoaded 事件前执行，</p>
 <p>而async 在脚本下载完成之后就执行，中断文档的渲染</p>
 <p>多个defer 会按照顺序加载执行，而 async会依据下载时间</p>
+<h2 id="解构赋值使用方法总结"><a href="#解构赋值使用方法总结" class="headerlink" title="解构赋值使用方法总结"></a>解构赋值使用方法总结</h2><p>解构赋值，让获取变量的值，更加的优雅，代码更加的易读。</p>
+<blockquote>
+<p>小提一句原理，是利用的新增的iterator 接口。</p>
+</blockquote>
+<h3 id="数据的解构赋值"><a href="#数据的解构赋值" class="headerlink" title="数据的解构赋值"></a>数据的解构赋值</h3><p>常规的情况：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> [a,b,c] = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]</span><br></pre></td></tr></table></figure></p>
+<p>如果需要忽略某些值，用,,来忽略<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> [a,,,d] = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>] <span class="comment">// a=a,d=4</span></span><br></pre></td></tr></table></figure></p>
+<p>设定默认值:<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> [a=<span class="number">5</span>,b=<span class="number">5</span>] = [<span class="number">2</span>] <span class="comment">// a=2,b=5</span></span><br></pre></td></tr></table></figure></p>
+<p>剩余参数的赋值；（使用… , 但是注意，… 一定得是最后一个参数; 如果后面还有参数，请使用,,, 的方法）<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> [a,b,...rest] = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>] <span class="comment">// a = 1, b = 2, rest = [3,4,5]</span></span><br></pre></td></tr></table></figure></p>
+<h4 id="经常使用的场景"><a href="#经常使用的场景" class="headerlink" title="经常使用的场景"></a>经常使用的场景</h4><p>下面记录几种经常在使用中利用的方法：</p>
+<ol>
+<li><p>交换变量</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[a,b] = [b,a]</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>正则表达式的exec语句、函数参数argument中某个值的获取</p>
+</li>
+</ol>
+<p>exec会返回一个带有很多值的数组，数组中有些的值，是我们不需要的。就可以直接使用解构获取想要的值</p>
+<h3 id="对象的解构赋值"><a href="#对象的解构赋值" class="headerlink" title="对象的解构赋值"></a>对象的解构赋值</h3><p>普通的情况:<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> &#123;o, p&#125; = &#123;<span class="attr">o</span>:<span class="string">'oVAl'</span>,<span class="attr">l</span>:<span class="string">'lVAL'</span>&#125; <span class="comment">// o = 'oVAl', p = undefined</span></span><br></pre></td></tr></table></figure></p>
+<p>使用对象的解构赋值，左边的值必须是对象中的属性名,如果不是将获取不到值(undefined)。如果需要重命名得使用下面的方法：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> &#123;<span class="attr">o</span>:oo, p&#125; = &#123;<span class="attr">o</span>:<span class="string">'oVaL'</span>,<span class="attr">p</span>:<span class="string">'pVAL'</span>&#125; <span class="comment">// oo = 'oVAl', p = 'pVAL'</span></span><br></pre></td></tr></table></figure></p>
+<p>注意，如果是没有声明的赋值，需要用()包起来，并且注意使用;(原因上面有讲)<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">;(&#123;o, p&#125; = &#123;<span class="attr">o</span>:<span class="string">'oVaL'</span>,<span class="attr">p</span>:<span class="string">'pVAL'</span>&#125;);</span><br></pre></td></tr></table></figure></p>
+<p>…rest 和 默认值的使用方法就和数组的差不多了 </p>
+<h2 id="requestAnimationFrame-理解"><a href="#requestAnimationFrame-理解" class="headerlink" title="requestAnimationFrame 理解"></a>requestAnimationFrame 理解</h2><p>这是web中专门对优化动画，增加的函数。按照翻译，API的名字应该叫做，<strong>请求动画帧</strong>。</p>
+<p>接受一个callback 回调，在屏幕刷新时调用。一般在callback 中还会继续调用requestAnimationFrame, 直到约定的条件达成后，实现动画的效果。</p>
+<h3 id="屏幕刷新频率"><a href="#屏幕刷新频率" class="headerlink" title="屏幕刷新频率"></a>屏幕刷新频率</h3><p>一般的显示器设置的是60HZ，就是一秒钟刷新60次，16.67ms刷新一次。</p>
+<h3 id="与setTimeout的对比"><a href="#与setTimeout的对比" class="headerlink" title="与setTimeout的对比"></a>与setTimeout的对比</h3><p>在没有requestAnimationFrame之前，我们都是使用setTimeout来实现动画的。那为什么使用setTimeout不好呢？</p>
+<ol>
+<li><p>屏幕刷新的频率只是一般来说是60HZ，但是不是绝对的。这个间隔人为设定，会有误差。</p>
+</li>
+<li><p>setTimeout 是在异步队列中执行的，在主线程任务执行完成之后才回去执行。</p>
+</li>
+</ol>
+<p>以上两点，会导致setTimeout的执行步调和屏幕刷新不一致，会导致动画的丢帧。</p>
+<p>同时requestAnimationFrame对性能也更加的友好，页面处于未激活状态下，requestAnimationFrame 不会调用，不同于setTimeout。</p>
+<p>综上，如果有使用动画的地方，使用requestAnimationFrame 而不是setTImeout</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yippee.ink/git-blog/2019/04/05/Regex-Golf闯关记录/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yippee">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="依破缘">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/04/05/Regex-Golf闯关记录/" itemprop="url">Regex Golf闯关记录</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-04-05T10:43:24+08:00">
+                2019-04-05
+              </time>
+            
+
+            
+
+            
+          </span>
+          
+          
+            <span class="post-updated">
+              &nbsp; | &nbsp; post.updated
+              <time itemprop="dateUpdated" datetime="2019-04-05T17:17:32+08:00" content="2019-04-05">
+                2019-04-05
+              </time>
+            </span>
+          
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <blockquote>
+<p>这篇博客是对<a href="https://alf.nu/RegexGolf" target="_blank" rel="noopener">Regex Golf</a>答案的记录和总结</p>
+</blockquote>
+<h2 id="Order"><a href="#Order" class="headerlink" title="Order"></a>Order</h2><p><code>^[^o].....?$</code> 通过个数判断</p>
 
           
         
@@ -780,8 +943,8 @@
           
             <span class="post-updated">
               &nbsp; | &nbsp; post.updated
-              <time itemprop="dateUpdated" datetime="2019-04-09T17:12:27+08:00" content="2019-04-09">
-                2019-04-09
+              <time itemprop="dateUpdated" datetime="2019-04-21T10:21:22+08:00" content="2019-04-21">
+                2019-04-21
               </time>
             </span>
           
@@ -949,8 +1112,8 @@
           
             <span class="post-updated">
               &nbsp; | &nbsp; post.updated
-              <time itemprop="dateUpdated" datetime="2019-03-29T17:22:19+08:00" content="2019-03-29">
-                2019-03-29
+              <time itemprop="dateUpdated" datetime="2019-03-31T10:31:52+08:00" content="2019-03-31">
+                2019-03-31
               </time>
             </span>
           
@@ -1093,8 +1256,8 @@
           
             <span class="post-updated">
               &nbsp; | &nbsp; post.updated
-              <time itemprop="dateUpdated" datetime="2019-03-29T17:21:29+08:00" content="2019-03-29">
-                2019-03-29
+              <time itemprop="dateUpdated" datetime="2019-03-31T10:31:52+08:00" content="2019-03-31">
+                2019-03-31
               </time>
             </span>
           
@@ -1262,8 +1425,8 @@
           
             <span class="post-updated">
               &nbsp; | &nbsp; post.updated
-              <time itemprop="dateUpdated" datetime="2019-03-29T17:22:11+08:00" content="2019-03-29">
-                2019-03-29
+              <time itemprop="dateUpdated" datetime="2019-03-31T10:31:52+08:00" content="2019-03-31">
+                2019-03-31
               </time>
             </span>
           
@@ -1447,8 +1610,8 @@
           
             <span class="post-updated">
               &nbsp; | &nbsp; post.updated
-              <time itemprop="dateUpdated" datetime="2019-03-29T17:07:00+08:00" content="2019-03-29">
-                2019-03-29
+              <time itemprop="dateUpdated" datetime="2019-04-05T10:41:52+08:00" content="2019-04-05">
+                2019-04-05
               </time>
             </span>
           
@@ -1646,8 +1809,8 @@
           
             <span class="post-updated">
               &nbsp; | &nbsp; post.updated
-              <time itemprop="dateUpdated" datetime="2019-03-29T17:54:47+08:00" content="2019-03-29">
-                2019-03-29
+              <time itemprop="dateUpdated" datetime="2019-03-31T10:31:52+08:00" content="2019-03-31">
+                2019-03-31
               </time>
             </span>
           
@@ -1688,167 +1851,6 @@
 <h3 id="从promise的实现说起"><a href="#从promise的实现说起" class="headerlink" title="从promise的实现说起"></a>从promise的实现说起</h3><p>既然我们想实现一个promise，至少要明白promise是什么。<br>一句话解释promise，对异步事件的最终状态的描述。</p>
 <p>一个简单的，可以代表实现历程的promise：</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> PENDING = <span class="string">'PENDING'</span></span><br><span class="line"><span class="keyword">const</span> FULFILLED = <span class="string">'FULFILLED'</span></span><br><span class="line"><span class="keyword">const</span> REJECTED = <span class="string">'REJECTED'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> isFunction = <span class="function"><span class="params">fn</span> =&gt;</span> <span class="keyword">typeof</span> fn === <span class="string">'function'</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyPromise</span> </span>&#123;</span><br><span class="line">    <span class="keyword">constructor</span>(handle) &#123;</span><br><span class="line">        <span class="keyword">if</span> (!isFunction(handle)) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'must be a function'</span>)</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 初始化状态</span></span><br><span class="line">        <span class="keyword">this</span>._status = PENDING</span><br><span class="line">        <span class="comment">// 初始化返回值</span></span><br><span class="line">        <span class="keyword">this</span>._value = <span class="literal">undefined</span></span><br><span class="line">        <span class="comment">// 执行队列</span></span><br><span class="line">        <span class="keyword">this</span>._fulfilledQueues = []</span><br><span class="line">        <span class="keyword">this</span>._rejectedQueues = []</span><br><span class="line"></span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            handle(<span class="keyword">this</span>._resolved.bind(<span class="keyword">this</span>), <span class="keyword">this</span>._rejected.bind(<span class="keyword">this</span>))</span><br><span class="line">        &#125; <span class="keyword">catch</span> (error) &#123;</span><br><span class="line">            <span class="keyword">this</span>._rejected(error)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    _resolved(val) &#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">this</span>._status !== PENDING) <span class="keyword">return</span></span><br><span class="line">        <span class="comment">// 还需要处理如果resolve 接受的还是 promise的情况， 接受就是promise的话， 状态会由接受的promise的状态来决定</span></span><br><span class="line">        <span class="comment">// 上述的解决方法，和then中的设计思路是一样的</span></span><br><span class="line">        <span class="keyword">const</span> run = <span class="function">(<span class="params">value</span>) =&gt;</span> &#123;</span><br><span class="line">            <span class="keyword">const</span> fulfilled = <span class="function">(<span class="params">value</span>) =&gt;</span> &#123;</span><br><span class="line">                <span class="keyword">let</span> cb</span><br><span class="line">                <span class="keyword">while</span> (cb = <span class="keyword">this</span>._fulfilledQueues.shift()) &#123;</span><br><span class="line">                    cb(value)</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">const</span> rejected = <span class="function">(<span class="params">err</span>) =&gt;</span> &#123;</span><br><span class="line">                <span class="keyword">let</span> cb</span><br><span class="line">                <span class="keyword">while</span> (cb = <span class="keyword">this</span>._rejectedQueues.shift()) &#123;</span><br><span class="line">                    cb(err)</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (val <span class="keyword">instanceof</span> MyPromise) &#123;</span><br><span class="line">                val.then(<span class="function"><span class="params">value</span> =&gt;</span> &#123;</span><br><span class="line">                    <span class="keyword">this</span>._status = FULFILLED</span><br><span class="line">                    <span class="keyword">this</span>._value = value</span><br><span class="line">                    fulfilled(value)</span><br><span class="line">                &#125;, err =&gt; &#123;</span><br><span class="line">                    <span class="keyword">this</span>._status = REJECTED</span><br><span class="line">                    <span class="keyword">this</span>._value = err</span><br><span class="line">                    rejected(err)</span><br><span class="line">                &#125;)</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">this</span>._status = FULFILLED</span><br><span class="line">                <span class="keyword">this</span>._value = value</span><br><span class="line">                fulfilled(value)</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">        setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> run(val), <span class="number">0</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    _rejected(err) &#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">this</span>._status !== PENDING) <span class="keyword">return</span></span><br><span class="line">        <span class="keyword">const</span> run = <span class="function">(<span class="params">error</span>) =&gt;</span> &#123;</span><br><span class="line">            <span class="keyword">this</span>._status = REJECTED</span><br><span class="line">            <span class="keyword">this</span>._value = error</span><br><span class="line">            <span class="keyword">let</span> cb</span><br><span class="line">            <span class="keyword">while</span> (cb = <span class="keyword">this</span>._rejectedQueues.shift()) &#123;</span><br><span class="line">                cb(error)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> run(err), <span class="number">0</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    then(onFulfilled, onRejected) &#123;</span><br><span class="line">        <span class="keyword">const</span> &#123; _status, _value &#125; = <span class="keyword">this</span></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> MyPromise(<span class="function">(<span class="params">onFulfilledNext, onRejectedNext</span>) =&gt;</span> &#123;</span><br><span class="line">            <span class="keyword">const</span> fulfilled = <span class="function">(<span class="params">val</span>) =&gt;</span> &#123;</span><br><span class="line">                <span class="keyword">if</span> (!isFunction(onFulfilled)) &#123; <span class="comment">//值穿透 ，如果 then中的值不是函数，会忽略这个值，将上一个的value继续传下去</span></span><br><span class="line">                    onFulfilledNext(val)</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">let</span> res = onFulfilled(val)</span><br><span class="line">                <span class="keyword">if</span> (res <span class="keyword">instanceof</span> MyPromise) &#123; <span class="comment">// 如果返回的还是一个promise的话，需要等待这个promise的结束，所以把 handle 函数直接then 在其后面</span></span><br><span class="line">                    res.then(onFulfilledNext, onRejectedNext)</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    onFulfilledNext(res) <span class="comment">// 一般的情况</span></span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">// 失败的执行函数</span></span><br><span class="line">            <span class="keyword">const</span> rejected = <span class="function">(<span class="params">err</span>) =&gt;</span> &#123;</span><br><span class="line">                <span class="keyword">if</span> (!isFunction(onRejected)) &#123;</span><br><span class="line">                    onRejectedNext(err)</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="built_in">console</span>.trace()</span><br><span class="line">                <span class="keyword">let</span> res = onRejected(err)</span><br><span class="line">                <span class="keyword">if</span> (res <span class="keyword">instanceof</span> MyPromise) &#123;</span><br><span class="line">                    res.then(onFulfilledNext, onRejectedNext)</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    onFulfilledNext(res) <span class="comment">//  在失败队列中，没有错误的执行完了，进行的还是下一个的成功回调</span></span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">switch</span> (_status) &#123;</span><br><span class="line">                <span class="keyword">case</span> PENDING:</span><br><span class="line">                    <span class="keyword">this</span>._fulfilledQueues.push(fulfilled)</span><br><span class="line">                    <span class="keyword">this</span>._rejectedQueues.push(rejected)</span><br><span class="line">                    <span class="keyword">break</span></span><br><span class="line">                <span class="keyword">case</span> FULFILLED:</span><br><span class="line">                    fulfilled(_value)</span><br><span class="line">                    <span class="keyword">break</span></span><br><span class="line">                <span class="keyword">case</span> REJECTED:</span><br><span class="line">                    rejected(_value)</span><br><span class="line">                    <span class="keyword">break</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">catch</span>(fn) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.then(<span class="literal">undefined</span>, fn)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">static</span> resolve(value) &#123; <span class="comment">// resolve reject 返回的是一个具有成功处理函数（失败处理函数）的promise</span></span><br><span class="line">        <span class="keyword">if</span> (value <span class="keyword">instanceof</span> MyPromise) <span class="keyword">return</span> value</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> MyPromise(<span class="function"><span class="params">resolve</span> =&gt;</span> resolve(value))</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">static</span> rejected(val) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> MyPromise(<span class="function">(<span class="params">resolve, rejected</span>) =&gt;</span> rejected(val))</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">static</span> all(lists) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> MyPromise(<span class="function">(<span class="params">resolve, rejected</span>) =&gt;</span> &#123;</span><br><span class="line">            <span class="keyword">let</span> result = []</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">let</span> p <span class="keyword">of</span> lists) &#123;</span><br><span class="line">                MyPromise.resolve(p).then(<span class="function"><span class="params">val</span> =&gt;</span> &#123;</span><br><span class="line">                    result.push(val)</span><br><span class="line">                    <span class="built_in">console</span>.log(<span class="string">'val: '</span>, val);</span><br><span class="line">                    <span class="keyword">if</span> (result.length === lists.length) &#123;</span><br><span class="line">                        resolve(result)</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;, err =&gt; &#123;</span><br><span class="line">                    rejected(err)</span><br><span class="line">                &#125;)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">static</span> race(lists) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> MyPromise(<span class="function">(<span class="params">resolve, rejected</span>) =&gt;</span> &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">let</span> p <span class="keyword">in</span> lists) &#123;</span><br><span class="line">                p.then(<span class="function"><span class="params">val</span> =&gt;</span> &#123;</span><br><span class="line">                    resolve(val)</span><br><span class="line">                &#125;, err =&gt; &#123;</span><br><span class="line">                    rejected(err)</span><br><span class="line">                &#125;)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yippee.ink/git-blog/2019/03/14/js中的this/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Yippee">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="依破缘">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/03/14/js中的this/" itemprop="url">js中的this</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-03-14T18:19:09+08:00">
-                2019-03-14
-              </time>
-            
-
-            
-
-            
-          </span>
-          
-          
-            <span class="post-updated">
-              &nbsp; | &nbsp; post.updated
-              <time itemprop="dateUpdated" datetime="2019-03-29T17:21:41+08:00" content="2019-03-29">
-                2019-03-29
-              </time>
-            </span>
-          
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="提纲"><a href="#提纲" class="headerlink" title="提纲:"></a>提纲:</h3><ol>
-<li>this指向什么? 什么时候 this指向 window? </li>
-<li>箭头函数中的this</li>
-<li>bind,apply和 call, 模拟实现一个bind,call,apply</li>
-</ol>
-<h2 id="this指向什么"><a href="#this指向什么" class="headerlink" title="this指向什么"></a>this指向什么</h2><blockquote>
-<p>刚开始了解this的时候, 看到过一句话, 谁调用函数, 函数中的this就执行谁.我也把这句话奉为圭臬.<br>但是,随着深入的了解, 有些时候就更蒙蔽了.到底是谁调用的这个函数呢..</p>
-</blockquote>
-<h3 id="直接调用"><a href="#直接调用" class="headerlink" title="直接调用"></a>直接调用</h3><p>直接通过函数名调用, 无论在哪个作用域下返回的都是全局对象, 直接声明的函数就是在全局对象上声明的.<br>note: 浏览器下和node下的全局对象是不同的</p>
-<h3 id="方法中-this-指向全局对象的情况"><a href="#方法中-this-指向全局对象的情况" class="headerlink" title="方法中 this 指向全局对象的情况"></a>方法中 this 指向全局对象的情况</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> name = <span class="string">'Bob'</span></span><br><span class="line"><span class="keyword">var</span> obj = &#123;</span><br><span class="line">    name: <span class="string">'Jack'</span>,</span><br><span class="line">    getName: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="keyword">this</span>.name)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> getName = obj.getName</span><br><span class="line">getName()</span><br></pre></td></tr></table></figure>
-<p>我一开始觉得这个<code>getName</code>会输出的是 obj对象里面的 name,因为不是用obj.getName定义的嘛.<br>然而, 并不是的, 这都是属于定义的, 这个时候的调用还是window的,所以<code>log</code>出来的应该是Bob<br>还有一种特殊情况就是数组中的函数在数组中调用的情况,如下题目:<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> length = <span class="number">50</span></span><br><span class="line"><span class="keyword">var</span> fn = <span class="function"><span class="keyword">function</span> (<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span>.length)</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> arr = [fn,<span class="number">1</span>,<span class="number">2</span>]</span><br><span class="line">arr[<span class="number">0</span>]()</span><br></pre></td></tr></table></figure></p>
-<p>一开始以为这块的fn中的this应该会没有特殊指定会指向window,然而并不是的.<br>在数组中调用函数的话,this相当于是这个数组,所以返回的length是数组的length,所以返回的是3</p>
-<h3 id="箭头函数中的this"><a href="#箭头函数中的this" class="headerlink" title="箭头函数中的this"></a>箭头函数中的this</h3><p>箭头函数中没有作用域,也就没有this,this使用的是父级的this</p>
-<h2 id="bind-apply和-call-模拟实现一个bind-call-apply"><a href="#bind-apply和-call-模拟实现一个bind-call-apply" class="headerlink" title="bind,apply和 call, 模拟实现一个bind,call,apply"></a>bind,apply和 call, 模拟实现一个bind,call,apply</h2><p>三者对比:</p>
-<blockquote>
-<p>call 接受参数 [thisArg, arg1, arg2, …]<br>apply 接受参数 [thisArg, [argArr]]<br>bind 接受参数 [thisArg, arg1, arg2, …]<br>可以看出前两者的区别在于参数的提供方式 call是一个一个指定, 而apply 是用的数组<br>最后一个bind 接受的参数于call 相同,但是bind 会返回一个函数, 并不会直接执行函数, 这也是bind 与前两者的区别所在</p>
-</blockquote>
-<h3 id="call的实现"><a href="#call的实现" class="headerlink" title="call的实现"></a>call的实现</h3><p>先看call 到底做了什么.<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = &#123;<span class="attr">name</span>: <span class="string">'Jack'</span>&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn</span>(<span class="params"></span>) </span>&#123;<span class="built_in">console</span>.log(<span class="keyword">this</span>.name)&#125;</span><br><span class="line">fn.call(a) <span class="comment">// Jack</span></span><br></pre></td></tr></table></figure></p>
-<p>那么其实,上面的代码等同于:<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = &#123;</span><br><span class="line">    name: <span class="string">'Jack'</span>,</span><br><span class="line">    fn: fn <span class="comment">// 这块的fn的属性名任意都行</span></span><br><span class="line">&#125;</span><br><span class="line">a.fn()</span><br></pre></td></tr></table></figure></p>
-<p>有了这样的思路之后,我们发现实现call,就是将调用的方法增加到参数对象的属性中,然后运行就行了.为了不被污染,执行完成之后,还可以删除该属性<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Function</span>.prototype.MyCall = <span class="function"><span class="keyword">function</span> (<span class="params">thisArg</span>) </span>&#123;</span><br><span class="line">    thisArg.fn = thisArg</span><br><span class="line">    thisArg.fn()</span><br><span class="line">    <span class="keyword">delete</span> thisArg.fn</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>这样的第一版的call就完成了,然后我们再继续优化它</p>
-<p>首先,对接受的参数是不是函数要进行判断.</p>
-<p>其次,除了接受thisArg参数之外,call 还可以接受函数执行时候的参数,</p>
-<p>如果函数有返回值的话,还应该将值返回出去,</p>
-<p>还需要保证添加的函数的属性名不会覆盖原有属性</p>
-<p>以及, 如果传的 thisArg是 null,应该使用window</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 考虑到多种环境下的使用</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getWindow</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">generateRandom</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">Date</span>.now()</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">Function</span>.prototype.MyCall = <span class="function"><span class="keyword">function</span> (<span class="params">thisArg, ...args</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">typeof</span> <span class="keyword">this</span> !=== <span class="string">'function'</span>) <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="keyword">this</span>+<span class="string">'must be a function'</span>)</span><br><span class="line">    <span class="keyword">if</span> (thisArg === <span class="literal">null</span>) thisArg = getWindow()</span><br><span class="line">    <span class="keyword">var</span> random = generateRandom()</span><br><span class="line">    thisArg[random] = <span class="keyword">this</span></span><br><span class="line">    <span class="keyword">var</span> result = thisArg[random](...args)</span><br><span class="line">    <span class="keyword">delete</span> thisArg[random]</span><br><span class="line">    <span class="keyword">return</span> result</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>这块使用了…args 来获取传过来的函数的参数,如果不让使用的话,可以使用<code>eval</code>来解析参数</p>
-<h3 id="apply的实现"><a href="#apply的实现" class="headerlink" title="apply的实现"></a>apply的实现</h3><blockquote>
-<p>实现了call之后 apply就是水到渠成的事情了.<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Function</span>.prototype.MyApply = <span class="function"><span class="keyword">function</span> (<span class="params">thisArg, args</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.MyCall(thisArg,...args)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-</blockquote>
-<h3 id="bind的实现"><a href="#bind的实现" class="headerlink" title="bind的实现"></a>bind的实现</h3><p>bind的实现需要考虑到一些比较特殊的地方,就是在使用new的时候, 感觉这块的实现有点不懂.等会来补充</p>
-<p>待续~</p>
-
           
         
       
@@ -1931,7 +1933,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">25</span>
+                <span class="site-state-item-count">27</span>
                 <span class="site-state-item-name">posts</span>
               </a>
             </div>

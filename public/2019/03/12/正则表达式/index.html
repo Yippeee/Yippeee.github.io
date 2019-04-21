@@ -102,7 +102,7 @@
 <meta property="og:site_name" content="依破缘">
 <meta property="og:description" content="关于正则表达式也使用过很久了,但是总是会有点遗漏和本身就没有掌握的地方.在此做记录.  JS正则中的捕获元和非捕获元   字符 描述     (pattern) 匹配 pattern ,并且获取   (?:pattern) 匹配pattern, 但是不捕获结果, 就是在分组中不考虑pattern的分组   (?=pattern) 正向预查,也不捕获结果,同时还不获取pattern的结果,只是做一">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-04-12T07:51:56.006Z">
+<meta property="og:updated_time" content="2019-04-21T02:21:22.589Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="正则表达式">
 <meta name="twitter:description" content="关于正则表达式也使用过很久了,但是总是会有点遗漏和本身就没有掌握的地方.在此做记录.  JS正则中的捕获元和非捕获元   字符 描述     (pattern) 匹配 pattern ,并且获取   (?:pattern) 匹配pattern, 但是不捕获结果, 就是在分组中不考虑pattern的分组   (?=pattern) 正向预查,也不捕获结果,同时还不获取pattern的结果,只是做一">
@@ -305,8 +305,8 @@
           
             <span class="post-updated">
               &nbsp; | &nbsp; post.updated
-              <time itemprop="dateUpdated" datetime="2019-04-12T15:51:56+08:00" content="2019-04-12">
-                2019-04-12
+              <time itemprop="dateUpdated" datetime="2019-04-21T10:21:22+08:00" content="2019-04-21">
+                2019-04-21
               </time>
             </span>
           
@@ -381,6 +381,7 @@
 <h3 id="实用情况"><a href="#实用情况" class="headerlink" title="实用情况"></a>实用情况</h3><h4 id="验证密码的复杂性和位数"><a href="#验证密码的复杂性和位数" class="headerlink" title="验证密码的复杂性和位数"></a>验证密码的复杂性和位数</h4><p>要求:位数大于6,而且包含有字母小写和大写,同时有特殊符号<br><code>/(?=.{6,})(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&amp;&amp;*()_+])/</code></p>
 <h4 id="验证邮箱"><a href="#验证邮箱" class="headerlink" title="验证邮箱"></a>验证邮箱</h4><p><code>/^[0-9a-zA-Z\-_]+@[0-9a-zA-Z\-_]+[\.0-9a-zA-Z\-_]+$/</code></p>
 <h4 id="匹配汉字"><a href="#匹配汉字" class="headerlink" title="匹配汉字"></a>匹配汉字</h4><p><code>[\u4e00-\u9fa5]</code></p>
+<p><code>[\u4E00-\u9FA5\uf900-\ufa2d]</code> </p>
 <h4 id="重学js中的正则表达式"><a href="#重学js中的正则表达式" class="headerlink" title="重学js中的正则表达式"></a>重学js中的正则表达式</h4><blockquote>
 <p>之前，自认为对正则的掌握已经有一丢丢的火候了。但是今天阅读了vue中对 template parse 形成 AST 过程中的原码。我哭了。so，重学正则。</p>
 </blockquote>
@@ -552,7 +553,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">25</span>
+                <span class="site-state-item-count">27</span>
                 <span class="site-state-item-name">posts</span>
               </a>
             </div>

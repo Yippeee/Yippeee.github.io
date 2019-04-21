@@ -78,7 +78,7 @@
 <link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css">
 
 
-  <meta name="keywords" content="总结,">
+  <meta name="keywords" content="Hexo, NexT">
 
 
 
@@ -94,21 +94,17 @@
 
 
 
-<meta name="description" content="2011 2014 2018 初中，高中，大学，就是这三个数字。现在2018也过完了，我的学生生涯也就结束了。这一年真的经历的很多呢。 LOCATION： 长沙、成都、深圳、西安、无锡、苏州、香港、珠海在6月回校期间，啵啵来找了我，还一起去了一趟西安。第一次一起和啵啵出去旅游，安排的密密麻麻。有点充实。刚去看了一眼days matter 来深圳其实也才308天，而且今年也是第一次来深圳，但是现在就">
-<meta name="keywords" content="总结">
+<meta name="description" content="babelbabel 做了什么babel 就是将js中新的语法转化成低版本的JS，一般转成ES5大部分浏览器就够了。 运行方式分为三个阶段：解析，转换，生成。 其中的具体功能是利用AST实现的。 插件babel本身不具有转化的功能，转化的功能都被分解到plugin中去了。这样利用控制，同时在使用babel时候，配置就是必不可少的了。 同时，插件还分为两种：  语法插件  语法插件主要是用于新语法中">
 <meta property="og:type" content="article">
-<meta property="og:title" content="2018年年终总结">
-<meta property="og:url" content="http://yippee.ink/git-blog/2019/01/01/2018-e5-b9-b4-e5-b9-b4-e7-bb-88-e6-80-bb-e7-bb-93/index.html">
+<meta property="og:title" content="babel初探">
+<meta property="og:url" content="http://yippee.ink/git-blog/2019/04/18/babel初探/index.html">
 <meta property="og:site_name" content="依破缘">
-<meta property="og:description" content="2011 2014 2018 初中，高中，大学，就是这三个数字。现在2018也过完了，我的学生生涯也就结束了。这一年真的经历的很多呢。 LOCATION： 长沙、成都、深圳、西安、无锡、苏州、香港、珠海在6月回校期间，啵啵来找了我，还一起去了一趟西安。第一次一起和啵啵出去旅游，安排的密密麻麻。有点充实。刚去看了一眼days matter 来深圳其实也才308天，而且今年也是第一次来深圳，但是现在就">
+<meta property="og:description" content="babelbabel 做了什么babel 就是将js中新的语法转化成低版本的JS，一般转成ES5大部分浏览器就够了。 运行方式分为三个阶段：解析，转换，生成。 其中的具体功能是利用AST实现的。 插件babel本身不具有转化的功能，转化的功能都被分解到plugin中去了。这样利用控制，同时在使用babel时候，配置就是必不可少的了。 同时，插件还分为两种：  语法插件  语法插件主要是用于新语法中">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="https://i.loli.net/2019/01/01/5c2b7744327a6.jpg">
-<meta property="og:image" content="https://i.loli.net/2019/01/01/5c2b77dacdb7f.jpeg">
-<meta property="og:updated_time" content="2019-03-31T02:31:52.252Z">
+<meta property="og:updated_time" content="2019-04-21T02:21:22.587Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="2018年年终总结">
-<meta name="twitter:description" content="2011 2014 2018 初中，高中，大学，就是这三个数字。现在2018也过完了，我的学生生涯也就结束了。这一年真的经历的很多呢。 LOCATION： 长沙、成都、深圳、西安、无锡、苏州、香港、珠海在6月回校期间，啵啵来找了我，还一起去了一趟西安。第一次一起和啵啵出去旅游，安排的密密麻麻。有点充实。刚去看了一眼days matter 来深圳其实也才308天，而且今年也是第一次来深圳，但是现在就">
-<meta name="twitter:image" content="https://i.loli.net/2019/01/01/5c2b7744327a6.jpg">
+<meta name="twitter:title" content="babel初探">
+<meta name="twitter:description" content="babelbabel 做了什么babel 就是将js中新的语法转化成低版本的JS，一般转成ES5大部分浏览器就够了。 运行方式分为三个阶段：解析，转换，生成。 其中的具体功能是利用AST实现的。 插件babel本身不具有转化的功能，转化的功能都被分解到plugin中去了。这样利用控制，同时在使用babel时候，配置就是必不可少的了。 同时，插件还分为两种：  语法插件  语法插件主要是用于新语法中">
 
 
 
@@ -137,13 +133,13 @@
 
 
 
-  <link rel="canonical" href="http://yippee.ink/git-blog/2019/01/01/2018-e5-b9-b4-e5-b9-b4-e7-bb-88-e6-80-bb-e7-bb-93/">
+  <link rel="canonical" href="http://yippee.ink/git-blog/2019/04/18/babel初探/">
 
 
 
 
 
-  <title>2018年年终总结 | 依破缘</title>
+  <title>babel初探 | 依破缘</title>
   
 
 
@@ -266,7 +262,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yippee.ink/git-blog/2019/01/01/2018-e5-b9-b4-e5-b9-b4-e7-bb-88-e6-80-bb-e7-bb-93/">
+    <link itemprop="mainEntityOfPage" href="http://yippee.ink/git-blog/2019/04/18/babel初探/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Yippee">
@@ -283,7 +279,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">2018年年终总结</h1>
+          <h1 class="post-title" itemprop="name headline">babel初探</h1>
         
 
         <div class="post-meta">
@@ -295,8 +291,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-01-01T22:24:53+08:00">
-                2019-01-01
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-04-18T11:07:01+08:00">
+                2019-04-18
               </time>
             
 
@@ -308,34 +304,12 @@
           
             <span class="post-updated">
               &nbsp; | &nbsp; post.updated
-              <time itemprop="dateUpdated" datetime="2019-03-31T10:31:52+08:00" content="2019-03-31">
-                2019-03-31
+              <time itemprop="dateUpdated" datetime="2019-04-21T10:21:22+08:00" content="2019-04-21">
+                2019-04-21
               </time>
             </span>
           
 
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/总结/" itemprop="url" rel="index">
-                    <span itemprop="name">总结</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
           
 
           
@@ -364,22 +338,29 @@
       
 
       
-        <p>2011 2014 2018 初中，高中，大学，就是这三个数字。现在2018也过完了，我的学生生涯也就结束了。这一年真的经历的很多呢。</p>
-<h2 id=""><a href="#" class="headerlink" title=""></a><a href="https://i.loli.net/2019/01/01/5c2b7744327a6.jpg" target="_blank" rel="noopener"><img src="https://i.loli.net/2019/01/01/5c2b7744327a6.jpg" alt=""></a></h2><h2 id="LOCATION："><a href="#LOCATION：" class="headerlink" title="LOCATION："></a>LOCATION：</h2><hr>
-<p>长沙、成都、深圳、西安、无锡、苏州、香港、珠海<br>在6月回校期间，啵啵来找了我，还一起去了一趟西安。第一次一起和啵啵出去旅游，安排的密密麻麻。有点充实。<br>刚去看了一眼days matter 来深圳其实也才308天，而且今年也是第一次来深圳，但是现在就是莫名的觉得自己都是个深圳人了。怎么说吧，深圳啊，基本上没有我没有去过的地方了。基本把足迹留在了深圳的每一个地方。当然，这得感谢小许。<br>无锡，完全去的时候心情沉重，是去加班的，而且还牺牲了国庆7天和啵啵玩的时间。<br>在无锡的时候，国庆就顺带去了苏州。<br>年末，啵啵回到深圳，一起去了趟香港迪士尼。<br>公司组织去了珠海长隆<br>长沙，成都，就不赘述了。</p>
-<h2 id="EVENT："><a href="#EVENT：" class="headerlink" title="EVENT："></a>EVENT：</h2><hr>
-<p>上班、毕业、见家长 </p>
-<p>年初来深圳上班的时候，还是对职场充满了好奇的。可是，也不过如此，很快就习惯了。<br>在去年年底，就已经觉得电子科大似乎就和自己已经没有啥关系了，5月回学校，又呆了一个半月，解决了毕业的相关事项后，就毕业了。没有什么，就是结束了而已，我想了想什么可以感动自己的，好像没有。 啵啵父母一直都是在深圳的，刚来的时候没有这个念头，然后12月啵啵从学校回来之后，这件事就被提上了日程。在啵啵生日前一周，一起吃了个饭。并且，这连着两周周末都有趣她家。觉得自己表现的很不好，有点过于紧张，不知道该做什么好。</p>
-<h2 id="GOODS"><a href="#GOODS" class="headerlink" title="GOODS"></a>GOODS</h2><hr>
-<p><a href="https://i.loli.net/2019/01/01/5c2b77dacdb7f.jpeg" target="_blank" rel="noopener"><img src="https://i.loli.net/2019/01/01/5c2b77dacdb7f.jpeg" alt=""></a> AirPods、 apple watch4，空军一号、reebok pure黑白 </p>
-<p>这一年虽然自己开始赚钱了，但是赚的有点过于少了。没有买什么东西，耳机是有线是在是太难的用了就换了，然后手表是见啵啵妈妈的时候送的。鞋就是5月和12月，自己买的。和啵啵送的。</p>
-<h2 id="AFFAIR"><a href="#AFFAIR" class="headerlink" title="AFFAIR"></a>AFFAIR</h2><hr>
-<p>400多天了，我们现在还能这么好，而且完全的习惯对方的存在，并且对对方的生活情绪完全的了解，是我一开始很难预料到的。</p>
-<p>2018最幸运的还是和你在一起。</p>
-<h2 id="skill"><a href="#skill" class="headerlink" title="skill"></a>skill</h2><hr>
-<p>为什么会去做前端，是一开始冲忙决定的。没有想到这就成为了现在的工作领域。我还是想把它做好的，但是还是遗憾自己开始的这么晚。我始终坚信着自己的，但是还是会踟蹰于自己的前进。竟然热爱，只有坚持。</p>
-<h2 id="MUSIC-amp-FILM-amp-ANIME-amp-VARIETY-SHOW"><a href="#MUSIC-amp-FILM-amp-ANIME-amp-VARIETY-SHOW" class="headerlink" title="MUSIC &amp; FILM &amp; ANIME &amp; VARIETY SHOW"></a>MUSIC &amp; FILM &amp; ANIME &amp; VARIETY SHOW</h2><hr>
-<p>任然是单曲着周杰伦，最近有迷上电音。（续费了QQ音乐，突然后悔了，想用apple music了。）<br>电影看了蛮多，基本都是电影院看的，自己平常在家倒是看得蛮少的。<br>动漫基本没有怎么看了，猪头少年还没有看完，我们的英雄学院也有点快忘了。<br>综艺都是看了不少，吃饭必备的赶脚，吐槽大会，101。其他的都是偶尔看看。</p>
+        <h1 id="babel"><a href="#babel" class="headerlink" title="babel"></a>babel</h1><h2 id="babel-做了什么"><a href="#babel-做了什么" class="headerlink" title="babel 做了什么"></a>babel 做了什么</h2><p>babel 就是将js中新的语法转化成低版本的JS，一般转成ES5大部分浏览器就够了。</p>
+<h2 id="运行方式"><a href="#运行方式" class="headerlink" title="运行方式"></a>运行方式</h2><p>分为三个阶段：解析，转换，生成。 其中的具体功能是利用AST实现的。</p>
+<h3 id="插件"><a href="#插件" class="headerlink" title="插件"></a>插件</h3><p>babel本身不具有转化的功能，转化的功能都被分解到plugin中去了。这样利用控制，同时在使用babel时候，配置就是必不可少的了。</p>
+<p>同时，插件还分为两种：</p>
+<ol>
+<li>语法插件</li>
+</ol>
+<p>语法插件主要是用于新语法中一些新提供的语法，在老版本中，会认为是错误的语法，而在新版中认为是可以使用的语法。使用语法插件后，就不会报错，会认为这样是正确的。</p>
+<p>和转译插件的差别在于是<strong>否转化</strong>，语法插件只是改变了<strong>解析</strong>的规则</p>
+<ol start="2">
+<li>转译插件</li>
+</ol>
+<p>转译插件插件则是为了支持新式的代码，将它转化成浏览器支持的版本。例如箭头函数：</p>
+<p>In:<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="function"><span class="params">()</span> =&gt;</span> &#123;&#125;;</span><br><span class="line"><span class="keyword">var</span> b = <span class="function"><span class="params">()</span> =&gt;</span> b;</span><br></pre></td></tr></table></figure></p>
+<p>经过转译插件之后，Out:<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;&#125;;</span><br><span class="line"><span class="keyword">var</span> b = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;<span class="keyword">return</span> b;&#125;;</span><br></pre></td></tr></table></figure></p>
+<p><strong>注意的是，转译插件中会用到语法插件的情况，转译插件会直接启动，不同我们同时制定了</strong></p>
+<h3 id="使用插件的方式"><a href="#使用插件的方式" class="headerlink" title="使用插件的方式"></a>使用插件的方式</h3><p>就是NPM包引入标准的步骤：</p>
+<ol>
+<li>npm i babel-plugin-xxx 安装</li>
+<li>把插件名字增加到配置文件中</li>
+</ol>
+<p>这个时候肯定会觉得，那一个项目得用到的插件肯定很多啊，这么一个一个的配置肯定很麻烦啊。</p>
+<p>so，preset(预设)就出来啦。 其实preset就是一整套插件的方案。</p>
 
       
     </div>
@@ -395,12 +376,6 @@
 
     <footer class="post-footer">
       
-        <div class="post-tags">
-          
-            <a href="/tags/总结/" rel="tag"># 总结</a>
-          
-        </div>
-      
 
       
       
@@ -410,8 +385,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/11/20/to-be-my-hero/" rel="next" title="TO BE MY HERO">
-                <i class="fa fa-chevron-left"></i> TO BE MY HERO
+              <a href="/2019/04/15/js-错误捕获总结/" rel="next" title="js 错误捕获总结">
+                <i class="fa fa-chevron-left"></i> js 错误捕获总结
               </a>
             
           </div>
@@ -419,10 +394,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/01/07/JS中的位操作符/" rel="prev" title="JS中的位操作符">
-                JS中的位操作符 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -554,7 +525,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#"><span class="nav-number">1.</span> <span class="nav-text"></span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#LOCATION："><span class="nav-number">2.</span> <span class="nav-text">LOCATION：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#EVENT："><span class="nav-number">3.</span> <span class="nav-text">EVENT：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#GOODS"><span class="nav-number">4.</span> <span class="nav-text">GOODS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#AFFAIR"><span class="nav-number">5.</span> <span class="nav-text">AFFAIR</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#skill"><span class="nav-number">6.</span> <span class="nav-text">skill</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MUSIC-amp-FILM-amp-ANIME-amp-VARIETY-SHOW"><span class="nav-number">7.</span> <span class="nav-text">MUSIC &amp; FILM &amp; ANIME &amp; VARIETY SHOW</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#babel"><span class="nav-number">1.</span> <span class="nav-text">babel</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#babel-做了什么"><span class="nav-number">1.1.</span> <span class="nav-text">babel 做了什么</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#运行方式"><span class="nav-number">1.2.</span> <span class="nav-text">运行方式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#插件"><span class="nav-number">1.2.1.</span> <span class="nav-text">插件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用插件的方式"><span class="nav-number">1.2.2.</span> <span class="nav-text">使用插件的方式</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>

@@ -260,6 +260,167 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yippee.ink/git-blog/2019/03/14/js中的this/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yippee">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="依破缘">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/03/14/js中的this/" itemprop="url">js中的this</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-03-14T18:19:09+08:00">
+                2019-03-14
+              </time>
+            
+
+            
+
+            
+          </span>
+          
+          
+            <span class="post-updated">
+              &nbsp; | &nbsp; post.updated
+              <time itemprop="dateUpdated" datetime="2019-03-31T10:31:52+08:00" content="2019-03-31">
+                2019-03-31
+              </time>
+            </span>
+          
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="提纲"><a href="#提纲" class="headerlink" title="提纲:"></a>提纲:</h3><ol>
+<li>this指向什么? 什么时候 this指向 window? </li>
+<li>箭头函数中的this</li>
+<li>bind,apply和 call, 模拟实现一个bind,call,apply</li>
+</ol>
+<h2 id="this指向什么"><a href="#this指向什么" class="headerlink" title="this指向什么"></a>this指向什么</h2><blockquote>
+<p>刚开始了解this的时候, 看到过一句话, 谁调用函数, 函数中的this就执行谁.我也把这句话奉为圭臬.<br>但是,随着深入的了解, 有些时候就更蒙蔽了.到底是谁调用的这个函数呢..</p>
+</blockquote>
+<h3 id="直接调用"><a href="#直接调用" class="headerlink" title="直接调用"></a>直接调用</h3><p>直接通过函数名调用, 无论在哪个作用域下返回的都是全局对象, 直接声明的函数就是在全局对象上声明的.<br>note: 浏览器下和node下的全局对象是不同的</p>
+<h3 id="方法中-this-指向全局对象的情况"><a href="#方法中-this-指向全局对象的情况" class="headerlink" title="方法中 this 指向全局对象的情况"></a>方法中 this 指向全局对象的情况</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> name = <span class="string">'Bob'</span></span><br><span class="line"><span class="keyword">var</span> obj = &#123;</span><br><span class="line">    name: <span class="string">'Jack'</span>,</span><br><span class="line">    getName: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="keyword">this</span>.name)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> getName = obj.getName</span><br><span class="line">getName()</span><br></pre></td></tr></table></figure>
+<p>我一开始觉得这个<code>getName</code>会输出的是 obj对象里面的 name,因为不是用obj.getName定义的嘛.<br>然而, 并不是的, 这都是属于定义的, 这个时候的调用还是window的,所以<code>log</code>出来的应该是Bob<br>还有一种特殊情况就是数组中的函数在数组中调用的情况,如下题目:<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> length = <span class="number">50</span></span><br><span class="line"><span class="keyword">var</span> fn = <span class="function"><span class="keyword">function</span> (<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span>.length)</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> arr = [fn,<span class="number">1</span>,<span class="number">2</span>]</span><br><span class="line">arr[<span class="number">0</span>]()</span><br></pre></td></tr></table></figure></p>
+<p>一开始以为这块的fn中的this应该会没有特殊指定会指向window,然而并不是的.<br>在数组中调用函数的话,this相当于是这个数组,所以返回的length是数组的length,所以返回的是3</p>
+<h3 id="箭头函数中的this"><a href="#箭头函数中的this" class="headerlink" title="箭头函数中的this"></a>箭头函数中的this</h3><p>箭头函数中没有作用域,也就没有this,this使用的是父级的this</p>
+<h2 id="bind-apply和-call-模拟实现一个bind-call-apply"><a href="#bind-apply和-call-模拟实现一个bind-call-apply" class="headerlink" title="bind,apply和 call, 模拟实现一个bind,call,apply"></a>bind,apply和 call, 模拟实现一个bind,call,apply</h2><p>三者对比:</p>
+<blockquote>
+<p>call 接受参数 [thisArg, arg1, arg2, …]<br>apply 接受参数 [thisArg, [argArr]]<br>bind 接受参数 [thisArg, arg1, arg2, …]<br>可以看出前两者的区别在于参数的提供方式 call是一个一个指定, 而apply 是用的数组<br>最后一个bind 接受的参数于call 相同,但是bind 会返回一个函数, 并不会直接执行函数, 这也是bind 与前两者的区别所在</p>
+</blockquote>
+<h3 id="call的实现"><a href="#call的实现" class="headerlink" title="call的实现"></a>call的实现</h3><p>先看call 到底做了什么.<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = &#123;<span class="attr">name</span>: <span class="string">'Jack'</span>&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn</span>(<span class="params"></span>) </span>&#123;<span class="built_in">console</span>.log(<span class="keyword">this</span>.name)&#125;</span><br><span class="line">fn.call(a) <span class="comment">// Jack</span></span><br></pre></td></tr></table></figure></p>
+<p>那么其实,上面的代码等同于:<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = &#123;</span><br><span class="line">    name: <span class="string">'Jack'</span>,</span><br><span class="line">    fn: fn <span class="comment">// 这块的fn的属性名任意都行</span></span><br><span class="line">&#125;</span><br><span class="line">a.fn()</span><br></pre></td></tr></table></figure></p>
+<p>有了这样的思路之后,我们发现实现call,就是将调用的方法增加到参数对象的属性中,然后运行就行了.为了不被污染,执行完成之后,还可以删除该属性<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Function</span>.prototype.MyCall = <span class="function"><span class="keyword">function</span> (<span class="params">thisArg</span>) </span>&#123;</span><br><span class="line">    thisArg.fn = thisArg</span><br><span class="line">    thisArg.fn()</span><br><span class="line">    <span class="keyword">delete</span> thisArg.fn</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这样的第一版的call就完成了,然后我们再继续优化它</p>
+<p>首先,对接受的参数是不是函数要进行判断.</p>
+<p>其次,除了接受thisArg参数之外,call 还可以接受函数执行时候的参数,</p>
+<p>如果函数有返回值的话,还应该将值返回出去,</p>
+<p>还需要保证添加的函数的属性名不会覆盖原有属性</p>
+<p>以及, 如果传的 thisArg是 null,应该使用window</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 考虑到多种环境下的使用</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getWindow</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">generateRandom</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">Date</span>.now()</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">Function</span>.prototype.MyCall = <span class="function"><span class="keyword">function</span> (<span class="params">thisArg, ...args</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">typeof</span> <span class="keyword">this</span> !=== <span class="string">'function'</span>) <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="keyword">this</span>+<span class="string">'must be a function'</span>)</span><br><span class="line">    <span class="keyword">if</span> (thisArg === <span class="literal">null</span>) thisArg = getWindow()</span><br><span class="line">    <span class="keyword">var</span> random = generateRandom()</span><br><span class="line">    thisArg[random] = <span class="keyword">this</span></span><br><span class="line">    <span class="keyword">var</span> result = thisArg[random](...args)</span><br><span class="line">    <span class="keyword">delete</span> thisArg[random]</span><br><span class="line">    <span class="keyword">return</span> result</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这块使用了…args 来获取传过来的函数的参数,如果不让使用的话,可以使用<code>eval</code>来解析参数</p>
+<h3 id="apply的实现"><a href="#apply的实现" class="headerlink" title="apply的实现"></a>apply的实现</h3><blockquote>
+<p>实现了call之后 apply就是水到渠成的事情了.<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Function</span>.prototype.MyApply = <span class="function"><span class="keyword">function</span> (<span class="params">thisArg, args</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.MyCall(thisArg,...args)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<h3 id="bind的实现"><a href="#bind的实现" class="headerlink" title="bind的实现"></a>bind的实现</h3><p>bind的实现需要考虑到一些比较特殊的地方,就是在使用new的时候, 感觉这块的实现有点不懂.等会来补充</p>
+<p>待续~</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yippee.ink/git-blog/2019/03/13/HTML-CSS知识补充/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -304,8 +465,8 @@
           
             <span class="post-updated">
               &nbsp; | &nbsp; post.updated
-              <time itemprop="dateUpdated" datetime="2019-03-29T17:54:01+08:00" content="2019-03-29">
-                2019-03-29
+              <time itemprop="dateUpdated" datetime="2019-03-31T10:31:52+08:00" content="2019-03-31">
+                2019-03-31
               </time>
             </span>
           
@@ -434,8 +595,8 @@
           
             <span class="post-updated">
               &nbsp; | &nbsp; post.updated
-              <time itemprop="dateUpdated" datetime="2019-03-29T17:39:17+08:00" content="2019-03-29">
-                2019-03-29
+              <time itemprop="dateUpdated" datetime="2019-03-31T10:31:52+08:00" content="2019-03-31">
+                2019-03-31
               </time>
             </span>
           
@@ -591,8 +752,8 @@
           
             <span class="post-updated">
               &nbsp; | &nbsp; post.updated
-              <time itemprop="dateUpdated" datetime="2019-04-12T15:51:56+08:00" content="2019-04-12">
-                2019-04-12
+              <time itemprop="dateUpdated" datetime="2019-04-21T10:21:22+08:00" content="2019-04-21">
+                2019-04-21
               </time>
             </span>
           
@@ -669,6 +830,7 @@
 <h3 id="实用情况"><a href="#实用情况" class="headerlink" title="实用情况"></a>实用情况</h3><h4 id="验证密码的复杂性和位数"><a href="#验证密码的复杂性和位数" class="headerlink" title="验证密码的复杂性和位数"></a>验证密码的复杂性和位数</h4><p>要求:位数大于6,而且包含有字母小写和大写,同时有特殊符号<br><code>/(?=.{6,})(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&amp;&amp;*()_+])/</code></p>
 <h4 id="验证邮箱"><a href="#验证邮箱" class="headerlink" title="验证邮箱"></a>验证邮箱</h4><p><code>/^[0-9a-zA-Z\-_]+@[0-9a-zA-Z\-_]+[\.0-9a-zA-Z\-_]+$/</code></p>
 <h4 id="匹配汉字"><a href="#匹配汉字" class="headerlink" title="匹配汉字"></a>匹配汉字</h4><p><code>[\u4e00-\u9fa5]</code></p>
+<p><code>[\u4E00-\u9FA5\uf900-\ufa2d]</code> </p>
 <h4 id="重学js中的正则表达式"><a href="#重学js中的正则表达式" class="headerlink" title="重学js中的正则表达式"></a>重学js中的正则表达式</h4><blockquote>
 <p>之前，自认为对正则的掌握已经有一丢丢的火候了。但是今天阅读了vue中对 template parse 形成 AST 过程中的原码。我哭了。so，重学正则。</p>
 </blockquote>
@@ -771,6 +933,160 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yippee.ink/git-blog/2019/03/07/置顶文章/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yippee">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="依破缘">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/03/07/置顶文章/" itemprop="url">置顶文章</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-03-07T15:33:56+08:00">
+                2019-03-07
+              </time>
+            
+
+            
+
+            
+          </span>
+          
+          
+            <span class="post-updated">
+              &nbsp; | &nbsp; post.updated
+              <time itemprop="dateUpdated" datetime="2019-03-31T10:31:52+08:00" content="2019-03-31">
+                2019-03-31
+              </time>
+            </span>
+          
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="博客现在的规划"><a href="#博客现在的规划" class="headerlink" title="博客现在的规划"></a>博客现在的规划</h1><ul>
+<li style="list-style: none"><input type="checkbox"> js函数式编程学习</li>
+<li style="list-style: none"><input type="checkbox"> Lodash-分析学习<blockquote>
+<p>上面第一个进行的有点困难现在.</p>
+</blockquote>
+</li>
+</ul>
+<p>2019-03-14: </p>
+<ol>
+<li>Promise模仿,手写了一遍实现</li>
+<li>准备完整的搞一遍 js中的 this的问题</li>
+</ol>
+<p>2019-03-18:</p>
+<ol>
+<li>http 缓存知识复习</li>
+<li>promise 再现</li>
+</ol>
+<p>2019-03-29</p>
+<blockquote>
+<p>首先，上述的学习任务基本完成，当然规划那两个是长期任务。</p>
+</blockquote>
+<p>去年七月份就刷了这篇(博客)[<a href="http://www.dailichun.com/2018/03/12/whenyouenteraurl.html]，当时看完之后基本上没有什么理解的内容，半年之后重新回顾，很多知识已经有所熟悉，但是还是有很多根本没有听说过，在此记录。" target="_blank" rel="noopener">http://www.dailichun.com/2018/03/12/whenyouenteraurl.html]，当时看完之后基本上没有什么理解的内容，半年之后重新回顾，很多知识已经有所熟悉，但是还是有很多根本没有听说过，在此记录。</a></p>
+<p>浏览器的机制，到如何打开一个tab页。（涉及到进程和线程）</p>
+<p>其中有很多后台的和服务器端的内容，暂时不作为我的学习内容，在这里只对其中出现的前端的内容，而我都不是很了解的内容做一个to-learn-list。</p>
+<p>简单层与复合层，都是什么，这个完全不了解。(已经做了总结)<br>(看这个)[<a href="https://segmentfault.com/a/1190000012925872#articleHeader16]" target="_blank" rel="noopener">https://segmentfault.com/a/1190000012925872#articleHeader16]</a></p>
+<p>没事多看看这篇博客，对其中不太了解的知识体系做一个梳理。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yippee.ink/git-blog/2019/03/07/js函数式编程学习/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -815,8 +1131,8 @@
           
             <span class="post-updated">
               &nbsp; | &nbsp; post.updated
-              <time itemprop="dateUpdated" datetime="2019-03-29T17:07:00+08:00" content="2019-03-29">
-                2019-03-29
+              <time itemprop="dateUpdated" datetime="2019-03-12T22:08:58+08:00" content="2019-03-12">
+                2019-03-12
               </time>
             </span>
           
@@ -949,8 +1265,8 @@
           
             <span class="post-updated">
               &nbsp; | &nbsp; post.updated
-              <time itemprop="dateUpdated" datetime="2019-03-29T17:54:28+08:00" content="2019-03-29">
-                2019-03-29
+              <time itemprop="dateUpdated" datetime="2019-03-31T10:31:52+08:00" content="2019-03-31">
+                2019-03-31
               </time>
             </span>
           
@@ -1085,8 +1401,8 @@
           
             <span class="post-updated">
               &nbsp; | &nbsp; post.updated
-              <time itemprop="dateUpdated" datetime="2019-04-02T19:00:33+08:00" content="2019-04-02">
-                2019-04-02
+              <time itemprop="dateUpdated" datetime="2019-04-21T10:21:22+08:00" content="2019-04-21">
+                2019-04-21
               </time>
             </span>
           
@@ -1141,7 +1457,10 @@
 <p>把CPU比做一个工厂，如果是单核CPU，那么这个的意思就是，一次只能一个运行一个车间，一个车间就是一个进程(process)</p>
 <p>车间里会有很多协同工作的工人，这些工人就看做是线程(thread)。在一个进程中就可以有多个线程。<br>同时一个进程中间的内存是共享的，但是是不能同时使用的。</p>
 <h3 id="浏览器最小宽度"><a href="#浏览器最小宽度" class="headerlink" title="浏览器最小宽度"></a>浏览器最小宽度</h3><p>窗口缩小最小宽度是400px(来自Google)</p>
-
+<p><details open></details></p>
+<p><summary>Want to ruin the surprise?</summary><br><br><br>Well, you asked for it!<br><a href="www.baidu.com">fds</a></p>
+<image src="./io">
+</image>
           
         
       
@@ -1233,8 +1552,8 @@
           
             <span class="post-updated">
               &nbsp; | &nbsp; post.updated
-              <time itemprop="dateUpdated" datetime="2019-04-04T13:47:22+08:00" content="2019-04-04">
-                2019-04-04
+              <time itemprop="dateUpdated" datetime="2019-03-19T19:56:49+08:00" content="2019-03-19">
+                2019-03-19
               </time>
             </span>
           
@@ -1416,8 +1735,8 @@ BFC就是页面上的一个隔离的独立容器，容器里面的子元素不�
           
             <span class="post-updated">
               &nbsp; | &nbsp; post.updated
-              <time itemprop="dateUpdated" datetime="2019-03-29T17:54:52+08:00" content="2019-03-29">
-                2019-03-29
+              <time itemprop="dateUpdated" datetime="2019-03-31T10:31:52+08:00" content="2019-03-31">
+                2019-03-31
               </time>
             </span>
           
@@ -1465,313 +1784,6 @@ BFC就是页面上的一个隔离的独立容器，容器里面的子元素不�
 <p>这里在做的时候有一个误区,同等优先级就从左往右计算就好了..<a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/Operator_Precedence#Table" target="_blank" rel="noopener">优先级</a>,同等级是没有更优先的了.</p>
 </blockquote>
 <p>第七问中的new是有参数列表的,优先级和. [] 的相同,所以都是从左往右执行<br>先会执行new Foo() ,在构造函数的方法先在原型链上查询有没有这个方法,就定义到了原型 prototype 上的getName方法</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yippee.ink/git-blog/2019/01/10/JS中的继承/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Yippee">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="依破缘">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/01/10/JS中的继承/" itemprop="url">JS中的继承</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-01-10T14:33:09+08:00">
-                2019-01-10
-              </time>
-            
-
-            
-
-            
-          </span>
-          
-          
-            <span class="post-updated">
-              &nbsp; | &nbsp; post.updated
-              <time itemprop="dateUpdated" datetime="2019-03-29T17:54:22+08:00" content="2019-03-29">
-                2019-03-29
-              </time>
-            </span>
-          
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <blockquote>
-<p>文中方法全部来自&lt;&lt;JavaScript高级程序设计一书&gt;&gt;</p>
-</blockquote>
-<p>先想一个需求, 这里有一个父类方法, 包含了全部的共有属性, 我们想自己利用这个方法来创造继承于其中的子类方法<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">SuperClass</span>(<span class="params">id</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.id = id</span><br><span class="line">    <span class="keyword">this</span>.name = <span class="string">'fatherFunction'</span></span><br><span class="line">    <span class="keyword">this</span>.colors = [<span class="string">'red'</span>, <span class="string">'bule'</span>]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">SueperClass.prototype.say = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span>.id, <span class="keyword">this</span>.name, <span class="keyword">this</span>.colors)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>在上面我们定义了一个父类构造方法, 其中包含属性id,name,colors,还定义了它的一个方法say</p>
-<h3 id="原型链继承"><a href="#原型链继承" class="headerlink" title="原型链继承"></a>原型链继承</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Child_chain</span> (<span class="params"></span>) </span>&#123; <span class="comment">// 定义的子类</span></span><br><span class="line">    <span class="keyword">this</span>.name = <span class="string">'Child_Prototype_chain'</span></span><br><span class="line">&#125;</span><br><span class="line">Child_chain.prototype = <span class="keyword">new</span> SuperClass(<span class="string">'10'</span>)</span><br><span class="line"><span class="keyword">let</span> child_chain1 = <span class="keyword">new</span> Child_chain()</span><br><span class="line">child_chain1.colors.push(<span class="string">'yellow'</span>)</span><br><span class="line">child_chain1.say()</span><br><span class="line"><span class="keyword">let</span> child_chain2 = <span class="keyword">new</span> Child_chain()</span><br><span class="line">child_chain2.say()</span><br></pre></td></tr></table></figure>
-<p>原型链继承是直接利用原型链实现的继承方法, 将原型继承父类实例的方法和属性<br>当子类中调用其本身没有的属性和方法的时候,会在原型链上查找就可以调用父类上的属性和方法了,就实现了继承</p>
-<blockquote>
-<p>原型链继承的缺点： 1. 所有实例共享属性和方法，如果某一个实例修改了对象类型（引用类型）的属性的话，所有的实例的属性都会变化。 2.无法在创建实例的时候，向超类的构造函数传递参数</p>
-</blockquote>
-<h3 id="构造函数继承"><a href="#构造函数继承" class="headerlink" title="构造函数继承"></a>构造函数继承</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Child_constructor</span> (<span class="params">id</span>) </span>&#123;</span><br><span class="line">    SuperClass.call(<span class="keyword">this</span>, id) <span class="comment">// key</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> child_constructor = <span class="keyword">new</span> Child_constructor(<span class="string">'20'</span>)</span><br><span class="line"><span class="keyword">let</span> child_constructor2 = <span class="keyword">new</span> Child_constructor(<span class="string">'21'</span>)</span><br></pre></td></tr></table></figure>
-<p>用构造函数实现继承的时候,每一个子类的实例都会调用一次父类的构造函数,保证了数据的独立性<br>但是这样并不是完整的继承,这样的方法只实现了属性的继承,而对方法没有继承。在使用方法的时候需要在构造函数内部定义方法，方法就没有复用的了。<br>so,就是组合继承出场的时候了.</p>
-<h3 id="组合继承"><a href="#组合继承" class="headerlink" title="组合继承"></a>组合继承</h3><p>在组合继承中,还是使用构造函数一样的继承方法,但是会在子类的原型上再进行一些操作<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Child_constructor.prototype = <span class="keyword">new</span> SuperClass() <span class="comment">// 实现对父类中的方法的继承</span></span><br><span class="line">Child_constructor.prototype.constructor = Child_constructor <span class="comment">// 同时还需要把constructor属性更改回来</span></span><br></pre></td></tr></table></figure></p>
-<p>这样就完成了一个完整的继承,当然还是有不够完美的地方,那就是调用了父类的构造函数两次,这些都是很浪费的</p>
-<h3 id="寄生组合继承"><a href="#寄生组合继承" class="headerlink" title="寄生组合继承"></a>寄生组合继承</h3><p>这个方法的出现原因主要是为了解决父类构造函数被调用了两次的问题,<code>Super.call()</code>这个继承属性的构造函数是没有什么办法可以去省略的,但是在原型链中指定子类的原型其实没有必要用父类的构造函数,因为我们其实需要父类的原型的一个副本而已</p>
-<p>就衍生了一个创造副本的函数<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">object</span> (<span class="params">o</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> F = <span class="keyword">new</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function">    <span class="title">F</span>.<span class="title">prototype</span> = <span class="title">o</span></span></span><br><span class="line"><span class="function">    <span class="title">return</span> <span class="title">new</span> <span class="title">F</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function">&#125;</span></span><br></pre></td></tr></table></figure></p>
-<blockquote>
-<p>这个函数在ECMAScript5中用Object.create()进行了规范</p>
-</blockquote>
-<p>那么寄生组合继承就可以完成了<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Child_inherit</span> (<span class="params">id</span>) </span>&#123;</span><br><span class="line">    SuperClass.call(<span class="keyword">this</span>, id)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Child_inherit.prototype = object(SuperClass.prototype)</span><br><span class="line">Child_inherit.prototype.constructor  = Child_inherit</span><br></pre></td></tr></table></figure></p>
-<p>就OK啦</p>
-<h4 id="class完成继承"><a href="#class完成继承" class="headerlink" title="class完成继承"></a>class完成继承</h4><blockquote>
-<p>上面的方法看着就反人类,官方也这么觉得了,自然现在就有官方的解决办法了.类似JAVA,用class来完成继承<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Super</span> </span>&#123;</span><br><span class="line">    <span class="keyword">constructor</span> (name) &#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name</span><br><span class="line">    &#125;</span><br><span class="line">    sayName () &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="keyword">this</span>.name)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Child</span> <span class="keyword">extends</span> <span class="title">Super</span> </span>&#123;</span><br><span class="line">    <span class="keyword">constructor</span> (name, id) &#123;</span><br><span class="line">        <span class="keyword">super</span>(name) <span class="comment">// 实现继承</span></span><br><span class="line">        <span class="keyword">this</span>.id = id</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-</blockquote>
-<p>关于class见<a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Statements/class" target="_blank" rel="noopener">more</a></p>
-<h3 id="关于ES6中的关键字-super"><a href="#关于ES6中的关键字-super" class="headerlink" title="关于ES6中的关键字 super"></a>关于ES6中的关键字 super</h3><p>在ES6中使用extend完成继承的话，在子类constructor 中必须使用super关键字。</p>
-<p>同时super可以作为方法，也可以作为对象。作为方法只能在constructor中使用，而在方法中，可以将super作为对象使用。</p>
-<h4 id="作为方法"><a href="#作为方法" class="headerlink" title="作为方法"></a>作为方法</h4><p>在ES6的constructor 中使用super() ，相当于 <code>Super.call()</code></p>
-<h4 id="作为对象"><a href="#作为对象" class="headerlink" title="作为对象"></a>作为对象</h4><h5 id="在方法中使用"><a href="#在方法中使用" class="headerlink" title="在方法中使用"></a>在方法中使用</h5><p>相当于 super 指向 父类的原型 <code>Super.prototype</code>.</p>
-<p>但是super 内部的this 指向的是子类中的this， 所以在使用的时候， 是 <code>Super.prototype.call()</code></p>
-<h5 id="在静态方法中使用"><a href="#在静态方法中使用" class="headerlink" title="在静态方法中使用"></a>在静态方法中使用</h5><p>在静态方法中使用的时候，super 指向的是 Super , 就不再是 Super的原型了</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yippee.ink/git-blog/2019/01/09/如何使用hexo-新手向/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Yippee">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="依破缘">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/01/09/如何使用hexo-新手向/" itemprop="url">如何使用hexo(新手向)</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-01-09T09:45:04+08:00">
-                2019-01-09
-              </time>
-            
-
-            
-
-            
-          </span>
-          
-          
-            <span class="post-updated">
-              &nbsp; | &nbsp; post.updated
-              <time itemprop="dateUpdated" datetime="2019-03-26T14:56:11+08:00" content="2019-03-26">
-                2019-03-26
-              </time>
-            </span>
-          
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <blockquote>
-<p>大误  这是一篇通用文档<br>这是一篇告诉女朋友怎么使用我给她搭建的博客的说明</p>
-</blockquote>
-<p>hexo的搭建过程就不说明了, 关键是现在怎么使用.</p>
-<h3 id="拉取源码"><a href="#拉取源码" class="headerlink" title="拉取源码"></a>拉取源码</h3><blockquote>
-<p>建议使用SSH</p>
-</blockquote>
-<p><img src="https://ws2.sinaimg.cn/large/006tNc79gy1fz03zrlcpjj30o80diwgj.jpg" alt=""></p>
-<p><code>git clone git@github.com:pumpkinnan97/pumpkinnan97.github.io.git</code><br>拉取下来了了之后, 切换到blog分支<br><code>git checkout blog</code><br>安装依赖<br><code>npm i</code></p>
-<h4 id="添加SSH"><a href="#添加SSH" class="headerlink" title="添加SSH"></a>添加SSH</h4><blockquote>
-<p>要是我没有记错的话,你电脑之前肯定是配过SSH钥匙的.</p>
-</blockquote>
-<p>那么<br><code>cat ~/.ssh/id_rsa.pub</code><br><strong>command + c</strong><br>点击GitHub右上角进入 <strong>Setting</strong><br>然后点击 左方的SSH<br><code>New SSH key</code><br><strong>command + v</strong><br>完毕即可</p>
-<h3 id="hexo博客管理"><a href="#hexo博客管理" class="headerlink" title="hexo博客管理"></a>hexo博客管理</h3><p>hexo g : Generate static files. 就是生成静态资源,在发布之前需要进行<br>hexo s : Start the server.  这个的作用是在本地可以查看现在博客<br>hexo d : Deploy your website. 发布</p>
-<p>使用<code>hexo new [your blog name]</code><br>然后进入<code>source</code>中的<code>_posts</code>就可以看到新建的博客,在已经存在的内容下面加上你的博客内容就可以了<br>最后使用上面的<code>hexo g</code> <code>hexo d</code> 就完成了发布</p>
-<h3 id="hexo-主题以及配置"><a href="#hexo-主题以及配置" class="headerlink" title="hexo 主题以及配置"></a>hexo 主题以及配置</h3><blockquote>
-<p>这一块都在<strong>_config.yml</strong>文件中,<br><code>theme: next</code>选择主题,前提是先需要把主题下载到博客根目录的 themes 文件中</p>
-</blockquote>
-<p><a href="https://hexo.io/themes/" target="_blank" rel="noopener">主题</a><br><a href="https://hexo.io/plugins/" target="_blank" rel="noopener">插件</a></p>
-<p>就可以像QQ空间一样的愉快的玩耍了</p>
 
           
         
@@ -1855,7 +1867,7 @@ BFC就是页面上的一个隔离的独立容器，容器里面的子元素不�
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">25</span>
+                <span class="site-state-item-count">27</span>
                 <span class="site-state-item-name">posts</span>
               </a>
             </div>
