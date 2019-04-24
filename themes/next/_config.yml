@@ -77,8 +77,8 @@ menu_icons:
 # ---------------------------------------------------------------
 
 # Schemes
-scheme: Muse
-#scheme: Mist
+# scheme: Muse
+scheme: Mist
 #scheme: Pisces
 #scheme: Gemini
 
@@ -90,7 +90,9 @@ scheme: Muse
 # Social Links
 # Key is the link label showing to end users.
 # Value is the target link (E.g. GitHub: https://github.com/iissnan)
-#social:
+social:
+  GitHub: https://github.com/Yippeee
+  Twitter: https://twitter.com/Yipper_tc
   #LinkLabel: Link
 
 # Social Links Icons
@@ -316,7 +318,7 @@ han: false
 #swiftype_key:
 
 # Baidu Analytics ID
-#baidu_analytics:
+baidu_analytics: be0a702b8fbcbc2433ff711ca69c62ed
 
 # Duoshuo ShortName
 #duoshuo_shortname:
@@ -348,7 +350,7 @@ changyan:
 # Available value:
 #    button | slide
 # Warning: Baidu Share does not support https.
-#baidushare:
+baidushare: true
 ##  type: button
 
 # Share

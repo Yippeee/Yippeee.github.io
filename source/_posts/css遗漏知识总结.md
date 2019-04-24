@@ -111,3 +111,12 @@ pseudoElement 是伪元素，没有可以不传或者传null。
 visibility 和 cursor 可以继承，也是可以理解的，外部的都不可见了，里面的怎么还能看见呢。
 
 想来也是，如果子元素的这些元素都与父元素不一致，看上去很不舒畅。
+
+## CSS 渐变属性使用
+使用渐变属性(gradient)可以一个元素多种颜色
+```css
+div{
+    background-image:linear-gradient(to bottom,red 0%,red 50%,blue 50%,blue 100%)
+}
+```
+因为本身属性是渐变的,所有需要对同一个位置(除了首位之外)需要把结束和开始的颜色都标注出来,就可以达到锐化的效果.

@@ -35,7 +35,9 @@ child_chain2.say()
 原型链继承是直接利用原型链实现的继承方法, 将原型继承父类实例的方法和属性
 当子类中调用其本身没有的属性和方法的时候,会在原型链上查找就可以调用父类上的属性和方法了,就实现了继承
 
-> 原型链继承的缺点： 1. 所有实例共享属性和方法，如果某一个实例修改了对象类型（引用类型）的属性的话，所有的实例的属性都会变化。 2.无法在创建实例的时候，向超类的构造函数传递参数
+> 原型链继承的缺点： 
+1. 所有实例共享属性和方法，如果某一个实例修改了对象类型（引用类型）的属性的话，所有的实例的属性都会变化。 
+2. 无法在创建实例的时候，向超类的构造函数传递参数
 
 ### 构造函数继承
 
@@ -47,7 +49,9 @@ let child_constructor = new Child_constructor('20')
 let child_constructor2 = new Child_constructor('21')
 ```
 用构造函数实现继承的时候,每一个子类的实例都会调用一次父类的构造函数,保证了数据的独立性
+
 但是这样并不是完整的继承,这样的方法只实现了属性的继承,而对方法没有继承。在使用方法的时候需要在构造函数内部定义方法，方法就没有复用的了。
+
 so,就是组合继承出场的时候了.
 
 ### 组合继承
@@ -66,7 +70,7 @@ Child_constructor.prototype.constructor = Child_constructor // 同时还需要�
 就衍生了一个创造副本的函数
 ```js
 function object (o) {
-    var F = new function()
+    var F = new Function()
     F.prototype = o
     return new F()
 }
@@ -87,6 +91,7 @@ Child_inherit.prototype.constructor  = Child_inherit
 #### class完成继承
 
 >上面的方法看着就反人类,官方也这么觉得了,自然现在就有官方的解决办法了.类似JAVA,用class来完成继承
+
 ```js
 class Super {
     constructor (name) {
