@@ -11,7 +11,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="theme-color" content="#222">
-
+<meta name="google-site-verification" content="8zDf90JHBHd6ITvkfvZxA9i6vZEXOMl1oDP3Fp7YXtA">
 
 
 
@@ -94,13 +94,17 @@
 
 
 
+<meta name="description" content="学习路上">
+<meta name="keywords" content="前端 js">
 <meta property="og:type" content="website">
 <meta property="og:title" content="依破缘">
-<meta property="og:url" content="http://yippee.ink/git-blog/page/2/index.html">
+<meta property="og:url" content="http://yippee.ink/page/2/index.html">
 <meta property="og:site_name" content="依破缘">
+<meta property="og:description" content="学习路上">
 <meta property="og:locale" content="zh-Hans">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="依破缘">
+<meta name="twitter:description" content="学习路上">
 
 
 
@@ -129,13 +133,12 @@
 
 
 
-  <link rel="canonical" href="http://yippee.ink/git-blog/page/2/">
+  <link rel="canonical" href="http://yippee.ink/page/2/">
 
 
 
 
-
-  <title>依破缘</title>
+  <title> Hexo, NexT - 依破缘学习路上 - 前端小工</title>
   
 
 
@@ -188,7 +191,7 @@
       </a>
     </div>
       
-        <p class="site-subtitle"></p>
+        <h1 class="site-subtitle" itemprop="description">前端小工</h1>
       
   </div>
 
@@ -270,7 +273,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yippee.ink/git-blog/2019/03/19/关于跨域/">
+    <link itemprop="mainEntityOfPage" href="http://yippee.ink/2019/03/14/js中的this/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Yippee">
@@ -287,341 +290,9 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">
+          <h2 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/03/19/关于跨域/" itemprop="url">关于跨域</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-19T11:22:47+08:00">
-                2019-03-19
-              </time>
-            
-
-            
-
-            
-          </span>
-          
-          
-            <span class="post-updated">
-              &nbsp; | &nbsp; post.updated
-              <time itemprop="dateUpdated" datetime="2019-04-22T08:50:33+08:00" content="2019-04-22">
-                2019-04-22
-              </time>
-            </span>
-          
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <blockquote>
-<p>记得在18年年中天天临时抱佛脚,在看过很多关于跨域的问题,但是都是在浅尝辄止之后就完事了<br>对于现阶段的学习,我不应该是不求甚解啊,对于技术的学习应该得越深入越好啊</p>
-</blockquote>
-<h3 id="什么是跨域"><a href="#什么是跨域" class="headerlink" title="什么是跨域"></a>什么是跨域</h3><p>在早期为了防止跨域请求伪造,浏览器引入了同源策略来提高安全.<br>首先同源政策是浏览器引入的,再者什么是同域名呢,同域名,同端口,同协议的才算是同源</p>
-<h4 id="同源策略的影响"><a href="#同源策略的影响" class="headerlink" title="同源策略的影响"></a>同源策略的影响</h4><p>不同的域名下,跨域获取另一个域名的脚本,css,图片等资源,但是不可以发起请求,也不可以操作cookie/localStorage</p>
-<h3 id="js解决跨域的方法"><a href="#js解决跨域的方法" class="headerlink" title="js解决跨域的方法"></a>js解决跨域的方法</h3><h4 id="JSONP"><a href="#JSONP" class="headerlink" title="JSONP"></a>JSONP</h4><p>jsonp的意思就是JSON + callback,利用script请求资源不受同源策略影响的hack.<br>来,手写一个<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">addScript</span> (<span class="params">src</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> script = <span class="built_in">document</span>.createElement(<span class="string">'script'</span>)</span><br><span class="line">    script.src = src</span><br><span class="line">    <span class="built_in">document</span>.appendChild(script)</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">window</span>.onload = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  addScriptTag(<span class="string">'http://example.com/ip?callback=foo'</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span> (<span class="params">fata</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(data)</span><br><span class="line">&#125;v</span><br></pre></td></tr></table></figure></p>
-<p>jsonP的关键就在于两点</p>
-<ul>
-<li>动态添加script发起请求</li>
-<li>请求的回调callback一定是一个函数</li>
-</ul>
-<h4 id="document-domain"><a href="#document-domain" class="headerlink" title="document.domain"></a>document.domain</h4><blockquote>
-<p>这个方法只使用于共享cookie, LocalStorage 和 IndexDB 无法通过这种方法,而且只适用于一级域名/二级域名相同的情况下(因为document.domain的限制)<br>document.domain只能设置成为当前domain的suffix(后缀)</p>
-</blockquote>
-<p>eg:<br>A网页是<code>https://www.zhihu.com</code><br>B网页是<code>https://zhihu.com</code></p>
-<p>在B中设置了cookie, <code>document.cookie = &#39;name = tony&#39;</code><br>只需要在A中设置<code>document.domain = &#39;zhihu.com&#39;</code><br>然后就可以获取B中的cookie</p>
-<p>除了这种方法还可以通过服务端设置cookie的时候指定<br><code>Set-Cookie: key=value; domain=.example.com; path=/</code></p>
-<blockquote>
-<p>除此之外还有很多关于iframe的解决的办法,我觉得这个ifame实在没有在怎么使用了就不做记录了</p>
-</blockquote>
-<h3 id="服务器跨域"><a href="#服务器跨域" class="headerlink" title="服务器跨域"></a>服务器跨域</h3><h4 id="跨域资源共享-CORS"><a href="#跨域资源共享-CORS" class="headerlink" title="跨域资源共享 CORS"></a>跨域资源共享 CORS</h4><p>跨域资源共享允许浏览器向跨域服务器发出请求,从而克服了AJAX只能同源使用的限制</p>
-<blockquote>
-<p>以下信息来自我自己对<a href="http://www.ruanyifeng.com/blog/2016/04/cors.html" target="_blank" rel="noopener">阮一峰</a>的博客和<a href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Access_control_CORS" target="_blank" rel="noopener">MDN</a>理解</p>
-</blockquote>
-<p>cors需要服务器和浏览器同时支持,整个CORS通信的过程都是浏览器自动完成的.开发者不需要做什么其他的操作.<br>所以关键在于服务器</p>
-<h5 id="两种请求"><a href="#两种请求" class="headerlink" title="两种请求"></a>两种请求</h5><p>浏览器会将请求分为两种: 简单请求 和 非简单请求</p>
-<h6 id="简单请求"><a href="#简单请求" class="headerlink" title="简单请求"></a>简单请求</h6><p>满足的条件:</p>
-<blockquote>
-<p>请求是以下三个之一:</p>
-<ol>
-<li>GET</li>
-<li>POST</li>
-<li>HEAD<br>http的头部信息也不超过以下几种字段:</li>
-</ol>
-<ul>
-<li>Accept</li>
-<li>Accept-Language</li>
-<li>Content-Language</li>
-<li>Last-Event-ID</li>
-<li>Content-Type：只限于三个值application/x-www-form-urlencoded、multipart/form-data、text/plain</li>
-</ul>
-</blockquote>
-<p>如果是简单请求,浏览器会在头部加上一个<code>Origin</code>字段用于说明,本次请求来自哪个源.<br>服务器就可以根据这个值,判断是否同意这次请求.<br>如果服务器不同意这次请求,在返回头里面就没有<code>Access-Control-Allow-Origin</code>,浏览器就会知道请求出错了.<br>如果返回头中有<code>Access-Control-Allow-Origin</code>,就说明此次请求的源在服务器的origin中.<br>返回信息会加上</p>
-<ol>
-<li><p>Access-Control-Allow-Origin</p>
-<p><code>Access-Control-Allow-Origin: &lt;origin&gt; | *</code><br>origin会指定允许访问的url,还可以设置<code>*</code>为通配符</p>
-</li>
-<li><p>Access-Control-Allow-Credentials</p>
-<p> 该字段表明是否允许浏览器读取response中的内容.</p>
-<blockquote>
-<p>这句话实在是看不懂啥意思.有啥内容要去读啊.</p>
-</blockquote>
-<p> 阮一峰的说法: 就是cookie是否可以包含在请求中.<br> 默认情况下的cors是不包含cookies的,设置为true的情况才会发送出去</p>
-<p> <a href="https://stackoverflow.com/questions/24687313/what-exactly-does-the-access-control-allow-credentials-header-do" target="_blank" rel="noopener">stackoverflow</a>上也有一篇文章解释的很清楚</p>
-<p> 要想在cors中使用cookie同时还需要客户端设置 <code>withCredentials</code> 为 <code>true</code></p>
-</li>
-<li><p>Access-Control-Expose-Headers</p>
-<p> 在跨域访问时，XMLHttpRequest对象的getResponseHeader()方法只能拿到一些最基本的响应头，Cache-Control、Content-Language、Content-Type、Expires、Last-Modified、Pragma，如果要访问其他头，则需要服务器设置本响应头。</p>
-<p> 如果想要获取其他的响应头,就需要这个属性中说明</p>
-</li>
-<li><p>Content-Type</p>
-<p> 说明资源的类型 </p>
-<blockquote>
-<p>Content-Type标头告诉客户端实际返回的内容的内容类型</p>
-</blockquote>
-</li>
-</ol>
-<h6 id="非简单请求"><a href="#非简单请求" class="headerlink" title="非简单请求"></a>非简单请求</h6><blockquote>
-<p>只要不是简单请求那就是非简单请求</p>
-</blockquote>
-<p>在非简单请求的时候,浏览器会先发送一个预探请求, 该请求的method是<code>OPTIONS</code><br>关键参数是origin, 说明了请求的源<br>其次还会带上两个参数:<code>Access-Control-Request-Method</code> 和 <code>Access-Control-Request-Headers</code><br>第一个参数用于指明请求的方式,<br>第二个参数,<code>Access-Control-Request-Headers</code>,首部字段用于预检请求的响应。其指明了实际请求中允许携带的首部字段。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yippee.ink/git-blog/2019/03/18/理解Promise/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Yippee">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="依破缘">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/03/18/理解Promise/" itemprop="url">理解Promise</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-18T09:03:13+08:00">
-                2019-03-18
-              </time>
-            
-
-            
-
-            
-          </span>
-          
-          
-            <span class="post-updated">
-              &nbsp; | &nbsp; post.updated
-              <time itemprop="dateUpdated" datetime="2019-04-22T08:50:33+08:00" content="2019-04-22">
-                2019-04-22
-              </time>
-            </span>
-          
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <blockquote>
-<p>看到很多对博客的探讨的说法，认为博客应该是对网上没有的知识技能的补充。我不能认同，每个人记录的目的是不一样的，我就是为了记录自己学习的过程，很多文章，现在看来对其他人的作用可能很小，甚至没有什么用。但是这是我记录，加深印象的过程。暂时地步还没有到达补充的看法。</p>
-</blockquote>
-<h3 id="从promise的实现说起"><a href="#从promise的实现说起" class="headerlink" title="从promise的实现说起"></a>从promise的实现说起</h3><p>既然我们想实现一个promise，至少要明白promise是什么。<br>一句话解释promise，对异步事件的最终状态的描述。</p>
-<p>一个简单的，可以代表实现历程的promise：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> PENDING = <span class="string">'PENDING'</span></span><br><span class="line"><span class="keyword">const</span> FULFILLED = <span class="string">'FULFILLED'</span></span><br><span class="line"><span class="keyword">const</span> REJECTED = <span class="string">'REJECTED'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> isFunction = <span class="function"><span class="params">fn</span> =&gt;</span> <span class="keyword">typeof</span> fn === <span class="string">'function'</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyPromise</span> </span>&#123;</span><br><span class="line">    <span class="keyword">constructor</span>(handle) &#123;</span><br><span class="line">        <span class="keyword">if</span> (!isFunction(handle)) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'must be a function'</span>)</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 初始化状态</span></span><br><span class="line">        <span class="keyword">this</span>._status = PENDING</span><br><span class="line">        <span class="comment">// 初始化返回值</span></span><br><span class="line">        <span class="keyword">this</span>._value = <span class="literal">undefined</span></span><br><span class="line">        <span class="comment">// 执行队列</span></span><br><span class="line">        <span class="keyword">this</span>._fulfilledQueues = []</span><br><span class="line">        <span class="keyword">this</span>._rejectedQueues = []</span><br><span class="line"></span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            handle(<span class="keyword">this</span>._resolved.bind(<span class="keyword">this</span>), <span class="keyword">this</span>._rejected.bind(<span class="keyword">this</span>))</span><br><span class="line">        &#125; <span class="keyword">catch</span> (error) &#123;</span><br><span class="line">            <span class="keyword">this</span>._rejected(error)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    _resolved(val) &#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">this</span>._status !== PENDING) <span class="keyword">return</span></span><br><span class="line">        <span class="comment">// 还需要处理如果resolve 接受的还是 promise的情况， 接受就是promise的话， 状态会由接受的promise的状态来决定</span></span><br><span class="line">        <span class="comment">// 上述的解决方法，和then中的设计思路是一样的</span></span><br><span class="line">        <span class="keyword">const</span> run = <span class="function">(<span class="params">value</span>) =&gt;</span> &#123;</span><br><span class="line">            <span class="keyword">const</span> fulfilled = <span class="function">(<span class="params">value</span>) =&gt;</span> &#123;</span><br><span class="line">                <span class="keyword">let</span> cb</span><br><span class="line">                <span class="keyword">while</span> (cb = <span class="keyword">this</span>._fulfilledQueues.shift()) &#123;</span><br><span class="line">                    cb(value)</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">const</span> rejected = <span class="function">(<span class="params">err</span>) =&gt;</span> &#123;</span><br><span class="line">                <span class="keyword">let</span> cb</span><br><span class="line">                <span class="keyword">while</span> (cb = <span class="keyword">this</span>._rejectedQueues.shift()) &#123;</span><br><span class="line">                    cb(err)</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (val <span class="keyword">instanceof</span> MyPromise) &#123;</span><br><span class="line">                val.then(<span class="function"><span class="params">value</span> =&gt;</span> &#123;</span><br><span class="line">                    <span class="keyword">this</span>._status = FULFILLED</span><br><span class="line">                    <span class="keyword">this</span>._value = value</span><br><span class="line">                    fulfilled(value)</span><br><span class="line">                &#125;, err =&gt; &#123;</span><br><span class="line">                    <span class="keyword">this</span>._status = REJECTED</span><br><span class="line">                    <span class="keyword">this</span>._value = err</span><br><span class="line">                    rejected(err)</span><br><span class="line">                &#125;)</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">this</span>._status = FULFILLED</span><br><span class="line">                <span class="keyword">this</span>._value = value</span><br><span class="line">                fulfilled(value)</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">        setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> run(val), <span class="number">0</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    _rejected(err) &#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">this</span>._status !== PENDING) <span class="keyword">return</span></span><br><span class="line">        <span class="keyword">const</span> run = <span class="function">(<span class="params">error</span>) =&gt;</span> &#123;</span><br><span class="line">            <span class="keyword">this</span>._status = REJECTED</span><br><span class="line">            <span class="keyword">this</span>._value = error</span><br><span class="line">            <span class="keyword">let</span> cb</span><br><span class="line">            <span class="keyword">while</span> (cb = <span class="keyword">this</span>._rejectedQueues.shift()) &#123;</span><br><span class="line">                cb(error)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> run(err), <span class="number">0</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    then(onFulfilled, onRejected) &#123;</span><br><span class="line">        <span class="keyword">const</span> &#123; _status, _value &#125; = <span class="keyword">this</span></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> MyPromise(<span class="function">(<span class="params">onFulfilledNext, onRejectedNext</span>) =&gt;</span> &#123;</span><br><span class="line">            <span class="keyword">const</span> fulfilled = <span class="function">(<span class="params">val</span>) =&gt;</span> &#123;</span><br><span class="line">                <span class="keyword">if</span> (!isFunction(onFulfilled)) &#123; <span class="comment">//值穿透 ，如果 then中的值不是函数，会忽略这个值，将上一个的value继续传下去</span></span><br><span class="line">                    onFulfilledNext(val)</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">let</span> res = onFulfilled(val)</span><br><span class="line">                <span class="keyword">if</span> (res <span class="keyword">instanceof</span> MyPromise) &#123; <span class="comment">// 如果返回的还是一个promise的话，需要等待这个promise的结束，所以把 handle 函数直接then 在其后面</span></span><br><span class="line">                    res.then(onFulfilledNext, onRejectedNext)</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    onFulfilledNext(res) <span class="comment">// 一般的情况</span></span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">// 失败的执行函数</span></span><br><span class="line">            <span class="keyword">const</span> rejected = <span class="function">(<span class="params">err</span>) =&gt;</span> &#123;</span><br><span class="line">                <span class="keyword">if</span> (!isFunction(onRejected)) &#123;</span><br><span class="line">                    onRejectedNext(err)</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="built_in">console</span>.trace()</span><br><span class="line">                <span class="keyword">let</span> res = onRejected(err)</span><br><span class="line">                <span class="keyword">if</span> (res <span class="keyword">instanceof</span> MyPromise) &#123;</span><br><span class="line">                    res.then(onFulfilledNext, onRejectedNext)</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    onFulfilledNext(res) <span class="comment">//  在失败队列中，没有错误的执行完了，进行的还是下一个的成功回调</span></span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">switch</span> (_status) &#123;</span><br><span class="line">                <span class="keyword">case</span> PENDING:</span><br><span class="line">                    <span class="keyword">this</span>._fulfilledQueues.push(fulfilled)</span><br><span class="line">                    <span class="keyword">this</span>._rejectedQueues.push(rejected)</span><br><span class="line">                    <span class="keyword">break</span></span><br><span class="line">                <span class="keyword">case</span> FULFILLED:</span><br><span class="line">                    fulfilled(_value)</span><br><span class="line">                    <span class="keyword">break</span></span><br><span class="line">                <span class="keyword">case</span> REJECTED:</span><br><span class="line">                    rejected(_value)</span><br><span class="line">                    <span class="keyword">break</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">catch</span>(fn) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.then(<span class="literal">undefined</span>, fn)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">static</span> resolve(value) &#123; <span class="comment">// resolve reject 返回的是一个具有成功处理函数（失败处理函数）的promise</span></span><br><span class="line">        <span class="keyword">if</span> (value <span class="keyword">instanceof</span> MyPromise) <span class="keyword">return</span> value</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> MyPromise(<span class="function"><span class="params">resolve</span> =&gt;</span> resolve(value))</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">static</span> rejected(val) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> MyPromise(<span class="function">(<span class="params">resolve, rejected</span>) =&gt;</span> rejected(val))</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">static</span> all(lists) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> MyPromise(<span class="function">(<span class="params">resolve, rejected</span>) =&gt;</span> &#123;</span><br><span class="line">            <span class="keyword">let</span> result = []</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">let</span> p <span class="keyword">of</span> lists) &#123;</span><br><span class="line">                MyPromise.resolve(p).then(<span class="function"><span class="params">val</span> =&gt;</span> &#123;</span><br><span class="line">                    result.push(val)</span><br><span class="line">                    <span class="built_in">console</span>.log(<span class="string">'val: '</span>, val);</span><br><span class="line">                    <span class="keyword">if</span> (result.length === lists.length) &#123;</span><br><span class="line">                        resolve(result)</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;, err =&gt; &#123;</span><br><span class="line">                    rejected(err)</span><br><span class="line">                &#125;)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">static</span> race(lists) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> MyPromise(<span class="function">(<span class="params">resolve, rejected</span>) =&gt;</span> &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">let</span> p <span class="keyword">in</span> lists) &#123;</span><br><span class="line">                p.then(<span class="function"><span class="params">val</span> =&gt;</span> &#123;</span><br><span class="line">                    resolve(val)</span><br><span class="line">                &#125;, err =&gt; &#123;</span><br><span class="line">                    rejected(err)</span><br><span class="line">                &#125;)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yippee.ink/git-blog/2019/03/14/js中的this/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Yippee">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="依破缘">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/03/14/js中的this/" itemprop="url">js中的this</a></h1>
+                <a class="post-title-link" href="/2019/03/14/js中的this/" itemprop="url">js中的this</a></h2>
         
 
         <div class="post-meta">
@@ -763,7 +434,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yippee.ink/git-blog/2019/03/13/CSS布局/">
+    <link itemprop="mainEntityOfPage" href="http://yippee.ink/2019/03/13/CSS布局/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Yippee">
@@ -780,9 +451,9 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">
+          <h2 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/03/13/CSS布局/" itemprop="url">CSS布局</a></h1>
+                <a class="post-title-link" href="/2019/03/13/CSS布局/" itemprop="url">CSS布局</a></h2>
         
 
         <div class="post-meta">
@@ -920,7 +591,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yippee.ink/git-blog/2019/03/12/正则表达式/">
+    <link itemprop="mainEntityOfPage" href="http://yippee.ink/2019/03/12/正则表达式/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Yippee">
@@ -937,9 +608,9 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">
+          <h2 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/03/12/正则表达式/" itemprop="url">正则表达式</a></h1>
+                <a class="post-title-link" href="/2019/03/12/正则表达式/" itemprop="url">正则表达式</a></h2>
         
 
         <div class="post-meta">
@@ -964,8 +635,8 @@
           
             <span class="post-updated">
               &nbsp; | &nbsp; post.updated
-              <time itemprop="dateUpdated" datetime="2019-04-22T08:50:33+08:00" content="2019-04-22">
-                2019-04-22
+              <time itemprop="dateUpdated" datetime="2019-05-06T15:48:26+08:00" content="2019-05-06">
+                2019-05-06
               </time>
             </span>
           
@@ -1145,7 +816,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yippee.ink/git-blog/2019/03/07/计算机基础知识补充/">
+    <link itemprop="mainEntityOfPage" href="http://yippee.ink/2019/03/07/计算机基础知识补充/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Yippee">
@@ -1162,9 +833,9 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">
+          <h2 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/03/07/计算机基础知识补充/" itemprop="url">计算机基础知识补充</a></h1>
+                <a class="post-title-link" href="/2019/03/07/计算机基础知识补充/" itemprop="url">计算机基础知识补充</a></h2>
         
 
         <div class="post-meta">
@@ -1189,8 +860,8 @@
           
             <span class="post-updated">
               &nbsp; | &nbsp; post.updated
-              <time itemprop="dateUpdated" datetime="2019-04-24T10:06:04+08:00" content="2019-04-24">
-                2019-04-24
+              <time itemprop="dateUpdated" datetime="2019-05-06T15:48:45+08:00" content="2019-05-06">
+                2019-05-06
               </time>
             </span>
           
@@ -1244,7 +915,28 @@
 </blockquote>
 <p>把CPU比做一个工厂，如果是单核CPU，那么这个的意思就是，一次只能一个运行一个车间，一个车间就是一个进程(process)</p>
 <p>车间里会有很多协同工作的工人，这些工人就看做是线程(thread)。在一个进程中就可以有多个线程。<br>同时一个进程中间的内存是共享的，但是是不能同时使用的。</p>
-<h3 id="浏览器最小宽度"><a href="#浏览器最小宽度" class="headerlink" title="浏览器最小宽度"></a>浏览器最小宽度</h3><p>窗口缩小最小宽度是400px(来自Google)</p>
+<h2 id="浏览器最小宽度"><a href="#浏览器最小宽度" class="headerlink" title="浏览器最小宽度"></a>浏览器最小宽度</h2><p>窗口缩小最小宽度是400px(来自Google)</p>
+<h2 id="md5"><a href="#md5" class="headerlink" title="md5"></a>md5</h2><p>md5可以说的其实有很多，在这里我只是记录我对MD5的认知。</p>
+<p>MD5是一种摘要算法，常用于数据的标识，和一些对安全要求稍弱的密码登录。</p>
+<p>并不能说MD5是加密算法，用简单的语言描述MD5算法就是，丢失数据信息，只通过部分形成32位的16进制数。</p>
+<p>MD5不是完全安全的。常见的破解方法有：彩虹表，就是通过不断的计算MD5值，构建数据巨大的对象，然后反向查询。</p>
+<h2 id="文件压缩原理"><a href="#文件压缩原理" class="headerlink" title="文件压缩原理"></a>文件压缩原理</h2><p>下载文件的时候一个几百兆的文件可以解压出几兆的文件，那么这是一个怎么样的过程呢。</p>
+<p>文件存在于计算机，都只是0和1罢了。</p>
+<p>文件的压缩，就是将这些0和1组成的数据用更加简洁的数据表示出来。</p>
+<p>通常使用的方法有：</p>
+<ol>
+<li>字典算法</li>
+</ol>
+<p>将一些经常出现的，位长长的用一些简洁的字段表示。生成一个字典列表。</p>
+<ol start="2">
+<li>固定位长算法</li>
+</ol>
+<p>使用固定的进制位长。</p>
+<ol start="3">
+<li>RLE（Run Length Encoding）</li>
+</ol>
+<p>… 还有很多，就不一一记录了。大致了解下</p>
+<h2 id="负载均衡"><a href="#负载均衡" class="headerlink" title="负载均衡"></a>负载均衡</h2><p>我们把用户的访问流量称为负载，而根据转发策略（rules）将负载（访问流量）分配给后端机器的服务便是负载均衡</p>
 
           
         
@@ -1293,7 +985,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yippee.ink/git-blog/2019/03/06/几道面试题的知识总结/">
+    <link itemprop="mainEntityOfPage" href="http://yippee.ink/2019/03/06/几道面试题的知识总结/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Yippee">
@@ -1310,9 +1002,9 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">
+          <h2 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/03/06/几道面试题的知识总结/" itemprop="url">几道面试题的知识总结</a></h1>
+                <a class="post-title-link" href="/2019/03/06/几道面试题的知识总结/" itemprop="url">几道面试题的知识总结</a></h2>
         
 
         <div class="post-meta">
@@ -1476,7 +1168,7 @@ BFC就是页面上的一个隔离的独立容器，容器里面的子元素不�
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yippee.ink/git-blog/2019/02/22/疯狂的函数/">
+    <link itemprop="mainEntityOfPage" href="http://yippee.ink/2019/02/22/疯狂的函数/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Yippee">
@@ -1493,9 +1185,9 @@ BFC就是页面上的一个隔离的独立容器，容器里面的子元素不�
 
         
         
-          <h1 class="post-title" itemprop="name headline">
+          <h2 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/02/22/疯狂的函数/" itemprop="url">疯狂的函数</a></h1>
+                <a class="post-title-link" href="/2019/02/22/疯狂的函数/" itemprop="url">疯狂的函数</a></h2>
         
 
         <div class="post-meta">
@@ -1617,7 +1309,7 @@ BFC就是页面上的一个隔离的独立容器，容器里面的子元素不�
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yippee.ink/git-blog/2019/01/10/JS中的继承/">
+    <link itemprop="mainEntityOfPage" href="http://yippee.ink/2019/01/10/JS中的继承/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Yippee">
@@ -1634,9 +1326,9 @@ BFC就是页面上的一个隔离的独立容器，容器里面的子元素不�
 
         
         
-          <h1 class="post-title" itemprop="name headline">
+          <h2 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/01/10/JS中的继承/" itemprop="url">JS中的继承</a></h1>
+                <a class="post-title-link" href="/2019/01/10/JS中的继承/" itemprop="url">JS中的继承</a></h2>
         
 
         <div class="post-meta">
@@ -1783,7 +1475,7 @@ BFC就是页面上的一个隔离的独立容器，容器里面的子元素不�
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yippee.ink/git-blog/2019/01/09/如何使用hexo-新手向/">
+    <link itemprop="mainEntityOfPage" href="http://yippee.ink/2019/01/09/如何使用hexo-新手向/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Yippee">
@@ -1800,9 +1492,9 @@ BFC就是页面上的一个隔离的独立容器，容器里面的子元素不�
 
         
         
-          <h1 class="post-title" itemprop="name headline">
+          <h2 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/01/09/如何使用hexo-新手向/" itemprop="url">如何使用hexo(新手向)</a></h1>
+                <a class="post-title-link" href="/2019/01/09/如何使用hexo-新手向/" itemprop="url">如何使用hexo(新手向)</a></h2>
         
 
         <div class="post-meta">
@@ -1918,6 +1610,418 @@ BFC就是页面上的一个隔离的独立容器，容器里面的子元素不�
 
 
     
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yippee.ink/2019/01/08/e4-b8-80-e4-ba-9b-e5-b8-b8-e8-a7-81-e7-9a-84-e9-9d-a2-e8-af-95-e9-a2-98/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yippee">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="依破缘">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/01/08/e4-b8-80-e4-ba-9b-e5-b8-b8-e8-a7-81-e7-9a-84-e9-9d-a2-e8-af-95-e9-a2-98/" itemprop="url">一些常见的面试题</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-08T10:33:09+08:00">
+                2019-01-08
+              </time>
+            
+
+            
+
+            
+          </span>
+          
+          
+            <span class="post-updated">
+              &nbsp; | &nbsp; post.updated
+              <time itemprop="dateUpdated" datetime="2019-04-22T08:50:33+08:00" content="2019-04-22">
+                2019-04-22
+              </time>
+            </span>
+          
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/总结/" itemprop="url" rel="index">
+                    <span itemprop="name">总结</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <blockquote>
+<p>这里记录都是一些很常见的面试题 经常遇到,但是搞得并不是很清楚</p>
+</blockquote>
+<ol>
+<li>[“1”, “2”, “3”].map(parseInt); 先看上面这道题,很常见吧.结果是什么呢,反正不是[1,2,3]就是了 正确的应该是[1, NaN, NaN]. 刚开始我不知道为什么,只是记到parentInt接受的参数有两个所以.. <code>js console.log(parseInt.length) // 2</code> 第二个参数是指定传入参数的进制,默认是10进制的 而返回都是10进制的 我开始以为是因为把 数组中’1’,’2’一起传过去了.并不是这样滴 看map函数<pre><code class="js">[<span class="string">"1"</span>, <span class="string">"2"</span>, <span class="string">"3"</span>].map(<span class="built_in">console</span>.log)
+<span class="comment">/**</span>
+<span class="comment">1 0 [ '1', '2', '3' ]</span>
+<span class="comment">2 1 [ '1', '2', '3' ]</span>
+<span class="comment">3 2 [ '1', '2', '3' ]</span>
+<span class="comment">*/</span>
+</code></pre>
+</li>
+</ol>
+<p>可以看到还是因为map本身参数是有三个的,所以上面的题目中传入的值是 ‘1’ 0 ‘2’ 1 ‘3’ 2 2并不是一个1进制的树,3也不是.return NaN 当参数 radix 的值为 0，或没有设置该参数时，parseInt() 会根据 string 来判断数字的基数。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yippee.ink/2019/01/07/JS中的位操作符/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yippee">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="依破缘">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/01/07/JS中的位操作符/" itemprop="url">JS中的位操作符</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-07T11:39:05+08:00">
+                2019-01-07
+              </time>
+            
+
+            
+
+            
+          </span>
+          
+          
+            <span class="post-updated">
+              &nbsp; | &nbsp; post.updated
+              <time itemprop="dateUpdated" datetime="2019-04-22T08:50:33+08:00" content="2019-04-22">
+                2019-04-22
+              </time>
+            </span>
+          
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">笔记</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <blockquote>
+<p>位操作符在数字逻辑课程中,曾经系统的学习过,但是在JS中对应的是什么,往往好像不是很可以一次说的清楚.</p>
+</blockquote>
+<p>刚刚看到位操作的英语 bit operation </p>
+<p>在看mdn中的Polyfill中,常常可以看到这样的做法: length = length &gt;&gt;&gt; 0 google一下, 在使用 &gt;&gt;&gt;0的时候,基本上保证了参数不会为负数,但是可能会为其他类型的数值,这样就会把其他类型的都变成0.作用和~~是一样的.</p>
+<blockquote>
+<p>这里再吐槽一句js吧.这设计的啥玩意啊,有点太混乱的了.上面的原因都是位操作符会把参数全部转成32位的2进制的补码进行操作,而且对参数没有限制, 所以是非数组的数值,都被当成了0进行的操作.同时还会忽略掉62位浮点型的精度,所以对于数字也只会保留数字的整数部分.</p>
+</blockquote>
+<p>先总结这样使用的作用 <strong>1.把非数字的字符转化成0 2.把数字取大于等于零的整数部分</strong> </p>
+<p>为了整理清楚上述结果产生的原因,我们需要对JS中的位操作符有一个基本的认识: <a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Guide/Expressions_and_Operators#%E4%BD%8D%E8%BF%90%E7%AE%97%E7%AC%A6" target="_blank" rel="noopener">位操作符</a> </p>
+<p>说一点基础的知识,位操作符是给电脑内存中二进制运算使用的.所以在使用位操作运算的时候,一定得把数字转化成2进制来运算.同时数值在计算机中存储都是用的补码,然后再转回到10进制呈现. </p>
+<p>对于负数的操作,记录一下.  当发现数值的首位是1的时候, 说明此时数为负数. 所以就不能直接转成10进制的数值. 需要取反,然后加一(就是补码操作).然后再把<strong>负数符号加上去</strong>.反之,如果本身首位都是0了,则说明是正数, 直接转成10进制就完事了.</p>
+<p><strong>同时在js中,</strong></p>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>操作</th>
+<th>举例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>&lt;&lt;(左移位)</td>
+<td>将第一个操作数向左移动指定数量的位. 左边移出位被抛弃. <strong>左边移出的几位被丢弃.右边多出的空位由0补齐</strong></td>
+<td>9&lt;&lt;2产生36，因为1001移位2比特向左变为100100，它是36。</td>
+</tr>
+<tr>
+<td>>&gt;(带符号右移)</td>
+<td>将第一个操作数向右移动指定数量的位. 右边移出位被抛弃. <strong>左边多出的空位由原值的最左边数字补齐</strong>.</td>
+<td>9&gt;&gt;2产生2，因为1001移位2位向右变为10，其是2。同样，-9&gt;&gt;2产生-3，由于符号被保留。</td>
+</tr>
+<tr>
+<td>>&gt;&gt;(补零右移)</td>
+<td>将第一个操作数向右移动指定数量的位. 右边移出位被抛弃. <strong>左边多出的空位由0补齐</strong>.</td>
+<td>19&gt;&gt;&gt;2产生4，因为10011移位2位向右变为100，它是4。对非负数值，补零右移和带符号右移产生相同结果。</td>
+</tr>
+</tbody>
+</table>
+<p>左移中,正数和负数的逻辑是一样的,只是符号会不一样而已. </p>
+<p>例如 19 &lt;&lt; 2 -&gt; 76 -19 &lt;&lt; 2 -&gt; 76 而对于右移,结果就会有所不同,使用带符号右移或者是补零右移的结果会完全不一样 带符号的移动: 19 &gt;&gt; 2 -&gt; 4 10010 变成了 100 -&gt; 4 -19 &gt;&gt; 4 -&gt; -5 </p>
+<p>-19的原码: 110011 补码:101101 移位: (注意这个地方需要高位用1补齐) 111011 补码:100101 -&gt; -5 </p>
+<p>两点注意事项: 负数在计算移位的使用用的补码移位; 移位中左边的补齐是用的最左边的符号数字(负数的话也就是1)来补齐 对于正数,两种右移的方式是一样的 19 &gt;&gt;&gt; 2 -&gt; 4 而对于负数来说就不一样了,产生的原因则是移动补位的数值不同导致的,在补零右移中,无论正数负数都是用的0来补齐(或者这正是为什么叫做补零右移的原因吧),所以对于正数来说就是一样的结果,而对于负数来说差异就会很大了. -19 &gt;&gt;&gt; 2 -&gt; 1073741819 正是因为补零右移的特性,所以才可以使用这个方法来讲数字强行取整,或者是把非数字转成0</p>
+<hr>
+<p>接下来再对其他的位操作对理解 先看一道题:</p>
+<p><a href="https://i.loli.net/2019/01/07/5c32efafcf701.png" target="_blank" rel="noopener"><img src="https://i.loli.net/2019/01/07/5c32efafcf701.png" alt=""></a> </p>
+<p>大意如下:如何不使用+完成加法 意思很明显了就是适用位操作来完成加法,这个地方就得提到一下异或(XOR),在JS中用^来表示.<a href="https://baike.baidu.com/item/%E5%BC%82%E6%88%96" target="_blank" rel="noopener">异或</a>,在百科中就可以知道,异或的名称又叫做半加运算,因为它实现的逻辑法则和加法是一样的,只是不进位,所以也叫做不进位加法. 理一下我的思路,有点乱了.a^b得到的是a+b在二进制的情况下没有进位得到的结果 eg. 9 + 5 -&gt; 1001 + 101 1001 ^ 101 = 1100 竟然我们知道了在没有进位的情况下获得的值,那么现在只需要知道哪些地方进位了,再加上不就是加法的最终结果了嘛 什么情况下才会进位呢,当然是都为1的情况啊. 什么? 都为1,这不就是与操作吗,但是还要想到的是,在与操作的时候,获取到的都为1的位置,但是在真实的加法的情况下,进位的数值应该在都是1的左边的位置 所以,将a &amp; b &gt;&gt; 1就可以得到a b相加的情况下,进位的位置了 现在思路有了,那怎么实现这个加法呢. 可以看到在上面思路中, a + b = (a ^ b) + (a &amp; b &lt;&lt; 1) 前一个部分是a b不进位的加法的结果,后一部分是进位的数值,也就是说,如果后一部分不为0那么怎么都需要加法. 那么,如果后一部分为0的话,也就是a b不进位的加法正好等于 a+b 的时候,就不需要用到+号了.<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">tc_add</span> (<span class="params">a, b</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">while</span> (b != <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">let</span> _a = a ^ b</span><br><span class="line">        <span class="keyword">let</span> _b = (a &amp; b) &lt;&lt; <span class="number">1</span></span><br><span class="line">        a = _a</span><br><span class="line">        b = _b</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">'a:'</span>, a)</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">'b:'</span>, b)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> a</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(tc_add(<span class="number">9</span>, <span class="number">5</span>))</span><br><span class="line"><span class="comment">// 其实看来就像是一个递归,直到b等于0的时候就完成了加法运算</span></span><br></pre></td></tr></table></figure></p>
+<p>再写一个不用临时变量来交换变量的方法 a = a ^ b b = a ^ b a = a ^ b 并不提倡这么使用,但是可以搞懂一下这个的原理. b = a ^ b ^ b = a ^ 0 = a a = a ^ b ^ a = b ^ 0 = b 就是因为,任何数和0异或还是本身</p>
+<blockquote>
+<p>这还真的是巧了,从来没哟这么觉得这个异或有这么多功能,今天本来想做一下这块的记录.结果又看到了一道关于异或的题</p>
+</blockquote>
+<p>题目描述: 给定一个非空整数数组，除了某个元素只出现一次以外，其余每个元素均出现两次。找出那个只出现了一次的元素。 </p>
+<p>看这个题目, 想法有没有和这个交换变量的题的思想一模一样… 你可能会说为啥,两次就是偶数次,一次的就是奇数次. 还记得上面的那个 a ^ b ^ a = b 吧,所以这道题直接把所有的元素异或一道剩下的就是那个只有一次的元素了..</p>
+<blockquote>
+<p>2019 - 03 - 06 add</p>
+</blockquote>
+<h3 id="按位逻辑操作符"><a href="#按位逻辑操作符" class="headerlink" title="按位逻辑操作符"></a>按位逻辑操作符</h3><blockquote>
+<p>操作数被转换成32位整数，用比特序列（0和1组成）表示。超过32位的数字会被丢弃。例如, 以下具有32位以上的整数将转换为32位整数:</p>
+</blockquote>
+<p>同时 | &amp; 是js中的位比较符号, 也是对其数的二进制进行的位操作.</p>
+<p>| 是或, &amp;是与 , ~ 是非 </p>
+<p>举一个使用&amp;的栗子,在 js中的 Node的 API - compareDocumentPosition<br>在这个 API中, 返回值都是二进制</p>
+<p><code>node.compareDocumentPosition( otherNode )</code></p>
+<table>
+<thead>
+<tr>
+<th>返回值</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>不在同一个文档中</td>
+</tr>
+<tr>
+<td>2</td>
+<td>otherNode 在 node 之前</td>
+</tr>
+<tr>
+<td>4</td>
+<td>otherNode 在 node 之后</td>
+</tr>
+<tr>
+<td>8</td>
+<td>otherNode 包含 node</td>
+</tr>
+<tr>
+<td>16</td>
+<td>otherNode 被 node 包含</td>
+</tr>
+</tbody>
+</table>
+<p><strong>注意:这个compare是 other和 node之间的关系</strong></p>
+<p>而且,关系并存的情况下,返回的值是和.<br>所以,这个地方就是用到的&amp; 来进行判断了.</p>
+<p><code>node.compareDocumentPosition( otherNode ) &amp; 4</code>返回的如果是false,则说明other不在 node 之后,反之则反.</p>
+<p>~也是按位操作符,按位取反<br>对于是数值的情况下, ~x = -(x + 1)</p>
+<p>使用情景:<br>和indexOf 一起使用, <figure class="highlight plain"><figcaption><span>&#123;</span><a href="//">包含&#125; ```</a></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">同时还可以使用 ~~ 将操作符转化成32位有符号正数</span><br><span class="line">```js</span><br><span class="line">~~ null // 0</span><br><span class="line">~~ undefined // 0</span><br><span class="line">~~ NaN // 0</span><br><span class="line">~~ &#123;&#125; // 0</span><br><span class="line">~~ true // 1</span><br><span class="line">~~ &apos;&apos; // 0</span><br><span class="line">~~ &apos;string&apos; // 0</span><br><span class="line">~~ &apos;1&apos; // 1</span><br><span class="line">~~ Number.POSITIVE_INFINITY // 0</span><br><span class="line"></span><br><span class="line">~~ 1.2 // 1</span><br><span class="line">~~ -1.2 // -1</span><br><span class="line">~~ 1.6 // 1</span><br><span class="line">~~ -1.6 // -1</span><br><span class="line">~~ (Math.pow(2, 31) - 1) // 2147483647 = 2^31-1</span><br><span class="line">~~ (Math.pow(2, 31)) // -2147483648 = -2^31</span><br><span class="line">~~ (-Math.pow(2, 31)) // -2147483648 = -2^31</span><br><span class="line">~~ (-Math.pow(2, 31) - 1) // 2147483647 = 2^31-1</span><br><span class="line">~~ (Math.pow(2, 32)) // 0</span><br></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
   </section>
 
   
@@ -1959,14 +2063,14 @@ BFC就是页面上的一个隔离的独立容器，容器里面的子元素不�
           <p class="site-author-name" itemprop="name">Yippee</p>
            
               <p class="site-description motion-element" itemprop="description"></p>
-          
+           
         </div>
         <nav class="site-state motion-element">
 
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">24</span>
+                <span class="site-state-item-count">22</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -2198,6 +2302,21 @@ BFC就是页面上的一个隔离的独立容器，容器里面的子元素不�
   
 
   
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
 
   
 

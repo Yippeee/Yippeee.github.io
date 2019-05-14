@@ -4,16 +4,16 @@
 
 # Site
 title: '依破缘'
-subtitle:
-description:
-keywords:
+subtitle: 前端小工
+description: 学习路上
+keywords: 前端 js
 author: Yippee
 language: zh-Hans
 timezone:
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
-url: http://yippee.ink/git-blog
+url: http://yippee.ink
 root: / 
 permalink: :year/:month/:day/:title/
 permalink_defaults:

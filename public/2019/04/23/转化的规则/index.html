@@ -11,7 +11,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="theme-color" content="#222">
-
+<meta name="google-site-verification" content="8zDf90JHBHd6ITvkfvZxA9i6vZEXOMl1oDP3Fp7YXtA">
 
 
 
@@ -94,14 +94,18 @@
 
 
 
+<meta name="description" content="js中==会发生类型转换，这是在一开始学习js的时候都会注意到的点。但是其中的细节，往往没有深究。本文旨在对其中的细节做一个记录与梳理。  基本规则a == b  如果a的类型与b的类型是一样的。 a == b 等同于 a === b. a b 类型不同才进行下面的转化  null 和 undefined 在 == 的情况下，默认是相等的。  如果 a b 是 String Number 两种类">
+<meta name="keywords" content="前端 js">
 <meta property="og:type" content="article">
 <meta property="og:title" content="== 隐式转化的规则">
-<meta property="og:url" content="http://yippee.ink/git-blog/2019/04/23/转化的规则/index.html">
+<meta property="og:url" content="http://yippee.ink/2019/04/23/转化的规则/index.html">
 <meta property="og:site_name" content="依破缘">
+<meta property="og:description" content="js中==会发生类型转换，这是在一开始学习js的时候都会注意到的点。但是其中的细节，往往没有深究。本文旨在对其中的细节做一个记录与梳理。  基本规则a == b  如果a的类型与b的类型是一样的。 a == b 等同于 a === b. a b 类型不同才进行下面的转化  null 和 undefined 在 == 的情况下，默认是相等的。  如果 a b 是 String Number 两种类">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-04-23T10:35:15.740Z">
+<meta property="og:updated_time" content="2019-05-14T08:49:56.846Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="== 隐式转化的规则">
+<meta name="twitter:description" content="js中==会发生类型转换，这是在一开始学习js的时候都会注意到的点。但是其中的细节，往往没有深究。本文旨在对其中的细节做一个记录与梳理。  基本规则a == b  如果a的类型与b的类型是一样的。 a == b 等同于 a === b. a b 类型不同才进行下面的转化  null 和 undefined 在 == 的情况下，默认是相等的。  如果 a b 是 String Number 两种类">
 
 
 
@@ -130,8 +134,7 @@
 
 
 
-  <link rel="canonical" href="http://yippee.ink/git-blog/2019/04/23/转化的规则/">
-
+  <link rel="canonical" href="http://yippee.ink/2019/04/23/转化的规则/">
 
 
 
@@ -187,7 +190,7 @@
       </a>
     </div>
       
-        <p class="site-subtitle"></p>
+        <h1 class="site-subtitle" itemprop="description">前端小工</h1>
       
   </div>
 
@@ -269,7 +272,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yippee.ink/git-blog/2019/04/23/转化的规则/">
+    <link itemprop="mainEntityOfPage" href="http://yippee.ink/2019/04/23/转化的规则/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Yippee">
@@ -286,7 +289,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">== 隐式转化的规则</h1>
+          <h2 class="post-title" itemprop="name headline">== 隐式转化的规则</h2>
         
 
         <div class="post-meta">
@@ -311,8 +314,8 @@
           
             <span class="post-updated">
               &nbsp; | &nbsp; post.updated
-              <time itemprop="dateUpdated" datetime="2019-04-23T18:35:15+08:00" content="2019-04-23">
-                2019-04-23
+              <time itemprop="dateUpdated" datetime="2019-05-14T16:49:56+08:00" content="2019-05-14">
+                2019-05-14
               </time>
             </span>
           
@@ -345,7 +348,36 @@
       
 
       
-        
+        <blockquote>
+<p>js中==会发生类型转换，这是在一开始学习js的时候都会注意到的点。但是其中的细节，往往没有深究。本文旨在对其中的细节做一个记录与梳理。</p>
+</blockquote>
+<h1 id="基本规则"><a href="#基本规则" class="headerlink" title="基本规则"></a>基本规则</h1><p>a == b</p>
+<ol>
+<li><p>如果a的类型与b的类型是一样的。 a == b 等同于 a === b. a b 类型不同才进行下面的转化</p>
+</li>
+<li><p>null 和 undefined 在 == 的情况下，默认是相等的。</p>
+</li>
+<li><p>如果 a b 是 String Number 两种类型中的， 那么在 == 中会转化成number(toNumber) 来做比较。</p>
+</li>
+<li><p>如果 a b 中有 Boolean 类型的，另一个转化成number(toNumber) 来做比较</p>
+</li>
+<li><p>如果 a b 其中一个是对象， 而另一个是 String Number Symbol 中的一种。 将会把对象转化成基本类型(toPrimitive)，再进行比对。</p>
+</li>
+</ol>
+<blockquote>
+<p>注意: <strong>5条件的情况是，只有一个是对象，而另一个一定不能是对象，两个都是对象的情形下，是不会发生类型转化的。</strong>  其实这一点看条件一就说的很清楚了，但是每次在遇到 == 的情况下，总想着去转化。记住一点原则，typeOf 值不同才去转化。</p>
+</blockquote>
+<ol start="6">
+<li>finally 都不满足的情况下，才返回 false</li>
+</ol>
+<h2 id="toPrimitive"><a href="#toPrimitive" class="headerlink" title="toPrimitive"></a>toPrimitive</h2><p><a href="https://www.ecma-international.org/ecma-262/9.0/#sec-toprimitive" target="_blank" rel="noopener">原文定义</a></p>
+<p>原文说的东西太过于冗杂，经过我理解。觉得就是 valueOf 或者 toString 方法。valueOf 的优先级更高，在没有valueOf 的情况下，才去调用 toString方法</p>
+<h2 id="toNumber"><a href="#toNumber" class="headerlink" title="toNumber"></a>toNumber</h2><p>undefined =&gt; NaN</p>
+<p>null =&gt; +0</p>
+<p>Boolean: true =&gt; 1 ; false =&gt; 0</p>
+<p>String: 如果直接把 引号 去掉，可以形成一个number就返回这个number，如果不能就返回 NaN</p>
+<p>Object: 1. 先使用 toPrimitive  2. 再 toNumber</p>
+
       
     </div>
     
@@ -435,21 +467,30 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="Yippee">
           <p class="site-author-name" itemprop="name">Yippee</p>
            
               <p class="site-description motion-element" itemprop="description"></p>
-          
+           
         </div>
         <nav class="site-state motion-element">
 
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">24</span>
+                <span class="site-state-item-count">22</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -520,6 +561,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#基本规则"><span class="nav-number">1.</span> <span class="nav-text">基本规则</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#toPrimitive"><span class="nav-number">1.1.</span> <span class="nav-text">toPrimitive</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#toNumber"><span class="nav-number">1.2.</span> <span class="nav-text">toNumber</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -681,6 +738,21 @@
   
 
   
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
 
   
 
