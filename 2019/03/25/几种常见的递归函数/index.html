@@ -5,13 +5,13 @@
   
 
 
-<html class="theme-next muse use-motion" lang="">
+<html class="theme-next mist use-motion" lang="zh-Hans">
 <head><meta name="generator" content="Hexo 3.8.0">
   <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="theme-color" content="#222">
-
+<meta name="google-site-verification" content="8zDf90JHBHd6ITvkfvZxA9i6vZEXOMl1oDP3Fp7YXtA">
 
 
 
@@ -98,12 +98,12 @@
 <meta name="keywords" content="算法">
 <meta property="og:type" content="article">
 <meta property="og:title" content="几种常见的递归函数">
-<meta property="og:url" content="http://yippee.ink/git-blog/2019/03/25/几种常见的递归函数/index.html">
+<meta property="og:url" content="http://yippee.ink/2019/03/25/几种常见的递归函数/index.html">
 <meta property="og:site_name" content="依破缘">
 <meta property="og:description" content="本文的主题是，常见的几种递归函数，以及如何用非递归的方式实现  树形结构对象的遍历完成一个函数，作用是返回对象的最大深度（其实就是树的深度） 首先的思路，是从DP问题开始。位于N位置的最大深度，就是位于N-1位置的最大深度 + 1， 且如果没有子项了，深度就为1 一个递归的原型就形成了  相连项目之间的关系 递归退出的条件  所以递归的套路模板一般形如：12345if (基本情况) &amp;#123;">
-<meta property="og:locale" content="default">
+<meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://upload.wikimedia.org/wikipedia/commons/0/07/Tower_of_Hanoi.jpeg">
-<meta property="og:updated_time" content="2019-03-31T02:31:52.256Z">
+<meta property="og:updated_time" content="2019-05-18T05:17:07.052Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="几种常见的递归函数">
 <meta name="twitter:description" content="本文的主题是，常见的几种递归函数，以及如何用非递归的方式实现  树形结构对象的遍历完成一个函数，作用是返回对象的最大深度（其实就是树的深度） 首先的思路，是从DP问题开始。位于N位置的最大深度，就是位于N-1位置的最大深度 + 1， 且如果没有子项了，深度就为1 一个递归的原型就形成了  相连项目之间的关系 递归退出的条件  所以递归的套路模板一般形如：12345if (基本情况) &amp;#123;">
@@ -115,14 +115,14 @@
   var NexT = window.NexT || {};
   var CONFIG = {
     root: '/',
-    scheme: 'Muse',
+    scheme: 'Mist',
     sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
     fancybox: true,
     tabs: true,
     motion: true,
     duoshuo: {
       userId: '0',
-      author: 'Author'
+      author: '博主'
     },
     algolia: {
       applicationID: '',
@@ -136,8 +136,7 @@
 
 
 
-  <link rel="canonical" href="http://yippee.ink/git-blog/2019/03/25/几种常见的递归函数/">
-
+  <link rel="canonical" href="http://yippee.ink/2019/03/25/几种常见的递归函数/">
 
 
 
@@ -148,6 +147,16 @@
 
 
 
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?be0a702b8fbcbc2433ff711ca69c62ed";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
 
 
 
@@ -160,7 +169,7 @@
 
 </head>
 
-<body itemscope="" itemtype="http://schema.org/WebPage" lang="default">
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
   
   
@@ -183,7 +192,7 @@
       </a>
     </div>
       
-        <p class="site-subtitle"></p>
+        <h1 class="site-subtitle" itemprop="description">前端小工</h1>
       
   </div>
 
@@ -208,7 +217,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
             
-            Home
+            首页
           </a>
         </li>
       
@@ -218,7 +227,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
             
-            Archives
+            归档
           </a>
         </li>
       
@@ -228,7 +237,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
             
-            Tags
+            标签
           </a>
         </li>
       
@@ -265,7 +274,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yippee.ink/git-blog/2019/03/25/几种常见的递归函数/">
+    <link itemprop="mainEntityOfPage" href="http://yippee.ink/2019/03/25/几种常见的递归函数/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Yippee">
@@ -282,7 +291,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">几种常见的递归函数</h1>
+          <h2 class="post-title" itemprop="name headline">几种常见的递归函数</h2>
         
 
         <div class="post-meta">
@@ -292,9 +301,9 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">发表于</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-03-25T15:53:22+08:00">
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-25T15:53:22+08:00">
                 2019-03-25
               </time>
             
@@ -306,9 +315,9 @@
           
           
             <span class="post-updated">
-              &nbsp; | &nbsp; post.updated
-              <time itemprop="dateUpdated" datetime="2019-03-31T10:31:52+08:00" content="2019-03-31">
-                2019-03-31
+              &nbsp; | &nbsp; 修改于
+              <time itemprop="dateUpdated" datetime="2019-05-18T13:17:07+08:00" content="2019-05-18">
+                2019-05-18
               </time>
             </span>
           
@@ -459,6 +468,12 @@
 
     <div class="post-spread">
       
+        
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='//bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+      
     </div>
   </div>
 
@@ -494,10 +509,10 @@
       
         <ul class="sidebar-nav motion-element">
           <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            Table of Contents
+            文章目录
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
-            Overview
+            站点概览
           </li>
         </ul>
       
@@ -508,15 +523,15 @@
           <p class="site-author-name" itemprop="name">Yippee</p>
            
               <p class="site-description motion-element" itemprop="description"></p>
-          
+           
         </div>
         <nav class="site-state motion-element">
 
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">27</span>
-                <span class="site-state-item-name">posts</span>
+                <span class="site-state-item-count">24</span>
+                <span class="site-state-item-name">日志</span>
               </a>
             </div>
           
@@ -527,7 +542,7 @@
             <div class="site-state-item site-state-categories">
               
                 <span class="site-state-item-count">4</span>
-                <span class="site-state-item-name">categories</span>
+                <span class="site-state-item-name">分类</span>
               
             </div>
           
@@ -538,7 +553,7 @@
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
                 <span class="site-state-item-count">9</span>
-                <span class="site-state-item-name">tags</span>
+                <span class="site-state-item-name">标签</span>
               </a>
             </div>
           
@@ -548,6 +563,30 @@
         
 
         <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/Yippeee" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                    
+                      GitHub
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/Yipper_tc" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                    
+                      Twitter
+                    
+                </a>
+              </span>
+            
           
         </div>
 
@@ -604,13 +643,13 @@
 
 
 <div class="powered-by">
-  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
 </div>
 
 <div class="theme-info">
-  Theme -
+  主题 -
   <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
-    NexT.Muse
+    NexT.Mist
   </a>
 </div>
 
@@ -739,6 +778,21 @@
   
 
   
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
 
   
 

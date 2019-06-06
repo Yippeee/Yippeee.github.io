@@ -5,13 +5,13 @@
   
 
 
-<html class="theme-next muse use-motion" lang="">
+<html class="theme-next mist use-motion" lang="zh-Hans">
 <head><meta name="generator" content="Hexo 3.8.0">
   <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="theme-color" content="#222">
-
+<meta name="google-site-verification" content="8zDf90JHBHd6ITvkfvZxA9i6vZEXOMl1oDP3Fp7YXtA">
 
 
 
@@ -94,13 +94,17 @@
 
 
 
+<meta name="description" content="学习路上">
+<meta name="keywords" content="前端 js">
 <meta property="og:type" content="website">
 <meta property="og:title" content="依破缘">
-<meta property="og:url" content="http://yippee.ink/git-blog/page/2/index.html">
+<meta property="og:url" content="http://yippee.ink/page/2/index.html">
 <meta property="og:site_name" content="依破缘">
-<meta property="og:locale" content="default">
+<meta property="og:description" content="学习路上">
+<meta property="og:locale" content="zh-Hans">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="依破缘">
+<meta name="twitter:description" content="学习路上">
 
 
 
@@ -108,14 +112,14 @@
   var NexT = window.NexT || {};
   var CONFIG = {
     root: '/',
-    scheme: 'Muse',
+    scheme: 'Mist',
     sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
     fancybox: true,
     tabs: true,
     motion: true,
     duoshuo: {
       userId: '0',
-      author: 'Author'
+      author: '博主'
     },
     algolia: {
       applicationID: '',
@@ -129,18 +133,27 @@
 
 
 
-  <link rel="canonical" href="http://yippee.ink/git-blog/page/2/">
+  <link rel="canonical" href="http://yippee.ink/page/2/">
 
 
 
 
-
-  <title>依破缘</title>
+  <title> Hexo, NexT - 依破缘学习路上 - 前端小工</title>
   
 
 
 
 
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?be0a702b8fbcbc2433ff711ca69c62ed";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
 
 
 
@@ -153,7 +166,7 @@
 
 </head>
 
-<body itemscope="" itemtype="http://schema.org/WebPage" lang="default">
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
   
   
@@ -178,7 +191,7 @@
       </a>
     </div>
       
-        <p class="site-subtitle"></p>
+        <h1 class="site-subtitle" itemprop="description">前端小工</h1>
       
   </div>
 
@@ -203,7 +216,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
             
-            Home
+            首页
           </a>
         </li>
       
@@ -213,7 +226,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
             
-            Archives
+            归档
           </a>
         </li>
       
@@ -223,7 +236,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
             
-            Tags
+            标签
           </a>
         </li>
       
@@ -260,7 +273,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yippee.ink/git-blog/2019/03/14/js中的this/">
+    <link itemprop="mainEntityOfPage" href="http://yippee.ink/2019/03/19/关于跨域/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Yippee">
@@ -277,9 +290,9 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">
+          <h2 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/03/14/js中的this/" itemprop="url">js中的this</a></h1>
+                <a class="post-title-link" href="/2019/03/19/关于跨域/" itemprop="url">关于跨域</a></h2>
         
 
         <div class="post-meta">
@@ -289,9 +302,341 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">发表于</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-03-14T18:19:09+08:00">
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-19T11:22:47+08:00">
+                2019-03-19
+              </time>
+            
+
+            
+
+            
+          </span>
+          
+          
+            <span class="post-updated">
+              &nbsp; | &nbsp; 修改于
+              <time itemprop="dateUpdated" datetime="2019-05-18T13:17:07+08:00" content="2019-05-18">
+                2019-05-18
+              </time>
+            </span>
+          
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <blockquote>
+<p>记得在18年年中天天临时抱佛脚,在看过很多关于跨域的问题,但是都是在浅尝辄止之后就完事了<br>对于现阶段的学习,我不应该是不求甚解啊,对于技术的学习应该得越深入越好啊</p>
+</blockquote>
+<h3 id="什么是跨域"><a href="#什么是跨域" class="headerlink" title="什么是跨域"></a>什么是跨域</h3><p>在早期为了防止跨域请求伪造,浏览器引入了同源策略来提高安全.<br>首先同源政策是浏览器引入的,再者什么是同域名呢,同域名,同端口,同协议的才算是同源</p>
+<h4 id="同源策略的影响"><a href="#同源策略的影响" class="headerlink" title="同源策略的影响"></a>同源策略的影响</h4><p>不同的域名下,跨域获取另一个域名的脚本,css,图片等资源,但是不可以发起请求,也不可以操作cookie/localStorage</p>
+<h3 id="js解决跨域的方法"><a href="#js解决跨域的方法" class="headerlink" title="js解决跨域的方法"></a>js解决跨域的方法</h3><h4 id="JSONP"><a href="#JSONP" class="headerlink" title="JSONP"></a>JSONP</h4><p>jsonp的意思就是JSON + callback,利用script请求资源不受同源策略影响的hack.<br>来,手写一个<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">addScript</span> (<span class="params">src</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> script = <span class="built_in">document</span>.createElement(<span class="string">'script'</span>)</span><br><span class="line">    script.src = src</span><br><span class="line">    <span class="built_in">document</span>.appendChild(script)</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">window</span>.onload = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  addScriptTag(<span class="string">'http://example.com/ip?callback=foo'</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span> (<span class="params">fata</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(data)</span><br><span class="line">&#125;v</span><br></pre></td></tr></table></figure></p>
+<p>jsonP的关键就在于两点</p>
+<ul>
+<li>动态添加script发起请求</li>
+<li>请求的回调callback一定是一个函数</li>
+</ul>
+<h4 id="document-domain"><a href="#document-domain" class="headerlink" title="document.domain"></a>document.domain</h4><blockquote>
+<p>这个方法只使用于共享cookie, LocalStorage 和 IndexDB 无法通过这种方法,而且只适用于一级域名/二级域名相同的情况下(因为document.domain的限制)<br>document.domain只能设置成为当前domain的suffix(后缀)</p>
+</blockquote>
+<p>eg:<br>A网页是<code>https://www.zhihu.com</code><br>B网页是<code>https://zhihu.com</code></p>
+<p>在B中设置了cookie, <code>document.cookie = &#39;name = tony&#39;</code><br>只需要在A中设置<code>document.domain = &#39;zhihu.com&#39;</code><br>然后就可以获取B中的cookie</p>
+<p>除了这种方法还可以通过服务端设置cookie的时候指定<br><code>Set-Cookie: key=value; domain=.example.com; path=/</code></p>
+<blockquote>
+<p>除此之外还有很多关于iframe的解决的办法,我觉得这个ifame实在没有在怎么使用了就不做记录了</p>
+</blockquote>
+<h3 id="服务器跨域"><a href="#服务器跨域" class="headerlink" title="服务器跨域"></a>服务器跨域</h3><h4 id="跨域资源共享-CORS"><a href="#跨域资源共享-CORS" class="headerlink" title="跨域资源共享 CORS"></a>跨域资源共享 CORS</h4><p>跨域资源共享允许浏览器向跨域服务器发出请求,从而克服了AJAX只能同源使用的限制</p>
+<blockquote>
+<p>以下信息来自我自己对<a href="http://www.ruanyifeng.com/blog/2016/04/cors.html" target="_blank" rel="noopener">阮一峰</a>的博客和<a href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Access_control_CORS" target="_blank" rel="noopener">MDN</a>理解</p>
+</blockquote>
+<p>cors需要服务器和浏览器同时支持,整个CORS通信的过程都是浏览器自动完成的.开发者不需要做什么其他的操作.<br>所以关键在于服务器</p>
+<h5 id="两种请求"><a href="#两种请求" class="headerlink" title="两种请求"></a>两种请求</h5><p>浏览器会将请求分为两种: 简单请求 和 非简单请求</p>
+<h6 id="简单请求"><a href="#简单请求" class="headerlink" title="简单请求"></a>简单请求</h6><p>满足的条件:</p>
+<blockquote>
+<p>请求是以下三个之一:</p>
+<ol>
+<li>GET</li>
+<li>POST</li>
+<li>HEAD<br>http的头部信息也不超过以下几种字段:</li>
+</ol>
+<ul>
+<li>Accept</li>
+<li>Accept-Language</li>
+<li>Content-Language</li>
+<li>Last-Event-ID</li>
+<li>Content-Type：只限于三个值application/x-www-form-urlencoded、multipart/form-data、text/plain</li>
+</ul>
+</blockquote>
+<p>如果是简单请求,浏览器会在头部加上一个<code>Origin</code>字段用于说明,本次请求来自哪个源.<br>服务器就可以根据这个值,判断是否同意这次请求.<br>如果服务器不同意这次请求,在返回头里面就没有<code>Access-Control-Allow-Origin</code>,浏览器就会知道请求出错了.<br>如果返回头中有<code>Access-Control-Allow-Origin</code>,就说明此次请求的源在服务器的origin中.<br>返回信息会加上</p>
+<ol>
+<li><p>Access-Control-Allow-Origin</p>
+<p><code>Access-Control-Allow-Origin: &lt;origin&gt; | *</code><br>origin会指定允许访问的url,还可以设置<code>*</code>为通配符</p>
+</li>
+<li><p>Access-Control-Allow-Credentials</p>
+<p> 该字段表明是否允许浏览器读取response中的内容.</p>
+<blockquote>
+<p>这句话实在是看不懂啥意思.有啥内容要去读啊.</p>
+</blockquote>
+<p> 阮一峰的说法: 就是cookie是否可以包含在请求中.<br> 默认情况下的cors是不包含cookies的,设置为true的情况才会发送出去</p>
+<p> <a href="https://stackoverflow.com/questions/24687313/what-exactly-does-the-access-control-allow-credentials-header-do" target="_blank" rel="noopener">stackoverflow</a>上也有一篇文章解释的很清楚</p>
+<p> 要想在cors中使用cookie同时还需要客户端设置 <code>withCredentials</code> 为 <code>true</code></p>
+</li>
+<li><p>Access-Control-Expose-Headers</p>
+<p> 在跨域访问时，XMLHttpRequest对象的getResponseHeader()方法只能拿到一些最基本的响应头，Cache-Control、Content-Language、Content-Type、Expires、Last-Modified、Pragma，如果要访问其他头，则需要服务器设置本响应头。</p>
+<p> 如果想要获取其他的响应头,就需要这个属性中说明</p>
+</li>
+<li><p>Content-Type</p>
+<p> 说明资源的类型 </p>
+<blockquote>
+<p>Content-Type标头告诉客户端实际返回的内容的内容类型</p>
+</blockquote>
+</li>
+</ol>
+<h6 id="非简单请求"><a href="#非简单请求" class="headerlink" title="非简单请求"></a>非简单请求</h6><blockquote>
+<p>只要不是简单请求那就是非简单请求</p>
+</blockquote>
+<p>在非简单请求的时候,浏览器会先发送一个预探请求, 该请求的method是<code>OPTIONS</code><br>关键参数是origin, 说明了请求的源<br>其次还会带上两个参数:<code>Access-Control-Request-Method</code> 和 <code>Access-Control-Request-Headers</code><br>第一个参数用于指明请求的方式,<br>第二个参数,<code>Access-Control-Request-Headers</code>,首部字段用于预检请求的响应。其指明了实际请求中允许携带的首部字段。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yippee.ink/2019/03/18/理解Promise/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yippee">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="依破缘">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/03/18/理解Promise/" itemprop="url">理解Promise</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-18T09:03:13+08:00">
+                2019-03-18
+              </time>
+            
+
+            
+
+            
+          </span>
+          
+          
+            <span class="post-updated">
+              &nbsp; | &nbsp; 修改于
+              <time itemprop="dateUpdated" datetime="2019-05-18T13:17:07+08:00" content="2019-05-18">
+                2019-05-18
+              </time>
+            </span>
+          
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <blockquote>
+<p>看到很多对博客的探讨的说法，认为博客应该是对网上没有的知识技能的补充。我不能认同，每个人记录的目的是不一样的，我就是为了记录自己学习的过程，很多文章，现在看来对其他人的作用可能很小，甚至没有什么用。但是这是我记录，加深印象的过程。暂时地步还没有到达补充的看法。</p>
+</blockquote>
+<h3 id="从promise的实现说起"><a href="#从promise的实现说起" class="headerlink" title="从promise的实现说起"></a>从promise的实现说起</h3><p>既然我们想实现一个promise，至少要明白promise是什么。<br>一句话解释promise，对异步事件的最终状态的描述。</p>
+<p>一个简单的，可以代表实现历程的promise：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> PENDING = <span class="string">'PENDING'</span></span><br><span class="line"><span class="keyword">const</span> FULFILLED = <span class="string">'FULFILLED'</span></span><br><span class="line"><span class="keyword">const</span> REJECTED = <span class="string">'REJECTED'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> isFunction = <span class="function"><span class="params">fn</span> =&gt;</span> <span class="keyword">typeof</span> fn === <span class="string">'function'</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyPromise</span> </span>&#123;</span><br><span class="line">    <span class="keyword">constructor</span>(handle) &#123;</span><br><span class="line">        <span class="keyword">if</span> (!isFunction(handle)) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'must be a function'</span>)</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 初始化状态</span></span><br><span class="line">        <span class="keyword">this</span>._status = PENDING</span><br><span class="line">        <span class="comment">// 初始化返回值</span></span><br><span class="line">        <span class="keyword">this</span>._value = <span class="literal">undefined</span></span><br><span class="line">        <span class="comment">// 执行队列</span></span><br><span class="line">        <span class="keyword">this</span>._fulfilledQueues = []</span><br><span class="line">        <span class="keyword">this</span>._rejectedQueues = []</span><br><span class="line"></span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            handle(<span class="keyword">this</span>._resolved.bind(<span class="keyword">this</span>), <span class="keyword">this</span>._rejected.bind(<span class="keyword">this</span>))</span><br><span class="line">        &#125; <span class="keyword">catch</span> (error) &#123;</span><br><span class="line">            <span class="keyword">this</span>._rejected(error)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    _resolved(val) &#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">this</span>._status !== PENDING) <span class="keyword">return</span></span><br><span class="line">        <span class="comment">// 还需要处理如果resolve 接受的还是 promise的情况， 接受就是promise的话， 状态会由接受的promise的状态来决定</span></span><br><span class="line">        <span class="comment">// 上述的解决方法，和then中的设计思路是一样的</span></span><br><span class="line">        <span class="keyword">const</span> run = <span class="function">(<span class="params">value</span>) =&gt;</span> &#123;</span><br><span class="line">            <span class="keyword">const</span> fulfilled = <span class="function">(<span class="params">value</span>) =&gt;</span> &#123;</span><br><span class="line">                <span class="keyword">let</span> cb</span><br><span class="line">                <span class="keyword">while</span> (cb = <span class="keyword">this</span>._fulfilledQueues.shift()) &#123;</span><br><span class="line">                    cb(value)</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">const</span> rejected = <span class="function">(<span class="params">err</span>) =&gt;</span> &#123;</span><br><span class="line">                <span class="keyword">let</span> cb</span><br><span class="line">                <span class="keyword">while</span> (cb = <span class="keyword">this</span>._rejectedQueues.shift()) &#123;</span><br><span class="line">                    cb(err)</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (val <span class="keyword">instanceof</span> MyPromise) &#123;</span><br><span class="line">                val.then(<span class="function"><span class="params">value</span> =&gt;</span> &#123;</span><br><span class="line">                    <span class="keyword">this</span>._status = FULFILLED</span><br><span class="line">                    <span class="keyword">this</span>._value = value</span><br><span class="line">                    fulfilled(value)</span><br><span class="line">                &#125;, err =&gt; &#123;</span><br><span class="line">                    <span class="keyword">this</span>._status = REJECTED</span><br><span class="line">                    <span class="keyword">this</span>._value = err</span><br><span class="line">                    rejected(err)</span><br><span class="line">                &#125;)</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">this</span>._status = FULFILLED</span><br><span class="line">                <span class="keyword">this</span>._value = value</span><br><span class="line">                fulfilled(value)</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">        setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> run(val), <span class="number">0</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    _rejected(err) &#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">this</span>._status !== PENDING) <span class="keyword">return</span></span><br><span class="line">        <span class="keyword">const</span> run = <span class="function">(<span class="params">error</span>) =&gt;</span> &#123;</span><br><span class="line">            <span class="keyword">this</span>._status = REJECTED</span><br><span class="line">            <span class="keyword">this</span>._value = error</span><br><span class="line">            <span class="keyword">let</span> cb</span><br><span class="line">            <span class="keyword">while</span> (cb = <span class="keyword">this</span>._rejectedQueues.shift()) &#123;</span><br><span class="line">                cb(error)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> run(err), <span class="number">0</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    then(onFulfilled, onRejected) &#123;</span><br><span class="line">        <span class="keyword">const</span> &#123; _status, _value &#125; = <span class="keyword">this</span></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> MyPromise(<span class="function">(<span class="params">onFulfilledNext, onRejectedNext</span>) =&gt;</span> &#123;</span><br><span class="line">            <span class="keyword">const</span> fulfilled = <span class="function">(<span class="params">val</span>) =&gt;</span> &#123;</span><br><span class="line">                <span class="keyword">if</span> (!isFunction(onFulfilled)) &#123; <span class="comment">//值穿透 ，如果 then中的值不是函数，会忽略这个值，将上一个的value继续传下去</span></span><br><span class="line">                    onFulfilledNext(val)</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">let</span> res = onFulfilled(val)</span><br><span class="line">                <span class="keyword">if</span> (res <span class="keyword">instanceof</span> MyPromise) &#123; <span class="comment">// 如果返回的还是一个promise的话，需要等待这个promise的结束，所以把 handle 函数直接then 在其后面</span></span><br><span class="line">                    res.then(onFulfilledNext, onRejectedNext)</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    onFulfilledNext(res) <span class="comment">// 一般的情况</span></span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">// 失败的执行函数</span></span><br><span class="line">            <span class="keyword">const</span> rejected = <span class="function">(<span class="params">err</span>) =&gt;</span> &#123;</span><br><span class="line">                <span class="keyword">if</span> (!isFunction(onRejected)) &#123;</span><br><span class="line">                    onRejectedNext(err)</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="built_in">console</span>.trace()</span><br><span class="line">                <span class="keyword">let</span> res = onRejected(err)</span><br><span class="line">                <span class="keyword">if</span> (res <span class="keyword">instanceof</span> MyPromise) &#123;</span><br><span class="line">                    res.then(onFulfilledNext, onRejectedNext)</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    onFulfilledNext(res) <span class="comment">//  在失败队列中，没有错误的执行完了，进行的还是下一个的成功回调</span></span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">switch</span> (_status) &#123;</span><br><span class="line">                <span class="keyword">case</span> PENDING:</span><br><span class="line">                    <span class="keyword">this</span>._fulfilledQueues.push(fulfilled)</span><br><span class="line">                    <span class="keyword">this</span>._rejectedQueues.push(rejected)</span><br><span class="line">                    <span class="keyword">break</span></span><br><span class="line">                <span class="keyword">case</span> FULFILLED:</span><br><span class="line">                    fulfilled(_value)</span><br><span class="line">                    <span class="keyword">break</span></span><br><span class="line">                <span class="keyword">case</span> REJECTED:</span><br><span class="line">                    rejected(_value)</span><br><span class="line">                    <span class="keyword">break</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">catch</span>(fn) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.then(<span class="literal">undefined</span>, fn)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">static</span> resolve(value) &#123; <span class="comment">// resolve reject 返回的是一个具有成功处理函数（失败处理函数）的promise</span></span><br><span class="line">        <span class="keyword">if</span> (value <span class="keyword">instanceof</span> MyPromise) <span class="keyword">return</span> value</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> MyPromise(<span class="function"><span class="params">resolve</span> =&gt;</span> resolve(value))</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">static</span> rejected(val) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> MyPromise(<span class="function">(<span class="params">resolve, rejected</span>) =&gt;</span> rejected(val))</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">static</span> all(lists) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> MyPromise(<span class="function">(<span class="params">resolve, rejected</span>) =&gt;</span> &#123;</span><br><span class="line">            <span class="keyword">let</span> result = []</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">let</span> p <span class="keyword">of</span> lists) &#123;</span><br><span class="line">                MyPromise.resolve(p).then(<span class="function"><span class="params">val</span> =&gt;</span> &#123;</span><br><span class="line">                    result.push(val)</span><br><span class="line">                    <span class="built_in">console</span>.log(<span class="string">'val: '</span>, val);</span><br><span class="line">                    <span class="keyword">if</span> (result.length === lists.length) &#123;</span><br><span class="line">                        resolve(result)</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;, err =&gt; &#123;</span><br><span class="line">                    rejected(err)</span><br><span class="line">                &#125;)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">static</span> race(lists) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> MyPromise(<span class="function">(<span class="params">resolve, rejected</span>) =&gt;</span> &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">let</span> p <span class="keyword">in</span> lists) &#123;</span><br><span class="line">                p.then(<span class="function"><span class="params">val</span> =&gt;</span> &#123;</span><br><span class="line">                    resolve(val)</span><br><span class="line">                &#125;, err =&gt; &#123;</span><br><span class="line">                    rejected(err)</span><br><span class="line">                &#125;)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yippee.ink/2019/03/14/js中的this/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yippee">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="依破缘">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/03/14/js中的this/" itemprop="url">js中的this</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-14T18:19:09+08:00">
                 2019-03-14
               </time>
             
@@ -303,9 +648,9 @@
           
           
             <span class="post-updated">
-              &nbsp; | &nbsp; post.updated
-              <time itemprop="dateUpdated" datetime="2019-03-31T10:31:52+08:00" content="2019-03-31">
-                2019-03-31
+              &nbsp; | &nbsp; 修改于
+              <time itemprop="dateUpdated" datetime="2019-05-18T13:17:07+08:00" content="2019-05-18">
+                2019-05-18
               </time>
             </span>
           
@@ -421,7 +766,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yippee.ink/git-blog/2019/03/13/HTML-CSS知识补充/">
+    <link itemprop="mainEntityOfPage" href="http://yippee.ink/2019/03/13/CSS布局/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Yippee">
@@ -438,9 +783,9 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">
+          <h2 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/03/13/HTML-CSS知识补充/" itemprop="url">HTML&CSS知识补充</a></h1>
+                <a class="post-title-link" href="/2019/03/13/CSS布局/" itemprop="url">CSS布局</a></h2>
         
 
         <div class="post-meta">
@@ -450,9 +795,9 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">发表于</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-03-13T15:35:34+08:00">
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-13T11:16:24+08:00">
                 2019-03-13
               </time>
             
@@ -464,139 +809,9 @@
           
           
             <span class="post-updated">
-              &nbsp; | &nbsp; post.updated
-              <time itemprop="dateUpdated" datetime="2019-03-31T10:31:52+08:00" content="2019-03-31">
-                2019-03-31
-              </time>
-            </span>
-          
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>CSS 渐变属性使用<br>使用渐变属性(gradient)可以一个元素多种颜色<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">div</span>&#123;</span><br><span class="line">    <span class="attribute">background-image</span>:<span class="built_in">linear-gradient</span>(to bottom,red 0%,red 50%,blue 50%,blue 100%)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>因为本身属性是渐变的,所有需要对同一个位置(除了首位之外)需要把结束和开始的颜色都标注出来,就可以达到锐化的效果.</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yippee.ink/git-blog/2019/03/13/CSS布局/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Yippee">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="依破缘">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/03/13/CSS布局/" itemprop="url">CSS布局</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-03-13T11:16:24+08:00">
-                2019-03-13
-              </time>
-            
-
-            
-
-            
-          </span>
-          
-          
-            <span class="post-updated">
-              &nbsp; | &nbsp; post.updated
-              <time itemprop="dateUpdated" datetime="2019-03-31T10:31:52+08:00" content="2019-03-31">
-                2019-03-31
+              &nbsp; | &nbsp; 修改于
+              <time itemprop="dateUpdated" datetime="2019-05-18T13:17:07+08:00" content="2019-05-18">
+                2019-05-18
               </time>
             </span>
           
@@ -708,7 +923,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yippee.ink/git-blog/2019/03/12/正则表达式/">
+    <link itemprop="mainEntityOfPage" href="http://yippee.ink/2019/03/12/正则表达式/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Yippee">
@@ -725,9 +940,9 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">
+          <h2 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/03/12/正则表达式/" itemprop="url">正则表达式</a></h1>
+                <a class="post-title-link" href="/2019/03/12/正则表达式/" itemprop="url">正则表达式</a></h2>
         
 
         <div class="post-meta">
@@ -737,9 +952,9 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">发表于</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-03-12T10:45:22+08:00">
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-12T10:45:22+08:00">
                 2019-03-12
               </time>
             
@@ -751,9 +966,9 @@
           
           
             <span class="post-updated">
-              &nbsp; | &nbsp; post.updated
-              <time itemprop="dateUpdated" datetime="2019-04-21T10:21:22+08:00" content="2019-04-21">
-                2019-04-21
+              &nbsp; | &nbsp; 修改于
+              <time itemprop="dateUpdated" datetime="2019-05-18T13:17:07+08:00" content="2019-05-18">
+                2019-05-18
               </time>
             </span>
           
@@ -933,7 +1148,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yippee.ink/git-blog/2019/03/07/置顶文章/">
+    <link itemprop="mainEntityOfPage" href="http://yippee.ink/2019/03/07/计算机基础知识补充/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Yippee">
@@ -950,9 +1165,9 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">
+          <h2 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/03/07/置顶文章/" itemprop="url">置顶文章</a></h1>
+                <a class="post-title-link" href="/2019/03/07/计算机基础知识补充/" itemprop="url">计算机基础知识补充</a></h2>
         
 
         <div class="post-meta">
@@ -962,9 +1177,9 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">发表于</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-03-07T15:33:56+08:00">
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-07T09:55:21+08:00">
                 2019-03-07
               </time>
             
@@ -976,433 +1191,9 @@
           
           
             <span class="post-updated">
-              &nbsp; | &nbsp; post.updated
-              <time itemprop="dateUpdated" datetime="2019-03-31T10:31:52+08:00" content="2019-03-31">
-                2019-03-31
-              </time>
-            </span>
-          
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="博客现在的规划"><a href="#博客现在的规划" class="headerlink" title="博客现在的规划"></a>博客现在的规划</h1><ul>
-<li style="list-style: none"><input type="checkbox"> js函数式编程学习</li>
-<li style="list-style: none"><input type="checkbox"> Lodash-分析学习<blockquote>
-<p>上面第一个进行的有点困难现在.</p>
-</blockquote>
-</li>
-</ul>
-<p>2019-03-14: </p>
-<ol>
-<li>Promise模仿,手写了一遍实现</li>
-<li>准备完整的搞一遍 js中的 this的问题</li>
-</ol>
-<p>2019-03-18:</p>
-<ol>
-<li>http 缓存知识复习</li>
-<li>promise 再现</li>
-</ol>
-<p>2019-03-29</p>
-<blockquote>
-<p>首先，上述的学习任务基本完成，当然规划那两个是长期任务。</p>
-</blockquote>
-<p>去年七月份就刷了这篇(博客)[<a href="http://www.dailichun.com/2018/03/12/whenyouenteraurl.html]，当时看完之后基本上没有什么理解的内容，半年之后重新回顾，很多知识已经有所熟悉，但是还是有很多根本没有听说过，在此记录。" target="_blank" rel="noopener">http://www.dailichun.com/2018/03/12/whenyouenteraurl.html]，当时看完之后基本上没有什么理解的内容，半年之后重新回顾，很多知识已经有所熟悉，但是还是有很多根本没有听说过，在此记录。</a></p>
-<p>浏览器的机制，到如何打开一个tab页。（涉及到进程和线程）</p>
-<p>其中有很多后台的和服务器端的内容，暂时不作为我的学习内容，在这里只对其中出现的前端的内容，而我都不是很了解的内容做一个to-learn-list。</p>
-<p>简单层与复合层，都是什么，这个完全不了解。(已经做了总结)<br>(看这个)[<a href="https://segmentfault.com/a/1190000012925872#articleHeader16]" target="_blank" rel="noopener">https://segmentfault.com/a/1190000012925872#articleHeader16]</a></p>
-<p>没事多看看这篇博客，对其中不太了解的知识体系做一个梳理。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yippee.ink/git-blog/2019/03/07/js函数式编程学习/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Yippee">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="依破缘">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/03/07/js函数式编程学习/" itemprop="url">js函数式编程学习</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-03-07T15:23:19+08:00">
-                2019-03-07
-              </time>
-            
-
-            
-
-            
-          </span>
-          
-          
-            <span class="post-updated">
-              &nbsp; | &nbsp; post.updated
-              <time itemprop="dateUpdated" datetime="2019-03-12T22:08:58+08:00" content="2019-03-12">
-                2019-03-12
-              </time>
-            </span>
-          
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>03-08 现在对JS函数式编程最大的印象几个使用的特性,还是高阶函数.闭包,柯里化,组合</p>
-<p>什么是高阶函数, 参数或者返回是一个函数的函数就是一个高阶函数. 在JS中,数组中的map,filter…都是高阶函数,在函数式编程中高阶函数的使用是很基本的.</p>
-<p>什么是闭包. 似乎在很多面试中看过有人问这个.  我在想,如果是我,我会怎么回答这个问题呢.</p>
-<p>闭包就是在函数中暴露出来的时候又引用了这个函数作用域的变量,导致没有被回收,从而导致了闭包.这种思想,似乎在函数话编程,纯函数的情况会经常使用.</p>
-<p>柯里化</p>
-<p>未完待续~</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yippee.ink/git-blog/2019/03/07/Lodash-分析学习/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Yippee">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="依破缘">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/03/07/Lodash-分析学习/" itemprop="url">Lodash 分析学习</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-03-07T15:22:17+08:00">
-                2019-03-07
-              </time>
-            
-
-            
-
-            
-          </span>
-          
-          
-            <span class="post-updated">
-              &nbsp; | &nbsp; post.updated
-              <time itemprop="dateUpdated" datetime="2019-03-31T10:31:52+08:00" content="2019-03-31">
-                2019-03-31
-              </time>
-            </span>
-          
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <blockquote>
-<p>稍微拿了几个函数研究了一下lodash的原码, 可以发现几个特点.</p>
-</blockquote>
-<p>一个是函数的防止意外性, 一般在写功能函数的时候,我不会去考虑如果传的参数不是我们想要的类型,会怎么处理.<br>然而在lodash中,功能函数都会对不是预料之中的类型做处理的.例如需要返回数组的情况,传参在不符合规范的情况下,函数就会默认的返回一个空数组.而不是直接的报错.</p>
-<p>还有就是对位操作符的使用, 两种情况, 一种是需要使用length的时候, 很多时候我们都需要置零,或者是转换成数值类型.<br>这个时候用位操作符就可以很方便的解决这个问题.(这个我在之前的位操作符的博客中有写到过,这里做一个大概的总结)</p>
-<p>使用&gt;&gt;&gt;0 右移0位,将其他类型置为0, 同时还会把正数转成正整数,一般都是对length使用,完全符合使用场景</p>
-<p>使用n &gt;&gt;&gt;1 等同于 parseInt(n / 2), 可以在取中间数的使用,  现在可以想到的使用场景就是二分法中取中间key的时候.</p>
-<p>未完待续~</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yippee.ink/git-blog/2019/03/07/计算机基础知识补充/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Yippee">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="依破缘">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/03/07/计算机基础知识补充/" itemprop="url">计算机基础知识补充</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-03-07T09:55:21+08:00">
-                2019-03-07
-              </time>
-            
-
-            
-
-            
-          </span>
-          
-          
-            <span class="post-updated">
-              &nbsp; | &nbsp; post.updated
-              <time itemprop="dateUpdated" datetime="2019-04-21T10:21:22+08:00" content="2019-04-21">
-                2019-04-21
+              &nbsp; | &nbsp; 修改于
+              <time itemprop="dateUpdated" datetime="2019-05-18T13:17:27+08:00" content="2019-05-18">
+                2019-05-18
               </time>
             </span>
           
@@ -1456,11 +1247,29 @@
 </blockquote>
 <p>把CPU比做一个工厂，如果是单核CPU，那么这个的意思就是，一次只能一个运行一个车间，一个车间就是一个进程(process)</p>
 <p>车间里会有很多协同工作的工人，这些工人就看做是线程(thread)。在一个进程中就可以有多个线程。<br>同时一个进程中间的内存是共享的，但是是不能同时使用的。</p>
-<h3 id="浏览器最小宽度"><a href="#浏览器最小宽度" class="headerlink" title="浏览器最小宽度"></a>浏览器最小宽度</h3><p>窗口缩小最小宽度是400px(来自Google)</p>
-<p><details open></details></p>
-<p><summary>Want to ruin the surprise?</summary><br><br><br>Well, you asked for it!<br><a href="www.baidu.com">fds</a></p>
-<image src="./io">
-</image>
+<h2 id="浏览器最小宽度"><a href="#浏览器最小宽度" class="headerlink" title="浏览器最小宽度"></a>浏览器最小宽度</h2><p>窗口缩小最小宽度是400px(来自Google)</p>
+<h2 id="md5"><a href="#md5" class="headerlink" title="md5"></a>md5</h2><p>md5可以说的其实有很多，在这里我只是记录我对MD5的认知。</p>
+<p>MD5是一种摘要算法，常用于数据的标识，和一些对安全要求稍弱的密码登录。</p>
+<p>并不能说MD5是加密算法，用简单的语言描述MD5算法就是，丢失数据信息，只通过部分形成32位的16进制数。</p>
+<p>MD5不是完全安全的。常见的破解方法有：彩虹表，就是通过不断的计算MD5值，构建数据巨大的对象，然后反向查询。</p>
+<h2 id="文件压缩原理"><a href="#文件压缩原理" class="headerlink" title="文件压缩原理"></a>文件压缩原理</h2><p>下载文件的时候一个几百兆的文件可以解压出几兆的文件，那么这是一个怎么样的过程呢。</p>
+<p>文件存在于计算机，都只是0和1罢了。</p>
+<p>文件的压缩，就是将这些0和1组成的数据用更加简洁的数据表示出来。</p>
+<p>通常使用的方法有：</p>
+<ol>
+<li>字典算法</li>
+</ol>
+<p>将一些经常出现的，位长长的用一些简洁的字段表示。生成一个字典列表。</p>
+<ol start="2">
+<li>固定位长算法</li>
+</ol>
+<p>使用固定的进制位长。</p>
+<ol start="3">
+<li>RLE（Run Length Encoding）</li>
+</ol>
+<p>… 还有很多，就不一一记录了。大致了解下</p>
+<h2 id="负载均衡"><a href="#负载均衡" class="headerlink" title="负载均衡"></a>负载均衡</h2><p>我们把用户的访问流量称为负载，而根据转发策略（rules）将负载（访问流量）分配给后端机器的服务便是负载均衡</p>
+
           
         
       
@@ -1508,7 +1317,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yippee.ink/git-blog/2019/03/06/几道面试题的知识总结/">
+    <link itemprop="mainEntityOfPage" href="http://yippee.ink/2019/03/06/几道面试题的知识总结/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Yippee">
@@ -1525,9 +1334,9 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">
+          <h2 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/03/06/几道面试题的知识总结/" itemprop="url">几道面试题的知识总结</a></h1>
+                <a class="post-title-link" href="/2019/03/06/几道面试题的知识总结/" itemprop="url">几道面试题的知识总结</a></h2>
         
 
         <div class="post-meta">
@@ -1537,9 +1346,9 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">发表于</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-03-06T10:03:58+08:00">
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-06T10:03:58+08:00">
                 2019-03-06
               </time>
             
@@ -1551,9 +1360,9 @@
           
           
             <span class="post-updated">
-              &nbsp; | &nbsp; post.updated
-              <time itemprop="dateUpdated" datetime="2019-03-19T19:56:49+08:00" content="2019-03-19">
-                2019-03-19
+              &nbsp; | &nbsp; 修改于
+              <time itemprop="dateUpdated" datetime="2019-05-18T13:17:07+08:00" content="2019-05-18">
+                2019-05-18
               </time>
             </span>
           
@@ -1691,7 +1500,7 @@ BFC就是页面上的一个隔离的独立容器，容器里面的子元素不�
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yippee.ink/git-blog/2019/02/22/疯狂的函数/">
+    <link itemprop="mainEntityOfPage" href="http://yippee.ink/2019/02/22/疯狂的函数/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Yippee">
@@ -1708,9 +1517,9 @@ BFC就是页面上的一个隔离的独立容器，容器里面的子元素不�
 
         
         
-          <h1 class="post-title" itemprop="name headline">
+          <h2 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/02/22/疯狂的函数/" itemprop="url">疯狂的函数</a></h1>
+                <a class="post-title-link" href="/2019/02/22/疯狂的函数/" itemprop="url">疯狂的函数</a></h2>
         
 
         <div class="post-meta">
@@ -1720,9 +1529,9 @@ BFC就是页面上的一个隔离的独立容器，容器里面的子元素不�
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">发表于</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-02-22T11:10:09+08:00">
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-02-22T11:10:09+08:00">
                 2019-02-22
               </time>
             
@@ -1734,9 +1543,9 @@ BFC就是页面上的一个隔离的独立容器，容器里面的子元素不�
           
           
             <span class="post-updated">
-              &nbsp; | &nbsp; post.updated
-              <time itemprop="dateUpdated" datetime="2019-03-31T10:31:52+08:00" content="2019-03-31">
-                2019-03-31
+              &nbsp; | &nbsp; 修改于
+              <time itemprop="dateUpdated" datetime="2019-05-18T13:17:07+08:00" content="2019-05-18">
+                2019-05-18
               </time>
             </span>
           
@@ -1819,6 +1628,320 @@ BFC就是页面上的一个隔离的独立容器，容器里面的子元素不�
 
 
     
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yippee.ink/2019/01/10/JS中的继承/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yippee">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="依破缘">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/01/10/JS中的继承/" itemprop="url">JS中的继承</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-10T14:33:09+08:00">
+                2019-01-10
+              </time>
+            
+
+            
+
+            
+          </span>
+          
+          
+            <span class="post-updated">
+              &nbsp; | &nbsp; 修改于
+              <time itemprop="dateUpdated" datetime="2019-05-18T13:17:27+08:00" content="2019-05-18">
+                2019-05-18
+              </time>
+            </span>
+          
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <blockquote>
+<p>文中方法全部来自&lt;&lt;JavaScript高级程序设计一书&gt;&gt;</p>
+</blockquote>
+<p>先想一个需求, 这里有一个父类方法, 包含了全部的共有属性, 我们想自己利用这个方法来创造继承于其中的子类方法<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">SuperClass</span>(<span class="params">id</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.id = id</span><br><span class="line">    <span class="keyword">this</span>.name = <span class="string">'fatherFunction'</span></span><br><span class="line">    <span class="keyword">this</span>.colors = [<span class="string">'red'</span>, <span class="string">'bule'</span>]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">SueperClass.prototype.say = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span>.id, <span class="keyword">this</span>.name, <span class="keyword">this</span>.colors)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>在上面我们定义了一个父类构造方法, 其中包含属性id,name,colors,还定义了它的一个方法say</p>
+<h3 id="原型链继承"><a href="#原型链继承" class="headerlink" title="原型链继承"></a>原型链继承</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Child_chain</span> (<span class="params"></span>) </span>&#123; <span class="comment">// 定义的子类</span></span><br><span class="line">    <span class="keyword">this</span>.name = <span class="string">'Child_Prototype_chain'</span></span><br><span class="line">&#125;</span><br><span class="line">Child_chain.prototype = <span class="keyword">new</span> SuperClass(<span class="string">'10'</span>)</span><br><span class="line"><span class="keyword">let</span> child_chain1 = <span class="keyword">new</span> Child_chain()</span><br><span class="line">child_chain1.colors.push(<span class="string">'yellow'</span>)</span><br><span class="line">child_chain1.say()</span><br><span class="line"><span class="keyword">let</span> child_chain2 = <span class="keyword">new</span> Child_chain()</span><br><span class="line">child_chain2.say()</span><br></pre></td></tr></table></figure>
+<p>原型链继承是直接利用原型链实现的继承方法, 将原型继承父类实例的方法和属性<br>当子类中调用其本身没有的属性和方法的时候,会在原型链上查找就可以调用父类上的属性和方法了,就实现了继承</p>
+<blockquote>
+<p>原型链继承的缺点： </p>
+<ol>
+<li>所有实例共享属性和方法，如果某一个实例修改了对象类型（引用类型）的属性的话，所有的实例的属性都会变化。 </li>
+<li>无法在创建实例的时候，向超类的构造函数传递参数</li>
+</ol>
+</blockquote>
+<h3 id="构造函数继承"><a href="#构造函数继承" class="headerlink" title="构造函数继承"></a>构造函数继承</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Child_constructor</span> (<span class="params">id</span>) </span>&#123;</span><br><span class="line">    SuperClass.call(<span class="keyword">this</span>, id) <span class="comment">// key</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> child_constructor = <span class="keyword">new</span> Child_constructor(<span class="string">'20'</span>)</span><br><span class="line"><span class="keyword">let</span> child_constructor2 = <span class="keyword">new</span> Child_constructor(<span class="string">'21'</span>)</span><br></pre></td></tr></table></figure>
+<p>用构造函数实现继承的时候,每一个子类的实例都会调用一次父类的构造函数,保证了数据的独立性</p>
+<p>但是这样并不是完整的继承,这样的方法只实现了属性的继承,而对方法没有继承。在使用方法的时候需要在构造函数内部定义方法，方法就没有复用的了。</p>
+<p>so,就是组合继承出场的时候了.</p>
+<h3 id="组合继承"><a href="#组合继承" class="headerlink" title="组合继承"></a>组合继承</h3><p>在组合继承中,还是使用构造函数一样的继承方法,但是会在子类的原型上再进行一些操作<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Child_constructor.prototype = <span class="keyword">new</span> SuperClass() <span class="comment">// 实现对父类中的方法的继承</span></span><br><span class="line">Child_constructor.prototype.constructor = Child_constructor <span class="comment">// 同时还需要把constructor属性更改回来</span></span><br></pre></td></tr></table></figure></p>
+<p>这样就完成了一个完整的继承,当然还是有不够完美的地方,那就是调用了父类的构造函数两次,这些都是很浪费的</p>
+<h3 id="寄生组合继承"><a href="#寄生组合继承" class="headerlink" title="寄生组合继承"></a>寄生组合继承</h3><p>这个方法的出现原因主要是为了解决父类构造函数被调用了两次的问题,<code>Super.call()</code>这个继承属性的构造函数是没有什么办法可以去省略的,但是在原型链中指定子类的原型其实没有必要用父类的构造函数,因为我们其实需要父类的原型的一个副本而已</p>
+<p>就衍生了一个创造副本的函数<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">object</span> (<span class="params">o</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> F = <span class="keyword">new</span> <span class="built_in">Function</span>()</span><br><span class="line">    F.prototype = o</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> F()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>这个函数在ECMAScript5中用Object.create()进行了规范</p>
+</blockquote>
+<p>那么寄生组合继承就可以完成了<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Child_inherit</span> (<span class="params">id</span>) </span>&#123;</span><br><span class="line">    SuperClass.call(<span class="keyword">this</span>, id)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Child_inherit.prototype = object(SuperClass.prototype)</span><br><span class="line">Child_inherit.prototype.constructor  = Child_inherit</span><br></pre></td></tr></table></figure></p>
+<p>就OK啦</p>
+<h4 id="class完成继承"><a href="#class完成继承" class="headerlink" title="class完成继承"></a>class完成继承</h4><blockquote>
+<p>上面的方法看着就反人类,官方也这么觉得了,自然现在就有官方的解决办法了.类似JAVA,用class来完成继承</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Super</span> </span>&#123;</span><br><span class="line">    <span class="keyword">constructor</span> (name) &#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name</span><br><span class="line">    &#125;</span><br><span class="line">    sayName () &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="keyword">this</span>.name)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Child</span> <span class="keyword">extends</span> <span class="title">Super</span> </span>&#123;</span><br><span class="line">    <span class="keyword">constructor</span> (name, id) &#123;</span><br><span class="line">        <span class="keyword">super</span>(name) <span class="comment">// 实现继承</span></span><br><span class="line">        <span class="keyword">this</span>.id = id</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>关于class见<a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Statements/class" target="_blank" rel="noopener">more</a></p>
+<h3 id="关于ES6中的关键字-super"><a href="#关于ES6中的关键字-super" class="headerlink" title="关于ES6中的关键字 super"></a>关于ES6中的关键字 super</h3><p>在ES6中使用extend完成继承的话，在子类constructor 中必须使用super关键字。</p>
+<p>同时super可以作为方法，也可以作为对象。作为方法只能在constructor中使用，而在方法中，可以将super作为对象使用。</p>
+<h4 id="作为方法"><a href="#作为方法" class="headerlink" title="作为方法"></a>作为方法</h4><p>在ES6的constructor 中使用super() ，相当于 <code>Super.call()</code></p>
+<h4 id="作为对象"><a href="#作为对象" class="headerlink" title="作为对象"></a>作为对象</h4><h5 id="在方法中使用"><a href="#在方法中使用" class="headerlink" title="在方法中使用"></a>在方法中使用</h5><p>相当于 super 指向 父类的原型 <code>Super.prototype</code>.</p>
+<p>但是super 内部的this 指向的是子类中的this， 所以在使用的时候， 是 <code>Super.prototype.call()</code></p>
+<h5 id="在静态方法中使用"><a href="#在静态方法中使用" class="headerlink" title="在静态方法中使用"></a>在静态方法中使用</h5><p>在静态方法中使用的时候，super 指向的是 Super , 就不再是 Super的原型了</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yippee.ink/2019/01/09/如何使用hexo-新手向/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yippee">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="依破缘">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/01/09/如何使用hexo-新手向/" itemprop="url">如何使用hexo(新手向)</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-09T09:45:04+08:00">
+                2019-01-09
+              </time>
+            
+
+            
+
+            
+          </span>
+          
+          
+            <span class="post-updated">
+              &nbsp; | &nbsp; 修改于
+              <time itemprop="dateUpdated" datetime="2019-05-18T13:17:07+08:00" content="2019-05-18">
+                2019-05-18
+              </time>
+            </span>
+          
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <blockquote>
+<p>大误  这是一篇通用文档<br>这是一篇告诉女朋友怎么使用我给她搭建的博客的说明</p>
+</blockquote>
+<p>hexo的搭建过程就不说明了, 关键是现在怎么使用.</p>
+<h3 id="拉取源码"><a href="#拉取源码" class="headerlink" title="拉取源码"></a>拉取源码</h3><blockquote>
+<p>建议使用SSH</p>
+</blockquote>
+<p><img src="https://ws2.sinaimg.cn/large/006tNc79gy1fz03zrlcpjj30o80diwgj.jpg" alt=""></p>
+<p><code>git clone git@github.com:pumpkinnan97/pumpkinnan97.github.io.git</code><br>拉取下来了了之后, 切换到blog分支<br><code>git checkout blog</code><br>安装依赖<br><code>npm i</code></p>
+<h4 id="添加SSH"><a href="#添加SSH" class="headerlink" title="添加SSH"></a>添加SSH</h4><blockquote>
+<p>要是我没有记错的话,你电脑之前肯定是配过SSH钥匙的.</p>
+</blockquote>
+<p>那么<br><code>cat ~/.ssh/id_rsa.pub</code><br><strong>command + c</strong><br>点击GitHub右上角进入 <strong>Setting</strong><br>然后点击 左方的SSH<br><code>New SSH key</code><br><strong>command + v</strong><br>完毕即可</p>
+<h3 id="hexo博客管理"><a href="#hexo博客管理" class="headerlink" title="hexo博客管理"></a>hexo博客管理</h3><p>hexo g : Generate static files. 就是生成静态资源,在发布之前需要进行<br>hexo s : Start the server.  这个的作用是在本地可以查看现在博客<br>hexo d : Deploy your website. 发布</p>
+<p>使用<code>hexo new [your blog name]</code><br>然后进入<code>source</code>中的<code>_posts</code>就可以看到新建的博客,在已经存在的内容下面加上你的博客内容就可以了<br>最后使用上面的<code>hexo g</code> <code>hexo d</code> 就完成了发布</p>
+<h3 id="hexo-主题以及配置"><a href="#hexo-主题以及配置" class="headerlink" title="hexo 主题以及配置"></a>hexo 主题以及配置</h3><blockquote>
+<p>这一块都在<strong>_config.yml</strong>文件中,<br><code>theme: next</code>选择主题,前提是先需要把主题下载到博客根目录的 themes 文件中</p>
+</blockquote>
+<p><a href="https://hexo.io/themes/" target="_blank" rel="noopener">主题</a><br><a href="https://hexo.io/plugins/" target="_blank" rel="noopener">插件</a></p>
+<p>就可以像QQ空间一样的愉快的玩耍了</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
   </section>
 
   
@@ -1860,15 +1983,15 @@ BFC就是页面上的一个隔离的独立容器，容器里面的子元素不�
           <p class="site-author-name" itemprop="name">Yippee</p>
            
               <p class="site-description motion-element" itemprop="description"></p>
-          
+           
         </div>
         <nav class="site-state motion-element">
 
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">27</span>
-                <span class="site-state-item-name">posts</span>
+                <span class="site-state-item-count">24</span>
+                <span class="site-state-item-name">日志</span>
               </a>
             </div>
           
@@ -1879,7 +2002,7 @@ BFC就是页面上的一个隔离的独立容器，容器里面的子元素不�
             <div class="site-state-item site-state-categories">
               
                 <span class="site-state-item-count">4</span>
-                <span class="site-state-item-name">categories</span>
+                <span class="site-state-item-name">分类</span>
               
             </div>
           
@@ -1890,7 +2013,7 @@ BFC就是页面上的一个隔离的独立容器，容器里面的子元素不�
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
                 <span class="site-state-item-count">9</span>
-                <span class="site-state-item-name">tags</span>
+                <span class="site-state-item-name">标签</span>
               </a>
             </div>
           
@@ -1900,6 +2023,30 @@ BFC就是页面上的一个隔离的独立容器，容器里面的子元素不�
         
 
         <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/Yippeee" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                    
+                      GitHub
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/Yipper_tc" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                    
+                      Twitter
+                    
+                </a>
+              </span>
+            
           
         </div>
 
@@ -1940,13 +2087,13 @@ BFC就是页面上的一个隔离的独立容器，容器里面的子元素不�
 
 
 <div class="powered-by">
-  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
 </div>
 
 <div class="theme-info">
-  Theme -
+  主题 -
   <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
-    NexT.Muse
+    NexT.Mist
   </a>
 </div>
 
@@ -2075,6 +2222,21 @@ BFC就是页面上的一个隔离的独立容器，容器里面的子元素不�
   
 
   
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
 
   
 

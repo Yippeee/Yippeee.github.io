@@ -5,13 +5,13 @@
   
 
 
-<html class="theme-next muse use-motion" lang="">
+<html class="theme-next mist use-motion" lang="zh-Hans">
 <head><meta name="generator" content="Hexo 3.8.0">
   <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="theme-color" content="#222">
-
+<meta name="google-site-verification" content="8zDf90JHBHd6ITvkfvZxA9i6vZEXOMl1oDP3Fp7YXtA">
 
 
 
@@ -98,11 +98,11 @@
 <meta name="keywords" content="总结">
 <meta property="og:type" content="article">
 <meta property="og:title" content="几道面试题的知识总结">
-<meta property="og:url" content="http://yippee.ink/git-blog/2019/03/06/几道面试题的知识总结/index.html">
+<meta property="og:url" content="http://yippee.ink/2019/03/06/几道面试题的知识总结/index.html">
 <meta property="og:site_name" content="依破缘">
 <meta property="og:description" content="突然看到几道面试题,之前都有看到但是就是感觉似曾相识但是却有点恍惚.决定还是记录一遍加深印象  逻辑运算 &amp;amp;&amp;amp; || 的作用以及返回值 目前我存在的一个疑问,js中的| 和 || 的差异在哪里, 或者就是同一个东西.困扰中…一个是逻辑运算,一个是位操作..  逻辑运算的特性短路运算  在&amp;amp;&amp;amp;中,如果运算符前面的是 false 的值,那么后面的语句就会被忽略掉.同理">
-<meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-03-19T11:56:49.834Z">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-05-18T05:17:07.053Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="几道面试题的知识总结">
 <meta name="twitter:description" content="突然看到几道面试题,之前都有看到但是就是感觉似曾相识但是却有点恍惚.决定还是记录一遍加深印象  逻辑运算 &amp;amp;&amp;amp; || 的作用以及返回值 目前我存在的一个疑问,js中的| 和 || 的差异在哪里, 或者就是同一个东西.困扰中…一个是逻辑运算,一个是位操作..  逻辑运算的特性短路运算  在&amp;amp;&amp;amp;中,如果运算符前面的是 false 的值,那么后面的语句就会被忽略掉.同理">
@@ -113,14 +113,14 @@
   var NexT = window.NexT || {};
   var CONFIG = {
     root: '/',
-    scheme: 'Muse',
+    scheme: 'Mist',
     sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
     fancybox: true,
     tabs: true,
     motion: true,
     duoshuo: {
       userId: '0',
-      author: 'Author'
+      author: '博主'
     },
     algolia: {
       applicationID: '',
@@ -134,8 +134,7 @@
 
 
 
-  <link rel="canonical" href="http://yippee.ink/git-blog/2019/03/06/几道面试题的知识总结/">
-
+  <link rel="canonical" href="http://yippee.ink/2019/03/06/几道面试题的知识总结/">
 
 
 
@@ -146,6 +145,16 @@
 
 
 
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?be0a702b8fbcbc2433ff711ca69c62ed";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
 
 
 
@@ -158,7 +167,7 @@
 
 </head>
 
-<body itemscope="" itemtype="http://schema.org/WebPage" lang="default">
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
   
   
@@ -181,7 +190,7 @@
       </a>
     </div>
       
-        <p class="site-subtitle"></p>
+        <h1 class="site-subtitle" itemprop="description">前端小工</h1>
       
   </div>
 
@@ -206,7 +215,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
             
-            Home
+            首页
           </a>
         </li>
       
@@ -216,7 +225,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
             
-            Archives
+            归档
           </a>
         </li>
       
@@ -226,7 +235,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
             
-            Tags
+            标签
           </a>
         </li>
       
@@ -263,7 +272,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yippee.ink/git-blog/2019/03/06/几道面试题的知识总结/">
+    <link itemprop="mainEntityOfPage" href="http://yippee.ink/2019/03/06/几道面试题的知识总结/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Yippee">
@@ -280,7 +289,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">几道面试题的知识总结</h1>
+          <h2 class="post-title" itemprop="name headline">几道面试题的知识总结</h2>
         
 
         <div class="post-meta">
@@ -290,9 +299,9 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">发表于</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-03-06T10:03:58+08:00">
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-06T10:03:58+08:00">
                 2019-03-06
               </time>
             
@@ -304,9 +313,9 @@
           
           
             <span class="post-updated">
-              &nbsp; | &nbsp; post.updated
-              <time itemprop="dateUpdated" datetime="2019-03-19T19:56:49+08:00" content="2019-03-19">
-                2019-03-19
+              &nbsp; | &nbsp; 修改于
+              <time itemprop="dateUpdated" datetime="2019-05-18T13:17:07+08:00" content="2019-05-18">
+                2019-05-18
               </time>
             </span>
           
@@ -455,6 +464,12 @@ BFC就是页面上的一个隔离的独立容器，容器里面的子元素不�
 
     <div class="post-spread">
       
+        
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='//bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+      
     </div>
   </div>
 
@@ -490,10 +505,10 @@ BFC就是页面上的一个隔离的独立容器，容器里面的子元素不�
       
         <ul class="sidebar-nav motion-element">
           <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            Table of Contents
+            文章目录
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
-            Overview
+            站点概览
           </li>
         </ul>
       
@@ -504,15 +519,15 @@ BFC就是页面上的一个隔离的独立容器，容器里面的子元素不�
           <p class="site-author-name" itemprop="name">Yippee</p>
            
               <p class="site-description motion-element" itemprop="description"></p>
-          
+           
         </div>
         <nav class="site-state motion-element">
 
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">27</span>
-                <span class="site-state-item-name">posts</span>
+                <span class="site-state-item-count">24</span>
+                <span class="site-state-item-name">日志</span>
               </a>
             </div>
           
@@ -523,7 +538,7 @@ BFC就是页面上的一个隔离的独立容器，容器里面的子元素不�
             <div class="site-state-item site-state-categories">
               
                 <span class="site-state-item-count">4</span>
-                <span class="site-state-item-name">categories</span>
+                <span class="site-state-item-name">分类</span>
               
             </div>
           
@@ -534,7 +549,7 @@ BFC就是页面上的一个隔离的独立容器，容器里面的子元素不�
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
                 <span class="site-state-item-count">9</span>
-                <span class="site-state-item-name">tags</span>
+                <span class="site-state-item-name">标签</span>
               </a>
             </div>
           
@@ -544,6 +559,30 @@ BFC就是页面上的一个隔离的独立容器，容器里面的子元素不�
         
 
         <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/Yippeee" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                    
+                      GitHub
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/Yipper_tc" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                    
+                      Twitter
+                    
+                </a>
+              </span>
+            
           
         </div>
 
@@ -600,13 +639,13 @@ BFC就是页面上的一个隔离的独立容器，容器里面的子元素不�
 
 
 <div class="powered-by">
-  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
 </div>
 
 <div class="theme-info">
-  Theme -
+  主题 -
   <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
-    NexT.Muse
+    NexT.Mist
   </a>
 </div>
 
@@ -735,6 +774,21 @@ BFC就是页面上的一个隔离的独立容器，容器里面的子元素不�
   
 
   
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
 
   
 
