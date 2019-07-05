@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+<meta name="google-site-verification" content="8zDf90JHBHd6ITvkfvZxA9i6vZEXOMl1oDP3Fp7YXtA">
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="vue 总结,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2">
+
+
+
+
+
+
+<meta name="description" content="父子组件交互prop $emit()123456789101112&amp;lt;template&amp;gt;    &amp;lt;div&amp;gt;&amp;lt;/div&amp;gt;&amp;lt;/template&amp;gt;// 子组件中export default &amp;#123;    prop: [val],    methods: &amp;#123;        changeVal(value) &amp;#123;            t">
+<meta name="keywords" content="vue 总结">
+<meta property="og:type" content="article">
+<meta property="og:title" content="vue 组件通信">
+<meta property="og:url" content="http://yippee.ink/2019/07/02/vue-组件通信/index.html">
+<meta property="og:site_name" content="依破缘">
+<meta property="og:description" content="父子组件交互prop $emit()123456789101112&amp;lt;template&amp;gt;    &amp;lt;div&amp;gt;&amp;lt;/div&amp;gt;&amp;lt;/template&amp;gt;// 子组件中export default &amp;#123;    prop: [val],    methods: &amp;#123;        changeVal(value) &amp;#123;            t">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-07-05T03:14:21.422Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="vue 组件通信">
+<meta name="twitter:description" content="父子组件交互prop $emit()123456789101112&amp;lt;template&amp;gt;    &amp;lt;div&amp;gt;&amp;lt;/div&amp;gt;&amp;lt;/template&amp;gt;// 子组件中export default &amp;#123;    prop: [val],    methods: &amp;#123;        changeVal(value) &amp;#123;            t">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yippee.ink/2019/07/02/vue-组件通信/">
+
+
+
+
+  <title>vue 组件通信 | 依破缘</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?be0a702b8fbcbc2433ff711ca69c62ed";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">依破缘</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">前端小工</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yippee.ink/2019/07/02/vue-组件通信/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yippee">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="依破缘">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">vue 组件通信</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-02T19:07:24+08:00">
+                2019-07-02
+              </time>
+            
+
+            
+
+            
+          </span>
+          
+          
+            <span class="post-updated">
+              &nbsp; | &nbsp; 修改于
+              <time itemprop="dateUpdated" datetime="2019-07-05T11:14:21+08:00" content="2019-07-05">
+                2019-07-05
+              </time>
+            </span>
+          
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="父子组件交互"><a href="#父子组件交互" class="headerlink" title="父子组件交互"></a>父子组件交互</h1><h2 id="prop-emit"><a href="#prop-emit" class="headerlink" title="prop $emit()"></a>prop $emit()</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">    &lt;div&gt;<span class="xml"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">&lt;<span class="regexp">/template&gt;</span></span><br><span class="line"><span class="regexp">/</span><span class="regexp">/ 子组件中</span></span><br><span class="line"><span class="regexp">export default &#123;</span></span><br><span class="line"><span class="regexp">    prop: [val],</span></span><br><span class="line"><span class="regexp">    methods: &#123;</span></span><br><span class="line"><span class="regexp">        changeVal(value) &#123;</span></span><br><span class="line"><span class="regexp">            this.$emit('fChange', value)</span></span><br><span class="line"><span class="regexp">        &#125;</span></span><br><span class="line"><span class="regexp">    &#125;</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">    &lt;child @fChange=<span class="string">"change"</span> :val=val &gt;<span class="xml"><span class="tag">&lt;/<span class="name">child</span>&gt;</span></span></span><br><span class="line">&lt;<span class="regexp">/template&gt;</span></span><br><span class="line"><span class="regexp">import child from './</span>child<span class="string">'</span></span><br><span class="line"><span class="string">// 父组件中</span></span><br><span class="line"><span class="string">export default &#123;</span></span><br><span class="line"><span class="string">    components: &#123;child&#125;,</span></span><br><span class="line"><span class="string">    data() &#123;</span></span><br><span class="line"><span class="string">        return &#123;</span></span><br><span class="line"><span class="string">            val: '</span><span class="number">1</span><span class="string">'</span></span><br><span class="line"><span class="string">        &#125;</span></span><br><span class="line"><span class="string">    &#125;,</span></span><br><span class="line"><span class="string">    methods: &#123;</span></span><br><span class="line"><span class="string">        change(val) &#123;</span></span><br><span class="line"><span class="string">            this.val = val</span></span><br><span class="line"><span class="string">        &#125;</span></span><br><span class="line"><span class="string">    &#125;</span></span><br><span class="line"><span class="string">&#125;</span></span><br></pre></td></tr></table></figure>
+<p>在这种实现的父子组件的通信,通常认为是稍微复杂一点的,数据的传递不仅仅是为了改变的,而是作为一个playload,去完成功能的.</p>
+<p>使用起来有几点注意:</p>
+<p>子组件用 <code>prop</code> 属性获取父组件中的数据</p>
+<p>子组件注册自定义事件,并且利用 <code>$emit()</code> 触发</p>
+<p>最后对数据的处理,以及事件都是在父组件发生的.</p>
+<h2 id="sync-修饰符"><a href="#sync-修饰符" class="headerlink" title=".sync 修饰符"></a>.sync 修饰符</h2><p>这是语法糖实现的双向绑定, 实则在vue中是不使用双向绑定的. 数据流都是单向的</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">    &lt;div&gt;<span class="xml"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">&lt;<span class="regexp">/template&gt;</span></span><br><span class="line"><span class="regexp">/</span><span class="regexp">/ 子组件中</span></span><br><span class="line"><span class="regexp">export default &#123;</span></span><br><span class="line"><span class="regexp">    prop: [val],</span></span><br><span class="line"><span class="regexp">    methods: &#123;</span></span><br><span class="line"><span class="regexp">        changeVal(value) &#123;</span></span><br><span class="line"><span class="regexp">            this.$emit('update:val', value)</span></span><br><span class="line"><span class="regexp">        &#125;</span></span><br><span class="line"><span class="regexp">    &#125;</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">    &lt;child :val.sync=val &gt;<span class="xml"><span class="tag">&lt;/<span class="name">child</span>&gt;</span></span></span><br><span class="line">&lt;<span class="regexp">/template&gt;</span></span><br><span class="line"><span class="regexp">import child from './</span>child<span class="string">'</span></span><br><span class="line"><span class="string">// 父组件中</span></span><br><span class="line"><span class="string">export default &#123;</span></span><br><span class="line"><span class="string">    components: &#123;child&#125;,</span></span><br><span class="line"><span class="string">    data() &#123;</span></span><br><span class="line"><span class="string">        return &#123;</span></span><br><span class="line"><span class="string">            val: '</span><span class="number">1</span><span class="string">'</span></span><br><span class="line"><span class="string">        &#125;</span></span><br><span class="line"><span class="string">    &#125;,</span></span><br><span class="line"><span class="string">&#125;</span></span><br></pre></td></tr></table></figure>
+<p>可以看出,如果同样只是需要对诗数据进行同步的话,使用.sync 修饰符,就会非常的简单.</p>
+<p>其实也就是下面的语法糖而已:<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;child :val=val @update:val=<span class="string">'val = $event'</span> &gt;<span class="xml"><span class="tag">&lt;/<span class="name">child</span>&gt;</span></span></span><br></pre></td></tr></table></figure></p>
+<h2 id="v-model"><a href="#v-model" class="headerlink" title="v-model"></a>v-model</h2><blockquote>
+<p>在看 elem 源码的时候发现了这种使用方法,后面发现这种使用方式很多了. 但是一直有一点很困惑,就是都是实现数据’双向’流动,之前的很多方法都使用的很便捷了,不知道为什么要使用这种. 后面,我搜索考察了一番,觉得应该是为了可以在实现自定义的组件的时候,保持vue本身的这么一个v-model的写法.</p>
+</blockquote>
+<p>使用v-modal 的作用也是保持子组件数据和父组件保持一样.</p>
+<p>使用的🌰:<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 子组件中</span></span><br><span class="line">&lt;template&gt;</span><br><span class="line">    &lt;div @change=<span class="string">'changeVal'</span> &gt;<span class="xml"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">&lt;<span class="regexp">/template&gt;</span></span><br><span class="line"><span class="regexp">export default &#123;</span></span><br><span class="line"><span class="regexp">    prop: [value],</span></span><br><span class="line"><span class="regexp">    modal: &#123;</span></span><br><span class="line"><span class="regexp">        prop: 'value', /</span><span class="regexp">/ 这里这个名词可以自己随意定义的,定义了之后就需要在prop中申明</span></span><br><span class="line"><span class="regexp">        event: 'changeValEvent'</span></span><br><span class="line"><span class="regexp">    &#125;,</span></span><br><span class="line"><span class="regexp">    methods: &#123;</span></span><br><span class="line"><span class="regexp">        changeVal(value) &#123;</span></span><br><span class="line"><span class="regexp">            this.$emit('changeValEvent', value)</span></span><br><span class="line"><span class="regexp">        &#125;</span></span><br><span class="line"><span class="regexp">    &#125;</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br></pre></td></tr></table></figure></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 父组件中</span></span><br><span class="line">&lt;template&gt;</span><br><span class="line">    &lt;child v-modal=<span class="string">'val'</span>&gt;<span class="xml"><span class="tag">&lt;/<span class="name">child</span>&gt;</span></span></span><br><span class="line">&lt;<span class="regexp">/template&gt;</span></span><br><span class="line"><span class="regexp">import child from './</span>child<span class="string">'</span></span><br><span class="line"><span class="string">export default &#123;</span></span><br><span class="line"><span class="string">    components: &#123;child&#125;,</span></span><br><span class="line"><span class="string">    data() &#123;</span></span><br><span class="line"><span class="string">        return &#123;</span></span><br><span class="line"><span class="string">            val: '</span><span class="number">1</span><span class="string">'</span></span><br><span class="line"><span class="string">        &#125;</span></span><br><span class="line"><span class="string">    &#125;,</span></span><br><span class="line"><span class="string">&#125;</span></span><br></pre></td></tr></table></figure>
+<p>这样的写法是对用组件的易用性有了很大的提升.同时这也只是个 prop $emit 的语法糖</p>
+<p>相当于:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;child v-bind:&#123; $parent.modal.prop &#125; = <span class="string">'val'</span> v-on:&#123; $parent.modal.event &#125; = <span class="string">'val = arguments[0]'</span> &gt;<span class="xml"><span class="tag">&lt;/<span class="name">child</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+<p>其中 <code>$parent.modal</code> 是在子组件中配置的属性名称和事件名称.</p>
+<h2 id="parent-children"><a href="#parent-children" class="headerlink" title="\$parent $children"></a>\$parent $children</h2><p>上面的几种方法,其实都是 prop 的不同的使用方法. 而真正的支持改变父或子组件的数据可以直接使用 <code>$parent $children</code></p>
+<p>可以直接通过 <code>this.$parent[methodName]</code> <code>this.$parent[dataName] = sth</code> 来调用方法,以及改变数据</p>
+<blockquote>
+<p>这一点可以看出, vue不是纯粹的单向数据流.</p>
+</blockquote>
+<h3 id="children"><a href="#children" class="headerlink" title="$children"></a>$children</h3><p>$children 是一个数组, 直接子组件, 其中并不保存顺序, 也不是响应式的.</p>
+<blockquote>
+<p>在查阅资料的时候,可以发现这两个直接访问组件的方法是不被倡导的.官网的说法,是应急的用法.但是现在这句话没有了,不知道是什么意思.<a href="https://cn.vuejs.org/v2/api/#vm-children" target="_blank" rel="noopener">链接</a> 现在(2019-07-03)在官网没有看到有提到节制使用 $children</p>
+</blockquote>
+<p>在直接对子组件的方法调用的时候,还是直接用ref 注册,然后直接使用 ref 会更加方便和准确</p>
+<h1 id="祖孙组件之间交互"><a href="#祖孙组件之间交互" class="headerlink" title="祖孙组件之间交互"></a>祖孙组件之间交互</h1><h2 id="attrs-listeners"><a href="#attrs-listeners" class="headerlink" title="\$attrs $listeners"></a>\$attrs $listeners</h2><blockquote>
+<p>开宗明义, $listeners是用来向上传递事件的, $attrs是用来向下传递数据的, 使用场景一般为多层组件的时候, 写在中间层直接传递.</p>
+</blockquote>
+<p>来一个🌰:</p>
+<p>引用关系是这样的  parent -&gt; child -&gt; grandChild</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// parent</span></span><br><span class="line">&lt;template&gt;</span><br><span class="line">    &lt;div&gt;</span><br><span class="line">        &lt;child :val=<span class="string">'value'</span> @changeValEvent=<span class="string">'changeVal'</span> &gt;<span class="xml"><span class="tag">&lt;/<span class="name">child</span>&gt;</span></span></span><br><span class="line">    &lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">&lt;/</span>template&gt;</span><br><span class="line"><span class="keyword">import</span> child <span class="keyword">from</span> <span class="string">'./child'</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    components:&#123;...&#125;,</span><br><span class="line">    data () &#123;</span><br><span class="line">        <span class="keyword">return</span> &#123;</span><br><span class="line">            value: <span class="string">'hiha'</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    methods: &#123;</span><br><span class="line">        changeVal(value) &#123;</span><br><span class="line">            <span class="built_in">console</span>.log(value)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// child</span></span><br><span class="line">&lt;template&gt;</span><br><span class="line">    &lt;div <span class="class"><span class="keyword">class</span></span>=<span class="string">'child'</span>&gt;</span><br><span class="line">        &lt;grandChild v-bind=<span class="string">'$attrs'</span> v-on=<span class="string">'$listeners'</span> &gt;<span class="xml"><span class="tag">&lt;/<span class="name">grandChild</span>&gt;</span></span> &lt;!-- 使用 $attrs $listeners 透传了数据和事件 --&gt;</span><br><span class="line">    &lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">&lt;/</span>template&gt;</span><br><span class="line"><span class="keyword">import</span> grandChild <span class="keyword">from</span> <span class="string">'./grandChild'</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    components:&#123;...&#125;,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// grandChild</span></span><br><span class="line">&lt;template&gt;</span><br><span class="line">    &lt;div&gt;<span class="xml"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">&lt;<span class="regexp">/template&gt;</span></span><br><span class="line"><span class="regexp">export default &#123;</span></span><br><span class="line"><span class="regexp">    prop: ['val'], /</span><span class="regexp">/ 直接在需要使用的子孙组件中引用prop</span></span><br><span class="line"><span class="regexp">    data () &#123;</span></span><br><span class="line"><span class="regexp">        return &#123;</span></span><br><span class="line"><span class="regexp">            value: 'hiha'</span></span><br><span class="line"><span class="regexp">        &#125;</span></span><br><span class="line"><span class="regexp">    &#125;,</span></span><br><span class="line"><span class="regexp">    methods: &#123;</span></span><br><span class="line"><span class="regexp">        changeVal(value) &#123;</span></span><br><span class="line"><span class="regexp">            this.$emit('changeValEvent', value) /</span><span class="regexp">/ 直接emit祖宗组件的事件</span></span><br><span class="line"><span class="regexp">        &#125;</span></span><br><span class="line"><span class="regexp">    &#125;</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br></pre></td></tr></table></figure>
+<p>可以看出使用 <code>$attrs $listeners</code> 的情况都是多层组件中, 直接让数据和事件传递, 而不用再中间不需要使用的地方, 再写 emit 和 prop 做中转. 再复杂的组件关系中,使用这种方法可以简洁很多,</p>
+<p>在使用 $attrs 的时候, 需要配合 inheritAttrs 属性一起使用</p>
+<h3 id="inheritAttrs"><a href="#inheritAttrs" class="headerlink" title="inheritAttrs"></a>inheritAttrs</h3><p>来一段官网的解释:</p>
+<blockquote>
+<p>默认情况下父作用域的不被认作 props 的特性绑定 (attribute bindings) 将会“回退”且作为普通的 HTML 特性应用在子组件的根元素上。当撰写包裹一个目标元素或另一个组件的组件时，这可能不会总是符合预期行为。通过设置 inheritAttrs 到 false，这些默认行为将会被去掉。而通过 (同样是 2.4 新增的) 实例属性 $attrs 可以让这些特性生效，且可以通过 v-bind 显性的绑定到非根元素上。</p>
+</blockquote>
+<p>我的理解就是在配合 $attrs 使用的时候, 防止 v-bind 的数据显性的出现在HTML中.</p>
+<p>以上面的代码为例, 如果是上面的写法,那么在HTML中会出现的这样的情况:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">data-v-763db97b</span>=<span class="string">""</span> <span class="attr">class</span>=<span class="string">"child"</span> <span class="attr">val</span>=<span class="string">"hiha"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>在使用 $attrs 的组件 child 中设置 inheritAttrs: false, 就不会出现这样的情况了.</p>
+<h2 id="event-bus"><a href="#event-bus" class="headerlink" title="event bus"></a>event bus</h2><p>一句话描述一下什么是event bus. 就是利用一个新的new,通过这个空的vue来监听($on)和触发($emit).</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// bus.js</span></span><br><span class="line"><span class="keyword">import</span> vue <span class="keyword">from</span> <span class="string">'vue'</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> vue</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// a.vue</span></span><br><span class="line">&lt;template&gt;</span><br><span class="line">    &lt;div @click=<span class="string">'changeA'</span> &gt;<span class="xml"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">&lt;<span class="regexp">/template&gt;</span></span><br><span class="line"><span class="regexp">import bus from './</span>bus<span class="string">'</span></span><br><span class="line"><span class="string">export default &#123;</span></span><br><span class="line"><span class="string">    data () &#123;</span></span><br><span class="line"><span class="string">        return &#123;</span></span><br><span class="line"><span class="string">            value: '</span>hiha<span class="string">'</span></span><br><span class="line"><span class="string">        &#125;</span></span><br><span class="line"><span class="string">    &#125;,</span></span><br><span class="line"><span class="string">    methods: &#123;</span></span><br><span class="line"><span class="string">        changeA(value) &#123;</span></span><br><span class="line"><span class="string">            bus.$emit('</span>fromA<span class="string">', this.value)</span></span><br><span class="line"><span class="string">        &#125;</span></span><br><span class="line"><span class="string">    &#125;</span></span><br><span class="line"><span class="string">&#125;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// b.vue</span></span><br><span class="line">&lt;template&gt;</span><br><span class="line">    &lt;div @click=<span class="string">'changeA'</span> &gt;<span class="xml"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">&lt;<span class="regexp">/template&gt;</span></span><br><span class="line"><span class="regexp">import bus from './</span>bus<span class="string">'</span></span><br><span class="line"><span class="string">export default &#123;</span></span><br><span class="line"><span class="string">    data () &#123;</span></span><br><span class="line"><span class="string">        return &#123;</span></span><br><span class="line"><span class="string">            value: '</span>hiha<span class="string">'</span></span><br><span class="line"><span class="string">        &#125;</span></span><br><span class="line"><span class="string">    &#125;,</span></span><br><span class="line"><span class="string">    created () &#123;</span></span><br><span class="line"><span class="string">        bus.$on('</span>fromA<span class="string">', (v) =&gt; &#123;</span></span><br><span class="line"><span class="string">            console.log(v)</span></span><br><span class="line"><span class="string">        &#125;)</span></span><br><span class="line"><span class="string">    &#125;,</span></span><br><span class="line"><span class="string">    beforeDestroy () &#123; // 不要忘记在组件销毁的时候同时注销事件监听</span></span><br><span class="line"><span class="string">        bus.$off('</span>fromA<span class="string">')</span></span><br><span class="line"><span class="string">    &#125;</span></span><br><span class="line"><span class="string">&#125;</span></span><br></pre></td></tr></table></figure>
+<p>感觉这种方式的数据流动过于随意,慎用.</p>
+<p>这个封装的一个库,思路挺不错的. <a href="https://github.com/yangmingshan/vue-bus/blob/master/src/index.js" target="_blank" rel="noopener">vue-bus</a></p>
+<h2 id="依赖注入-inject-provide"><a href="#依赖注入-inject-provide" class="headerlink" title="依赖注入 inject provide"></a>依赖注入 inject provide</h2><blockquote>
+<p>在官网中,不推荐在业务代码使用这种方法,这个方法发设计初衷是为了高级组件的.所以在elem源码中倒是经常看到这种使用方法.</p>
+</blockquote>
+<p>其主要的作用是祖先组件向子孙组件注入一个依赖,无论层级关系有多深,主要关系还在都会生效.</p>
+<p>这个没有怎么使用过.</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/vue-总结/" rel="tag"># vue 总结</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/06/05/函数式编程基础/" rel="next" title="函数式编程基础">
+                <i class="fa fa-chevron-left"></i> 函数式编程基础
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='//bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="Yippee">
+          <p class="site-author-name" itemprop="name">Yippee</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+           
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">25</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">分类</span>
+              
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/Yippeee" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                    
+                      GitHub
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/Yipper_tc" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                    
+                      Twitter
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://weibo.com/2606794002/profile?topnav=1&wvr=6" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                    
+                      Weibo
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#父子组件交互"><span class="nav-number">1.</span> <span class="nav-text">父子组件交互</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#prop-emit"><span class="nav-number">1.1.</span> <span class="nav-text">prop $emit()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sync-修饰符"><span class="nav-number">1.2.</span> <span class="nav-text">.sync 修饰符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#v-model"><span class="nav-number">1.3.</span> <span class="nav-text">v-model</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#parent-children"><span class="nav-number">1.4.</span> <span class="nav-text">\$parent $children</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#children"><span class="nav-number">1.4.1.</span> <span class="nav-text">$children</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#祖孙组件之间交互"><span class="nav-number">2.</span> <span class="nav-text">祖孙组件之间交互</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#attrs-listeners"><span class="nav-number">2.1.</span> <span class="nav-text">\$attrs $listeners</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#inheritAttrs"><span class="nav-number">2.1.1.</span> <span class="nav-text">inheritAttrs</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#event-bus"><span class="nav-number">2.2.</span> <span class="nav-text">event bus</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#依赖注入-inject-provide"><span class="nav-number">2.3.</span> <span class="nav-text">依赖注入 inject provide</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2018 - 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Yippee</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

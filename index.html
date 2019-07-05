@@ -283,6 +283,193 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yippee.ink/2019/07/02/vue-组件通信/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yippee">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="依破缘">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/07/02/vue-组件通信/" itemprop="url">vue 组件通信</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-02T19:07:24+08:00">
+                2019-07-02
+              </time>
+            
+
+            
+
+            
+          </span>
+          
+          
+            <span class="post-updated">
+              &nbsp; | &nbsp; 修改于
+              <time itemprop="dateUpdated" datetime="2019-07-05T11:14:21+08:00" content="2019-07-05">
+                2019-07-05
+              </time>
+            </span>
+          
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="父子组件交互"><a href="#父子组件交互" class="headerlink" title="父子组件交互"></a>父子组件交互</h1><h2 id="prop-emit"><a href="#prop-emit" class="headerlink" title="prop $emit()"></a>prop $emit()</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">    &lt;div&gt;<span class="xml"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">&lt;<span class="regexp">/template&gt;</span></span><br><span class="line"><span class="regexp">/</span><span class="regexp">/ 子组件中</span></span><br><span class="line"><span class="regexp">export default &#123;</span></span><br><span class="line"><span class="regexp">    prop: [val],</span></span><br><span class="line"><span class="regexp">    methods: &#123;</span></span><br><span class="line"><span class="regexp">        changeVal(value) &#123;</span></span><br><span class="line"><span class="regexp">            this.$emit('fChange', value)</span></span><br><span class="line"><span class="regexp">        &#125;</span></span><br><span class="line"><span class="regexp">    &#125;</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">    &lt;child @fChange=<span class="string">"change"</span> :val=val &gt;<span class="xml"><span class="tag">&lt;/<span class="name">child</span>&gt;</span></span></span><br><span class="line">&lt;<span class="regexp">/template&gt;</span></span><br><span class="line"><span class="regexp">import child from './</span>child<span class="string">'</span></span><br><span class="line"><span class="string">// 父组件中</span></span><br><span class="line"><span class="string">export default &#123;</span></span><br><span class="line"><span class="string">    components: &#123;child&#125;,</span></span><br><span class="line"><span class="string">    data() &#123;</span></span><br><span class="line"><span class="string">        return &#123;</span></span><br><span class="line"><span class="string">            val: '</span><span class="number">1</span><span class="string">'</span></span><br><span class="line"><span class="string">        &#125;</span></span><br><span class="line"><span class="string">    &#125;,</span></span><br><span class="line"><span class="string">    methods: &#123;</span></span><br><span class="line"><span class="string">        change(val) &#123;</span></span><br><span class="line"><span class="string">            this.val = val</span></span><br><span class="line"><span class="string">        &#125;</span></span><br><span class="line"><span class="string">    &#125;</span></span><br><span class="line"><span class="string">&#125;</span></span><br></pre></td></tr></table></figure>
+<p>在这种实现的父子组件的通信,通常认为是稍微复杂一点的,数据的传递不仅仅是为了改变的,而是作为一个playload,去完成功能的.</p>
+<p>使用起来有几点注意:</p>
+<p>子组件用 <code>prop</code> 属性获取父组件中的数据</p>
+<p>子组件注册自定义事件,并且利用 <code>$emit()</code> 触发</p>
+<p>最后对数据的处理,以及事件都是在父组件发生的.</p>
+<h2 id="sync-修饰符"><a href="#sync-修饰符" class="headerlink" title=".sync 修饰符"></a>.sync 修饰符</h2><p>这是语法糖实现的双向绑定, 实则在vue中是不使用双向绑定的. 数据流都是单向的</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">    &lt;div&gt;<span class="xml"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">&lt;<span class="regexp">/template&gt;</span></span><br><span class="line"><span class="regexp">/</span><span class="regexp">/ 子组件中</span></span><br><span class="line"><span class="regexp">export default &#123;</span></span><br><span class="line"><span class="regexp">    prop: [val],</span></span><br><span class="line"><span class="regexp">    methods: &#123;</span></span><br><span class="line"><span class="regexp">        changeVal(value) &#123;</span></span><br><span class="line"><span class="regexp">            this.$emit('update:val', value)</span></span><br><span class="line"><span class="regexp">        &#125;</span></span><br><span class="line"><span class="regexp">    &#125;</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">    &lt;child :val.sync=val &gt;<span class="xml"><span class="tag">&lt;/<span class="name">child</span>&gt;</span></span></span><br><span class="line">&lt;<span class="regexp">/template&gt;</span></span><br><span class="line"><span class="regexp">import child from './</span>child<span class="string">'</span></span><br><span class="line"><span class="string">// 父组件中</span></span><br><span class="line"><span class="string">export default &#123;</span></span><br><span class="line"><span class="string">    components: &#123;child&#125;,</span></span><br><span class="line"><span class="string">    data() &#123;</span></span><br><span class="line"><span class="string">        return &#123;</span></span><br><span class="line"><span class="string">            val: '</span><span class="number">1</span><span class="string">'</span></span><br><span class="line"><span class="string">        &#125;</span></span><br><span class="line"><span class="string">    &#125;,</span></span><br><span class="line"><span class="string">&#125;</span></span><br></pre></td></tr></table></figure>
+<p>可以看出,如果同样只是需要对诗数据进行同步的话,使用.sync 修饰符,就会非常的简单.</p>
+<p>其实也就是下面的语法糖而已:<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;child :val=val @update:val=<span class="string">'val = $event'</span> &gt;<span class="xml"><span class="tag">&lt;/<span class="name">child</span>&gt;</span></span></span><br></pre></td></tr></table></figure></p>
+<h2 id="v-model"><a href="#v-model" class="headerlink" title="v-model"></a>v-model</h2><blockquote>
+<p>在看 elem 源码的时候发现了这种使用方法,后面发现这种使用方式很多了. 但是一直有一点很困惑,就是都是实现数据’双向’流动,之前的很多方法都使用的很便捷了,不知道为什么要使用这种. 后面,我搜索考察了一番,觉得应该是为了可以在实现自定义的组件的时候,保持vue本身的这么一个v-model的写法.</p>
+</blockquote>
+<p>使用v-modal 的作用也是保持子组件数据和父组件保持一样.</p>
+<p>使用的🌰:<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 子组件中</span></span><br><span class="line">&lt;template&gt;</span><br><span class="line">    &lt;div @change=<span class="string">'changeVal'</span> &gt;<span class="xml"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">&lt;<span class="regexp">/template&gt;</span></span><br><span class="line"><span class="regexp">export default &#123;</span></span><br><span class="line"><span class="regexp">    prop: [value],</span></span><br><span class="line"><span class="regexp">    modal: &#123;</span></span><br><span class="line"><span class="regexp">        prop: 'value', /</span><span class="regexp">/ 这里这个名词可以自己随意定义的,定义了之后就需要在prop中申明</span></span><br><span class="line"><span class="regexp">        event: 'changeValEvent'</span></span><br><span class="line"><span class="regexp">    &#125;,</span></span><br><span class="line"><span class="regexp">    methods: &#123;</span></span><br><span class="line"><span class="regexp">        changeVal(value) &#123;</span></span><br><span class="line"><span class="regexp">            this.$emit('changeValEvent', value)</span></span><br><span class="line"><span class="regexp">        &#125;</span></span><br><span class="line"><span class="regexp">    &#125;</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br></pre></td></tr></table></figure></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 父组件中</span></span><br><span class="line">&lt;template&gt;</span><br><span class="line">    &lt;child v-modal=<span class="string">'val'</span>&gt;<span class="xml"><span class="tag">&lt;/<span class="name">child</span>&gt;</span></span></span><br><span class="line">&lt;<span class="regexp">/template&gt;</span></span><br><span class="line"><span class="regexp">import child from './</span>child<span class="string">'</span></span><br><span class="line"><span class="string">export default &#123;</span></span><br><span class="line"><span class="string">    components: &#123;child&#125;,</span></span><br><span class="line"><span class="string">    data() &#123;</span></span><br><span class="line"><span class="string">        return &#123;</span></span><br><span class="line"><span class="string">            val: '</span><span class="number">1</span><span class="string">'</span></span><br><span class="line"><span class="string">        &#125;</span></span><br><span class="line"><span class="string">    &#125;,</span></span><br><span class="line"><span class="string">&#125;</span></span><br></pre></td></tr></table></figure>
+<p>这样的写法是对用组件的易用性有了很大的提升.同时这也只是个 prop $emit 的语法糖</p>
+<p>相当于:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;child v-bind:&#123; $parent.modal.prop &#125; = <span class="string">'val'</span> v-on:&#123; $parent.modal.event &#125; = <span class="string">'val = arguments[0]'</span> &gt;<span class="xml"><span class="tag">&lt;/<span class="name">child</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+<p>其中 <code>$parent.modal</code> 是在子组件中配置的属性名称和事件名称.</p>
+<h2 id="parent-children"><a href="#parent-children" class="headerlink" title="\$parent $children"></a>\$parent $children</h2><p>上面的几种方法,其实都是 prop 的不同的使用方法. 而真正的支持改变父或子组件的数据可以直接使用 <code>$parent $children</code></p>
+<p>可以直接通过 <code>this.$parent[methodName]</code> <code>this.$parent[dataName] = sth</code> 来调用方法,以及改变数据</p>
+<blockquote>
+<p>这一点可以看出, vue不是纯粹的单向数据流.</p>
+</blockquote>
+<h3 id="children"><a href="#children" class="headerlink" title="$children"></a>$children</h3><p>$children 是一个数组, 直接子组件, 其中并不保存顺序, 也不是响应式的.</p>
+<blockquote>
+<p>在查阅资料的时候,可以发现这两个直接访问组件的方法是不被倡导的.官网的说法,是应急的用法.但是现在这句话没有了,不知道是什么意思.<a href="https://cn.vuejs.org/v2/api/#vm-children" target="_blank" rel="noopener">链接</a> 现在(2019-07-03)在官网没有看到有提到节制使用 $children</p>
+</blockquote>
+<p>在直接对子组件的方法调用的时候,还是直接用ref 注册,然后直接使用 ref 会更加方便和准确</p>
+<h1 id="祖孙组件之间交互"><a href="#祖孙组件之间交互" class="headerlink" title="祖孙组件之间交互"></a>祖孙组件之间交互</h1><h2 id="attrs-listeners"><a href="#attrs-listeners" class="headerlink" title="\$attrs $listeners"></a>\$attrs $listeners</h2><blockquote>
+<p>开宗明义, $listeners是用来向上传递事件的, $attrs是用来向下传递数据的, 使用场景一般为多层组件的时候, 写在中间层直接传递.</p>
+</blockquote>
+<p>来一个🌰:</p>
+<p>引用关系是这样的  parent -&gt; child -&gt; grandChild</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// parent</span></span><br><span class="line">&lt;template&gt;</span><br><span class="line">    &lt;div&gt;</span><br><span class="line">        &lt;child :val=<span class="string">'value'</span> @changeValEvent=<span class="string">'changeVal'</span> &gt;<span class="xml"><span class="tag">&lt;/<span class="name">child</span>&gt;</span></span></span><br><span class="line">    &lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">&lt;/</span>template&gt;</span><br><span class="line"><span class="keyword">import</span> child <span class="keyword">from</span> <span class="string">'./child'</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    components:&#123;...&#125;,</span><br><span class="line">    data () &#123;</span><br><span class="line">        <span class="keyword">return</span> &#123;</span><br><span class="line">            value: <span class="string">'hiha'</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    methods: &#123;</span><br><span class="line">        changeVal(value) &#123;</span><br><span class="line">            <span class="built_in">console</span>.log(value)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// child</span></span><br><span class="line">&lt;template&gt;</span><br><span class="line">    &lt;div <span class="class"><span class="keyword">class</span></span>=<span class="string">'child'</span>&gt;</span><br><span class="line">        &lt;grandChild v-bind=<span class="string">'$attrs'</span> v-on=<span class="string">'$listeners'</span> &gt;<span class="xml"><span class="tag">&lt;/<span class="name">grandChild</span>&gt;</span></span> &lt;!-- 使用 $attrs $listeners 透传了数据和事件 --&gt;</span><br><span class="line">    &lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">&lt;/</span>template&gt;</span><br><span class="line"><span class="keyword">import</span> grandChild <span class="keyword">from</span> <span class="string">'./grandChild'</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    components:&#123;...&#125;,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// grandChild</span></span><br><span class="line">&lt;template&gt;</span><br><span class="line">    &lt;div&gt;<span class="xml"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">&lt;<span class="regexp">/template&gt;</span></span><br><span class="line"><span class="regexp">export default &#123;</span></span><br><span class="line"><span class="regexp">    prop: ['val'], /</span><span class="regexp">/ 直接在需要使用的子孙组件中引用prop</span></span><br><span class="line"><span class="regexp">    data () &#123;</span></span><br><span class="line"><span class="regexp">        return &#123;</span></span><br><span class="line"><span class="regexp">            value: 'hiha'</span></span><br><span class="line"><span class="regexp">        &#125;</span></span><br><span class="line"><span class="regexp">    &#125;,</span></span><br><span class="line"><span class="regexp">    methods: &#123;</span></span><br><span class="line"><span class="regexp">        changeVal(value) &#123;</span></span><br><span class="line"><span class="regexp">            this.$emit('changeValEvent', value) /</span><span class="regexp">/ 直接emit祖宗组件的事件</span></span><br><span class="line"><span class="regexp">        &#125;</span></span><br><span class="line"><span class="regexp">    &#125;</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br></pre></td></tr></table></figure>
+<p>可以看出使用 <code>$attrs $listeners</code> 的情况都是多层组件中, 直接让数据和事件传递, 而不用再中间不需要使用的地方, 再写 emit 和 prop 做中转. 再复杂的组件关系中,使用这种方法可以简洁很多,</p>
+<p>在使用 $attrs 的时候, 需要配合 inheritAttrs 属性一起使用</p>
+<h3 id="inheritAttrs"><a href="#inheritAttrs" class="headerlink" title="inheritAttrs"></a>inheritAttrs</h3><p>来一段官网的解释:</p>
+<blockquote>
+<p>默认情况下父作用域的不被认作 props 的特性绑定 (attribute bindings) 将会“回退”且作为普通的 HTML 特性应用在子组件的根元素上。当撰写包裹一个目标元素或另一个组件的组件时，这可能不会总是符合预期行为。通过设置 inheritAttrs 到 false，这些默认行为将会被去掉。而通过 (同样是 2.4 新增的) 实例属性 $attrs 可以让这些特性生效，且可以通过 v-bind 显性的绑定到非根元素上。</p>
+</blockquote>
+<p>我的理解就是在配合 $attrs 使用的时候, 防止 v-bind 的数据显性的出现在HTML中.</p>
+<p>以上面的代码为例, 如果是上面的写法,那么在HTML中会出现的这样的情况:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">data-v-763db97b</span>=<span class="string">""</span> <span class="attr">class</span>=<span class="string">"child"</span> <span class="attr">val</span>=<span class="string">"hiha"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>在使用 $attrs 的组件 child 中设置 inheritAttrs: false, 就不会出现这样的情况了.</p>
+<h2 id="event-bus"><a href="#event-bus" class="headerlink" title="event bus"></a>event bus</h2><p>一句话描述一下什么是event bus. 就是利用一个新的new,通过这个空的vue来监听($on)和触发($emit).</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// bus.js</span></span><br><span class="line"><span class="keyword">import</span> vue <span class="keyword">from</span> <span class="string">'vue'</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> vue</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// a.vue</span></span><br><span class="line">&lt;template&gt;</span><br><span class="line">    &lt;div @click=<span class="string">'changeA'</span> &gt;<span class="xml"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">&lt;<span class="regexp">/template&gt;</span></span><br><span class="line"><span class="regexp">import bus from './</span>bus<span class="string">'</span></span><br><span class="line"><span class="string">export default &#123;</span></span><br><span class="line"><span class="string">    data () &#123;</span></span><br><span class="line"><span class="string">        return &#123;</span></span><br><span class="line"><span class="string">            value: '</span>hiha<span class="string">'</span></span><br><span class="line"><span class="string">        &#125;</span></span><br><span class="line"><span class="string">    &#125;,</span></span><br><span class="line"><span class="string">    methods: &#123;</span></span><br><span class="line"><span class="string">        changeA(value) &#123;</span></span><br><span class="line"><span class="string">            bus.$emit('</span>fromA<span class="string">', this.value)</span></span><br><span class="line"><span class="string">        &#125;</span></span><br><span class="line"><span class="string">    &#125;</span></span><br><span class="line"><span class="string">&#125;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// b.vue</span></span><br><span class="line">&lt;template&gt;</span><br><span class="line">    &lt;div @click=<span class="string">'changeA'</span> &gt;<span class="xml"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">&lt;<span class="regexp">/template&gt;</span></span><br><span class="line"><span class="regexp">import bus from './</span>bus<span class="string">'</span></span><br><span class="line"><span class="string">export default &#123;</span></span><br><span class="line"><span class="string">    data () &#123;</span></span><br><span class="line"><span class="string">        return &#123;</span></span><br><span class="line"><span class="string">            value: '</span>hiha<span class="string">'</span></span><br><span class="line"><span class="string">        &#125;</span></span><br><span class="line"><span class="string">    &#125;,</span></span><br><span class="line"><span class="string">    created () &#123;</span></span><br><span class="line"><span class="string">        bus.$on('</span>fromA<span class="string">', (v) =&gt; &#123;</span></span><br><span class="line"><span class="string">            console.log(v)</span></span><br><span class="line"><span class="string">        &#125;)</span></span><br><span class="line"><span class="string">    &#125;,</span></span><br><span class="line"><span class="string">    beforeDestroy () &#123; // 不要忘记在组件销毁的时候同时注销事件监听</span></span><br><span class="line"><span class="string">        bus.$off('</span>fromA<span class="string">')</span></span><br><span class="line"><span class="string">    &#125;</span></span><br><span class="line"><span class="string">&#125;</span></span><br></pre></td></tr></table></figure>
+<p>感觉这种方式的数据流动过于随意,慎用.</p>
+<p>这个封装的一个库,思路挺不错的. <a href="https://github.com/yangmingshan/vue-bus/blob/master/src/index.js" target="_blank" rel="noopener">vue-bus</a></p>
+<h2 id="依赖注入-inject-provide"><a href="#依赖注入-inject-provide" class="headerlink" title="依赖注入 inject provide"></a>依赖注入 inject provide</h2><blockquote>
+<p>在官网中,不推荐在业务代码使用这种方法,这个方法发设计初衷是为了高级组件的.所以在elem源码中倒是经常看到这种使用方法.</p>
+</blockquote>
+<p>其主要的作用是祖先组件向子孙组件注入一个依赖,无论层级关系有多深,主要关系还在都会生效.</p>
+<p>这个没有怎么使用过.</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yippee.ink/2019/06/05/函数式编程基础/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -1816,191 +2003,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yippee.ink/2019/03/25/几种常见的递归函数/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Yippee">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="依破缘">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/03/25/几种常见的递归函数/" itemprop="url">几种常见的递归函数</a></h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-25T15:53:22+08:00">
-                2019-03-25
-              </time>
-            
-
-            
-
-            
-          </span>
-          
-          
-            <span class="post-updated">
-              &nbsp; | &nbsp; 修改于
-              <time itemprop="dateUpdated" datetime="2019-05-18T13:17:07+08:00" content="2019-05-18">
-                2019-05-18
-              </time>
-            </span>
-          
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <blockquote>
-<p>本文的主题是，常见的几种递归函数，以及如何用非递归的方式实现</p>
-</blockquote>
-<h2 id="树形结构对象的遍历"><a href="#树形结构对象的遍历" class="headerlink" title="树形结构对象的遍历"></a>树形结构对象的遍历</h2><p>完成一个函数，作用是返回对象的最大深度（其实就是树的深度）</p>
-<p>首先的思路，是从DP问题开始。位于N位置的最大深度，就是位于N-1位置的最大深度 + 1， 且如果没有子项了，深度就为1</p>
-<p>一个递归的原型就形成了</p>
-<ol>
-<li>相连项目之间的关系</li>
-<li>递归退出的条件</li>
-</ol>
-<p>所以递归的套路模板一般形如：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (基本情况) &#123;</span><br><span class="line">    直接返回，退出函数</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    继续调用(新的参数)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>那么，按照上面的描述，写出这个函数</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">traverse</span>(<span class="params">obj</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (obj === <span class="literal">null</span>) <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">    <span class="comment">// 判断是不是单层对象</span></span><br><span class="line">    <span class="keyword">const</span> getSons = <span class="function">(<span class="params">obj</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> getObjChildren(obj).every(<span class="function">(<span class="params">item</span>) =&gt;</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="built_in">Object</span>.prototype.toString.call(item) !== <span class="string">'[object Object]'</span> <span class="comment">// 对象类型判断</span></span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (getSons(obj)) <span class="keyword">return</span> <span class="number">1</span></span><br><span class="line">    <span class="keyword">let</span> max = <span class="number">0</span></span><br><span class="line">    getObjChildren(obj).forEach(<span class="function"><span class="params">item</span> =&gt;</span> &#123;</span><br><span class="line">        max = traverse(item) &gt; max ? traverse(item) : max</span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="keyword">return</span> max + <span class="number">1</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 获取对象的直接儿子元素，返回数组</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getObjChildren</span>(<span class="params">obj</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> result = []</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">const</span> key <span class="keyword">in</span> obj) &#123;</span><br><span class="line">        <span class="keyword">if</span> (obj.hasOwnProperty(key)) &#123;</span><br><span class="line">            <span class="keyword">const</span> element = obj[key];</span><br><span class="line">            result.push(element)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> result</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>使用递归就是这么做的，如果不能使用递归呢。</p>
-<p>我们将思维转化一下，不要江化。</p>
-<p>这样的每一个去遍历，做了很多的无用功，如果我们直接以层为单位，这一层只要有子元素就把层数加一，知道最后一层所有的元素都没有子元素了，那么最后不就是树的层数了嘛。</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">layerTraverse</span>(<span class="params">obj</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (obj === <span class="literal">null</span>) <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">    <span class="keyword">let</span> layer = <span class="number">1</span></span><br><span class="line">    <span class="keyword">let</span> queues = [] <span class="comment">// 用于存放一层的所有数据</span></span><br><span class="line">    queues = getObjChildren(obj)</span><br><span class="line">    <span class="comment">// 如何通过两个while 完成对所有节点的遍历</span></span><br><span class="line">    <span class="comment">// 第一个while 作为外圈， 判断下一层是否还有数据</span></span><br><span class="line">    <span class="comment">// 第二个while 用来判断当层的数据是否全部都执行完（将子元素 push进入 queue</span></span><br><span class="line">    <span class="keyword">while</span> (queues.length &gt; <span class="number">0</span>) &#123;</span><br><span class="line">        layer++</span><br><span class="line">        <span class="keyword">let</span> length = queues.length</span><br><span class="line">        <span class="keyword">while</span> (length &gt; <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">let</span> item = queues.shift()</span><br><span class="line">            queues.push(...getObjChildren(item))</span><br><span class="line">            length--</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> layer</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>同时这还利用了堆的思想。  </p>
-<h2 id="阶乘、Fibonacci函数以及-HanoiTower-汉诺塔"><a href="#阶乘、Fibonacci函数以及-HanoiTower-汉诺塔" class="headerlink" title="阶乘、Fibonacci函数以及 HanoiTower(汉诺塔)"></a>阶乘、Fibonacci函数以及 HanoiTower(汉诺塔)</h2><p>明确这三个的定义：</p>
-<p>阶乘就是 6! = 6 x 5 x 4 x 3 x 2 x 1</p>
-<p>Fibonacci 函数就是 每一个数都是前两个数之和，第一个和第二个数都是1</p>
-<p>HanoiTower(汉诺塔)：<br>有三根杆子A，B，C。A杆上有 N 个 (N&gt;1) 穿孔圆盘，盘的尺寸由下到上依次变小。要求按下列规则将所有圆盘移至 C 杆：</p>
-<ol>
-<li>每次只能移动一个圆盘；</li>
-<li>大盘不能叠在小盘上面。</li>
-</ol>
-<p>提示：可将圆盘临时置于 B 杆，也可将从 A 杆移出的圆盘重新移回 A 杆，但都必须遵循上述两条规则。</p>
-<p>问：如何移？最少要移动多少次？</p>
-<h3 id="Fibonacci函数"><a href="#Fibonacci函数" class="headerlink" title="Fibonacci函数"></a>Fibonacci函数</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Fibonacci</span>(<span class="params">n</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (n === <span class="number">1</span> || n === <span class="number">2</span>) <span class="keyword">return</span> <span class="number">1</span></span><br><span class="line">    <span class="keyword">return</span> Fibonacci(n - <span class="number">1</span>) + Fibonacci(n - <span class="number">2</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>这就是最简单的实现，这个实现基本上就很垃圾，因为运行一下就知道了，耗费的时间非常大。</p>
-<p>这里的解决办法很多，例如建一个缓存，每次先从缓存里面拿值，如果没有在调用，之后再更新缓存。</p>
-<p>我们不适用这些办法，我这里想做的是用循环代替递归。</p>
-<p>也就是适用DP的思想，只保存当前运算时需要的数据。</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Fibonacci2</span>(<span class="params">n</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (n === <span class="number">1</span> || n === <span class="number">2</span>) <span class="keyword">return</span> <span class="number">1</span></span><br><span class="line">    <span class="keyword">let</span> result = <span class="number">1</span>, </span><br><span class="line">    a1 = <span class="number">1</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">3</span>; i &lt;= n; i++)&#123;</span><br><span class="line">        result = result + a1</span><br><span class="line">        a1 = result - a1</span><br><span class="line">    &#125;    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>上面这种写法只用了一个a1， 是为了节省变量，如果用两个变量，一个代表前一个的值，另一个代表前两个的值，就会更容易看懂。</p>
-<blockquote>
-<p>update: 2019-03-29</p>
-</blockquote>
-<p>发现了一种更优雅的实现<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Fibonacci3</span>(<span class="params">n</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> [prev, curr] = [<span class="number">0</span>, <span class="number">1</span>]</span><br><span class="line">    <span class="keyword">while</span>(n-- &gt; <span class="number">1</span>) &#123;</span><br><span class="line">        [prev, curr] = [curr, curr + prev]</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> curr</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>代码量更少，更容易阅读。思路来自于MDN迭代器中的实现。</p>
-<h3 id="阶乘"><a href="#阶乘" class="headerlink" title="阶乘"></a>阶乘</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">factorial</span>(<span class="params">n</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (n == <span class="number">1</span>) <span class="keyword">return</span> <span class="number">1</span></span><br><span class="line">    <span class="keyword">return</span> factorial(n - <span class="number">1</span>) * n</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">factorial2</span>(<span class="params">n</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (n===<span class="number">1</span>) <span class="keyword">return</span> <span class="number">1</span></span><br><span class="line">    <span class="keyword">let</span> result = <span class="number">1</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">2</span>; i &lt;= n; i++)&#123;</span><br><span class="line">        result = i * result</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> result</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="HanoiTower-汉诺塔"><a href="#HanoiTower-汉诺塔" class="headerlink" title="HanoiTower(汉诺塔)"></a>HanoiTower(汉诺塔)</h3><p><img src="https://upload.wikimedia.org/wikipedia/commons/0/07/Tower_of_Hanoi.jpeg" alt="汉诺塔"></p>
-<p>思路就是如果得把N个全都移动C柱，那么分解一下，就是把N-1个移动BY柱，把第N个移到C柱，再把N-1个从by柱移到C柱去</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">HanoiTower</span>(<span class="params">n, from, by, to</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (n === <span class="number">1</span>) &#123;</span><br><span class="line">        move(<span class="number">1</span>, <span class="keyword">from</span>, to)</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        HanoiTower(n - <span class="number">1</span>, <span class="keyword">from</span>, by, to)</span><br><span class="line">        move(n, <span class="keyword">from</span>, to)</span><br><span class="line">        HanoiTower(n - <span class="number">1</span>, to, by, <span class="keyword">from</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">move</span>(<span class="params">n, from, to, index</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">`移动第<span class="subst">$&#123;n&#125;</span>个从<span class="subst">$&#123;<span class="keyword">from</span>&#125;</span> ----&gt; <span class="subst">$&#123;to&#125;</span>`</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="尾调用"><a href="#尾调用" class="headerlink" title="尾调用"></a>尾调用</h2><blockquote>
-<p>除了我们手动的去优化递归，ES6中本身也有对递归优化的方法。那就是尾调用。</p>
-</blockquote>
-<p>尾调用一定是在函数的最后一步，返回了一个没有进行任何操作的函数。</p>
-<p>只有这样，才能完全的丢弃外层函数的调用栈，只保留内部返回函数的调用记录。</p>
-<p>这是对Fibonacci函数的尾递归改造：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Fibonacci3</span>(<span class="params">n, val1, val2</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (n === <span class="number">1</span>) <span class="keyword">return</span> val2</span><br><span class="line">    <span class="keyword">return</span> Fibonacci3(n - <span class="number">1</span>, val1 + val2, val1)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>再对阶乘函数进行改造：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">factorial</span>(<span class="params">n, total</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (n === <span class="number">1</span>) <span class="keyword">return</span> total</span><br><span class="line">    <span class="keyword">return</span> factorial(n - <span class="number">1</span>, n * total)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>看以上两个尾递归的函数，我们在使用的时候，都得显视的传入 val1 或者 total 这种开始的值。</p>
-<p>会让函数的意义不容易懂。</p>
-<p>这里有两种办法，一种是<strong>柯里化</strong>，另一种是<strong>参数默认值</strong></p>
-<h3 id="柯里化"><a href="#柯里化" class="headerlink" title="柯里化"></a>柯里化</h3><p>需要在外圈再包一个函数，如果是Fibonacci 函数的话。</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">currying</span>(<span class="params">fn, n</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params">val</span>) </span>&#123;</span><br><span class="line">        fn.call(<span class="keyword">this</span>, val, n)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> Fibonacci3_1 = currying(Fibonacci3, <span class="number">1</span>)</span><br></pre></td></tr></table></figure>
-<h3 id="函数默认值"><a href="#函数默认值" class="headerlink" title="函数默认值"></a>函数默认值</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Fibonacci3</span>(<span class="params">n, val1 = <span class="number">1</span>, val2 = <span class="number">1</span></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (n === <span class="number">1</span>) <span class="keyword">return</span> val2</span><br><span class="line">    <span class="keyword">return</span> Fibonacci3(n - <span class="number">1</span>, val1 + val2, val1)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2049,7 +2051,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">24</span>
+                <span class="site-state-item-count">25</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -2071,7 +2073,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-count">10</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
