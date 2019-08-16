@@ -283,6 +283,175 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yippee.ink/2019/03/27/http缓存/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yippee">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="依破缘">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/03/27/http缓存/" itemprop="url">http缓存</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-27T16:18:20+08:00">
+                2019-03-27
+              </time>
+            
+
+            
+
+            
+          </span>
+          
+          
+            <span class="post-updated">
+              &nbsp; | &nbsp; 修改于
+              <time itemprop="dateUpdated" datetime="2019-05-18T13:17:07+08:00" content="2019-05-18">
+                2019-05-18
+              </time>
+            </span>
+          
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <blockquote>
+<p>这篇博客纯粹是搬运，因为这些知识都是看来的，没有实践过。</p>
+</blockquote>
+<p>原先的时候http缓存(强缓存)是直接设定缓存的时间，如果时间过了，就去服务器请求新的数据。</p>
+<p>如果时间没有过，就直接从缓存数据中读取数据，<strong>不会发送请求</strong>。</p>
+<p>用到的字段有： </p>
+<p>Expire： 设置缓存过期时间，使用的是GMT(格林尼治时间)，这个时间是相对于服务器的</p>
+<p>而由于时间是对于服务器的，无法统一。 就使用了一个新的字段： <strong>cache-control</strong></p>
+<p>cache-control：设置 max-age=t 直接设置绝对过期时间<br>同时，还有其他的属性：</p>
+<table>
+<thead>
+<tr>
+<th>字段名称</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>no-cache</td>
+<td>代理服务器不能缓存数据，如果是在请求阶段就是，直接向服务器发送请求</td>
+</tr>
+<tr>
+<td>no-store</td>
+<td>所有的内容都不能被缓存</td>
+</tr>
+<tr>
+<td>private [= ‘field-name’]</td>
+<td>指定的用户或者缓存服务器才能缓存数据 </td>
+</tr>
+<tr>
+<td>public</td>
+<td><strong>只出现在响应头中</strong>，任何情况下都需要缓存数据</td>
+</tr>
+<tr>
+<td>max-age=t</td>
+<td>请求时：告知服务器接收一个在t时间之内的数据; 返回时，告知t时间内，数据不同再请求</td>
+</tr>
+</tbody>
+</table>
+<p>cache-control 中的属性可以设置多个，自由组合</p>
+<p>上面的字段决定了是否会发出请求，但是请求发出之后，也不是一定会再次发送数据的。还需要进行验证</p>
+<h3 id="缓存校验字段"><a href="#缓存校验字段" class="headerlink" title="缓存校验字段"></a>缓存校验字段</h3>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yippee.ink/2019/03/25/几种常见的递归函数/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -1387,8 +1556,8 @@
           
             <span class="post-updated">
               &nbsp; | &nbsp; 修改于
-              <time itemprop="dateUpdated" datetime="2019-05-18T13:17:27+08:00" content="2019-05-18">
-                2019-05-18
+              <time itemprop="dateUpdated" datetime="2019-08-08T12:04:58+08:00" content="2019-08-08">
+                2019-08-08
               </time>
             </span>
           
@@ -1464,7 +1633,17 @@
 </ol>
 <p>… 还有很多，就不一一记录了。大致了解下</p>
 <h2 id="负载均衡"><a href="#负载均衡" class="headerlink" title="负载均衡"></a>负载均衡</h2><p>我们把用户的访问流量称为负载，而根据转发策略（rules）将负载（访问流量）分配给后端机器的服务便是负载均衡</p>
-
+<h2 id="网络层"><a href="#网络层" class="headerlink" title="网络层"></a>网络层</h2><blockquote>
+<p>这可是当时计网天天强调的东西啊, 来回顾一下.</p>
+</blockquote>
+<h3 id="OSI七层模型"><a href="#OSI七层模型" class="headerlink" title="OSI七层模型"></a>OSI七层模型</h3><h2 id="TCP-IP-五层协议"><a href="#TCP-IP-五层协议" class="headerlink" title="TCP/IP 五层协议"></a>TCP/IP 五层协议</h2><ol>
+<li>应用层 HTTP : 约定如何描述自己的信息</li>
+<li>传输层 TCP UDP : 数据传输时候的协议(什么时候可以传, 传多少, 什么时候结束, 要不要接受)</li>
+<li>网络层 IP  : 寻找接受方地址</li>
+<li>数据链路层</li>
+<li>物理层</li>
+</ol>
+<h3 id="交换机和路由器的区别"><a href="#交换机和路由器的区别" class="headerlink" title="交换机和路由器的区别"></a>交换机和路由器的区别</h3>
           
         
       
@@ -1823,172 +2002,6 @@ BFC就是页面上的一个隔离的独立容器，容器里面的子元素不�
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yippee.ink/2019/01/10/JS中的继承/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Yippee">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="依破缘">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/01/10/JS中的继承/" itemprop="url">JS中的继承</a></h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-10T14:33:09+08:00">
-                2019-01-10
-              </time>
-            
-
-            
-
-            
-          </span>
-          
-          
-            <span class="post-updated">
-              &nbsp; | &nbsp; 修改于
-              <time itemprop="dateUpdated" datetime="2019-05-18T13:17:27+08:00" content="2019-05-18">
-                2019-05-18
-              </time>
-            </span>
-          
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <blockquote>
-<p>文中方法全部来自&lt;&lt;JavaScript高级程序设计一书&gt;&gt;</p>
-</blockquote>
-<p>先想一个需求, 这里有一个父类方法, 包含了全部的共有属性, 我们想自己利用这个方法来创造继承于其中的子类方法<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">SuperClass</span>(<span class="params">id</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.id = id</span><br><span class="line">    <span class="keyword">this</span>.name = <span class="string">'fatherFunction'</span></span><br><span class="line">    <span class="keyword">this</span>.colors = [<span class="string">'red'</span>, <span class="string">'bule'</span>]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">SueperClass.prototype.say = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span>.id, <span class="keyword">this</span>.name, <span class="keyword">this</span>.colors)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>在上面我们定义了一个父类构造方法, 其中包含属性id,name,colors,还定义了它的一个方法say</p>
-<h3 id="原型链继承"><a href="#原型链继承" class="headerlink" title="原型链继承"></a>原型链继承</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Child_chain</span> (<span class="params"></span>) </span>&#123; <span class="comment">// 定义的子类</span></span><br><span class="line">    <span class="keyword">this</span>.name = <span class="string">'Child_Prototype_chain'</span></span><br><span class="line">&#125;</span><br><span class="line">Child_chain.prototype = <span class="keyword">new</span> SuperClass(<span class="string">'10'</span>)</span><br><span class="line"><span class="keyword">let</span> child_chain1 = <span class="keyword">new</span> Child_chain()</span><br><span class="line">child_chain1.colors.push(<span class="string">'yellow'</span>)</span><br><span class="line">child_chain1.say()</span><br><span class="line"><span class="keyword">let</span> child_chain2 = <span class="keyword">new</span> Child_chain()</span><br><span class="line">child_chain2.say()</span><br></pre></td></tr></table></figure>
-<p>原型链继承是直接利用原型链实现的继承方法, 将原型继承父类实例的方法和属性<br>当子类中调用其本身没有的属性和方法的时候,会在原型链上查找就可以调用父类上的属性和方法了,就实现了继承</p>
-<blockquote>
-<p>原型链继承的缺点： </p>
-<ol>
-<li>所有实例共享属性和方法，如果某一个实例修改了对象类型（引用类型）的属性的话，所有的实例的属性都会变化。 </li>
-<li>无法在创建实例的时候，向超类的构造函数传递参数</li>
-</ol>
-</blockquote>
-<h3 id="构造函数继承"><a href="#构造函数继承" class="headerlink" title="构造函数继承"></a>构造函数继承</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Child_constructor</span> (<span class="params">id</span>) </span>&#123;</span><br><span class="line">    SuperClass.call(<span class="keyword">this</span>, id) <span class="comment">// key</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> child_constructor = <span class="keyword">new</span> Child_constructor(<span class="string">'20'</span>)</span><br><span class="line"><span class="keyword">let</span> child_constructor2 = <span class="keyword">new</span> Child_constructor(<span class="string">'21'</span>)</span><br></pre></td></tr></table></figure>
-<p>用构造函数实现继承的时候,每一个子类的实例都会调用一次父类的构造函数,保证了数据的独立性</p>
-<p>但是这样并不是完整的继承,这样的方法只实现了属性的继承,而对方法没有继承。在使用方法的时候需要在构造函数内部定义方法，方法就没有复用的了。</p>
-<p>so,就是组合继承出场的时候了.</p>
-<h3 id="组合继承"><a href="#组合继承" class="headerlink" title="组合继承"></a>组合继承</h3><p>在组合继承中,还是使用构造函数一样的继承方法,但是会在子类的原型上再进行一些操作<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Child_constructor.prototype = <span class="keyword">new</span> SuperClass() <span class="comment">// 实现对父类中的方法的继承</span></span><br><span class="line">Child_constructor.prototype.constructor = Child_constructor <span class="comment">// 同时还需要把constructor属性更改回来</span></span><br></pre></td></tr></table></figure></p>
-<p>这样就完成了一个完整的继承,当然还是有不够完美的地方,那就是调用了父类的构造函数两次,这些都是很浪费的</p>
-<h3 id="寄生组合继承"><a href="#寄生组合继承" class="headerlink" title="寄生组合继承"></a>寄生组合继承</h3><p>这个方法的出现原因主要是为了解决父类构造函数被调用了两次的问题,<code>Super.call()</code>这个继承属性的构造函数是没有什么办法可以去省略的,但是在原型链中指定子类的原型其实没有必要用父类的构造函数,因为我们其实需要父类的原型的一个副本而已</p>
-<p>就衍生了一个创造副本的函数<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">object</span> (<span class="params">o</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> F = <span class="keyword">new</span> <span class="built_in">Function</span>()</span><br><span class="line">    F.prototype = o</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> F()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<blockquote>
-<p>这个函数在ECMAScript5中用Object.create()进行了规范</p>
-</blockquote>
-<p>那么寄生组合继承就可以完成了<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Child_inherit</span> (<span class="params">id</span>) </span>&#123;</span><br><span class="line">    SuperClass.call(<span class="keyword">this</span>, id)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Child_inherit.prototype = object(SuperClass.prototype)</span><br><span class="line">Child_inherit.prototype.constructor  = Child_inherit</span><br></pre></td></tr></table></figure></p>
-<p>就OK啦</p>
-<h4 id="class完成继承"><a href="#class完成继承" class="headerlink" title="class完成继承"></a>class完成继承</h4><blockquote>
-<p>上面的方法看着就反人类,官方也这么觉得了,自然现在就有官方的解决办法了.类似JAVA,用class来完成继承</p>
-</blockquote>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Super</span> </span>&#123;</span><br><span class="line">    <span class="keyword">constructor</span> (name) &#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name</span><br><span class="line">    &#125;</span><br><span class="line">    sayName () &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="keyword">this</span>.name)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Child</span> <span class="keyword">extends</span> <span class="title">Super</span> </span>&#123;</span><br><span class="line">    <span class="keyword">constructor</span> (name, id) &#123;</span><br><span class="line">        <span class="keyword">super</span>(name) <span class="comment">// 实现继承</span></span><br><span class="line">        <span class="keyword">this</span>.id = id</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>关于class见<a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Statements/class" target="_blank" rel="noopener">more</a></p>
-<h3 id="关于ES6中的关键字-super"><a href="#关于ES6中的关键字-super" class="headerlink" title="关于ES6中的关键字 super"></a>关于ES6中的关键字 super</h3><p>在ES6中使用extend完成继承的话，在子类constructor 中必须使用super关键字。</p>
-<p>同时super可以作为方法，也可以作为对象。作为方法只能在constructor中使用，而在方法中，可以将super作为对象使用。</p>
-<h4 id="作为方法"><a href="#作为方法" class="headerlink" title="作为方法"></a>作为方法</h4><p>在ES6的constructor 中使用super() ，相当于 <code>Super.call()</code></p>
-<h4 id="作为对象"><a href="#作为对象" class="headerlink" title="作为对象"></a>作为对象</h4><h5 id="在方法中使用"><a href="#在方法中使用" class="headerlink" title="在方法中使用"></a>在方法中使用</h5><p>相当于 super 指向 父类的原型 <code>Super.prototype</code>.</p>
-<p>但是super 内部的this 指向的是子类中的this， 所以在使用的时候， 是 <code>Super.prototype.call()</code></p>
-<h5 id="在静态方法中使用"><a href="#在静态方法中使用" class="headerlink" title="在静态方法中使用"></a>在静态方法中使用</h5><p>在静态方法中使用的时候，super 指向的是 Super , 就不再是 Super的原型了</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2037,7 +2050,7 @@ BFC就是页面上的一个隔离的独立容器，容器里面的子元素不�
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">25</span>
+                <span class="site-state-item-count">26</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

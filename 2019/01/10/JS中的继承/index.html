@@ -102,7 +102,7 @@
 <meta property="og:site_name" content="依破缘">
 <meta property="og:description" content="文中方法全部来自&amp;lt;&amp;lt;JavaScript高级程序设计一书&amp;gt;&amp;gt;  先想一个需求, 这里有一个父类方法, 包含了全部的共有属性, 我们想自己利用这个方法来创造继承于其中的子类方法123456789function SuperClass(id) &amp;#123;    this.id = id    this.name = &apos;fatherFunction&apos;    this.colo">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-05-18T05:17:27.087Z">
+<meta property="og:updated_time" content="2019-08-14T04:02:32.034Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JS中的继承">
 <meta name="twitter:description" content="文中方法全部来自&amp;lt;&amp;lt;JavaScript高级程序设计一书&amp;gt;&amp;gt;  先想一个需求, 这里有一个父类方法, 包含了全部的共有属性, 我们想自己利用这个方法来创造继承于其中的子类方法123456789function SuperClass(id) &amp;#123;    this.id = id    this.name = &apos;fatherFunction&apos;    this.colo">
@@ -324,8 +324,8 @@
           
             <span class="post-updated">
               &nbsp; | &nbsp; 修改于
-              <time itemprop="dateUpdated" datetime="2019-05-18T13:17:27+08:00" content="2019-05-18">
-                2019-05-18
+              <time itemprop="dateUpdated" datetime="2019-08-14T12:02:32+08:00" content="2019-08-14">
+                2019-08-14
               </time>
             </span>
           
@@ -396,6 +396,14 @@
 <h4 id="作为对象"><a href="#作为对象" class="headerlink" title="作为对象"></a>作为对象</h4><h5 id="在方法中使用"><a href="#在方法中使用" class="headerlink" title="在方法中使用"></a>在方法中使用</h5><p>相当于 super 指向 父类的原型 <code>Super.prototype</code>.</p>
 <p>但是super 内部的this 指向的是子类中的this， 所以在使用的时候， 是 <code>Super.prototype.call()</code></p>
 <h5 id="在静态方法中使用"><a href="#在静态方法中使用" class="headerlink" title="在静态方法中使用"></a>在静态方法中使用</h5><p>在静态方法中使用的时候，super 指向的是 Super , 就不再是 Super的原型了</p>
+<blockquote>
+<p>2019-08-14 add:</p>
+</blockquote>
+<p>class extends 实现的继承和之前在上面看到的继承, 有一个最大的不同, 在于子类构造函数没有和父类构造函数形成关联.</p>
+<p>那么有什么影响呢?</p>
+<p>也就是父类构造函数的静态方法, 子类是否会继承.</p>
+<p>如果使用的是ES5组合继承之类的, 是不会继承父类的静态方法的. 如果使用的是 extends 的话, 父类的静态方法, 子类也是会继承的.</p>
+<p>如果在ES5中也需要继承的话, 可以加上一句 <code>Child.__proto__ === Parent</code></p>
 
       
     </div>
@@ -519,7 +527,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">25</span>
+                <span class="site-state-item-count">26</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
