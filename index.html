@@ -327,8 +327,8 @@
           
             <span class="post-updated">
               &nbsp; | &nbsp; 修改于
-              <time itemprop="dateUpdated" datetime="2019-08-16T10:00:57+08:00" content="2019-08-16">
-                2019-08-16
+              <time itemprop="dateUpdated" datetime="2019-08-27T09:10:13+08:00" content="2019-08-27">
+                2019-08-27
               </time>
             </span>
           
@@ -393,7 +393,7 @@
 <blockquote>
 <p>代码思路: 利用二分查找找到无序数组中第一个元素在有序数组中的位置, 将有序数组位置后面的元素全部后退一个, 再把无序数组第一个元素赋值给该位置</p>
 </blockquote>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">binaryInsertSort</span>(<span class="params">arr</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> length = arr.length</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">1</span>, item; i &lt; length; i++) &#123;</span><br><span class="line">        <span class="comment">// 修改成二分查找位置</span></span><br><span class="line">        <span class="keyword">let</span> left = right = i - <span class="number">1</span>, flag</span><br><span class="line">        item = arr[i]</span><br><span class="line">        <span class="keyword">while</span> (left &lt;= right) &#123;</span><br><span class="line">            flag = ~~((left + right) / <span class="number">2</span>)</span><br><span class="line">            <span class="keyword">if</span> (item &lt; arr[flag]) &#123;</span><br><span class="line">                right = flag - <span class="number">1</span></span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (item &gt;= arr[flag]) &#123;</span><br><span class="line">                left = flag + <span class="number">1</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">let</span> j = i - <span class="number">1</span>; j &gt;= left; j--) &#123;</span><br><span class="line">            arr[j + <span class="number">1</span>] = arr[j]</span><br><span class="line">        &#125;</span><br><span class="line">        arr[left] = item</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'arr: '</span>, arr);</span><br><span class="line">    <span class="keyword">return</span> arr</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">binaryInsertSort</span>(<span class="params">arr</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> length = arr.length</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">1</span>, item; i &lt; length; i++) &#123;</span><br><span class="line">        <span class="comment">// 修改成二分查找位置</span></span><br><span class="line">        <span class="keyword">let</span> left = <span class="number">0</span>, right = i - <span class="number">1</span>, flag</span><br><span class="line">        item = arr[i]</span><br><span class="line">        <span class="keyword">while</span> (left &lt;= right) &#123;</span><br><span class="line">            flag = ~~((left + right) / <span class="number">2</span>)</span><br><span class="line">            <span class="keyword">if</span> (item &lt; arr[flag]) &#123;</span><br><span class="line">                right = flag - <span class="number">1</span></span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (item &gt;= arr[flag]) &#123;</span><br><span class="line">                left = flag + <span class="number">1</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">let</span> j = i - <span class="number">1</span>; j &gt;= left; j--) &#123;</span><br><span class="line">            arr[j + <span class="number">1</span>] = arr[j]</span><br><span class="line">        &#125;</span><br><span class="line">        arr[left] = item</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'arr: '</span>, arr);</span><br><span class="line">    <span class="keyword">return</span> arr</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <blockquote>
 <p>希尔排序也是插入的一种优化, 但是过于特殊就专门作为了一种方法.</p>
 </blockquote>
@@ -1562,8 +1562,8 @@
           
             <span class="post-updated">
               &nbsp; | &nbsp; 修改于
-              <time itemprop="dateUpdated" datetime="2019-05-18T13:17:27+08:00" content="2019-05-18">
-                2019-05-18
+              <time itemprop="dateUpdated" datetime="2019-08-27T09:11:57+08:00" content="2019-08-27">
+                2019-08-27
               </time>
             </span>
           
@@ -1665,6 +1665,17 @@
 <p>在一般的canvas动画中，清除上一帧，使用的方法一般是 <code>clearRect()</code></p>
 <p>如果想出现幻影的效果的话，应该保留上几帧的画面，我们使用半透明的遮布去覆盖，就只会让上几帧的画面颜色变淡，到达幻影的效果。</p>
 <p><code>ctx.fillStyle = &#39;rgba(255,255,255,0.6)&#39;;ctx.fillRect(0,0,width,height)</code></p>
+<h2 id="触发-DOMContentLoaded"><a href="#触发-DOMContentLoaded" class="headerlink" title="触发 DOMContentLoaded"></a>触发 DOMContentLoaded</h2><p>DOMContentLoaded 主要用于区别于 onLoaded, onLoaded 会在页面的所有资源都加载完成之后触发. DOMContentLoaded 会在初始的HTML文档加载之后触发. </p>
+<h3 id="初始的HTML文档加载"><a href="#初始的HTML文档加载" class="headerlink" title="初始的HTML文档加载"></a>初始的HTML文档加载</h3><blockquote>
+<p>那么,什么情况下HTML文档才会加载完全呢?</p>
+</blockquote>
+<p><img src="https://www.html5rocks.com/zh/tutorials/internals/howbrowserswork/webkitflow.png" alt="浏览器渲染流程"></p>
+<p>HTML文档和CSS的文档是并行的线程, 是不会相互影响的. 所以说在只有HTML和CSS的时候, DOMContentLoaded会在HTML加载完成之后直接触发,不会等待css样式文件的加载.(仅CSS样式写在head的情况下)</p>
+<p>但是如果有JS资源存在的情况下就会有差异, 因为JS需要读取修改文档内容(浏览器会认为需要,即便本身代码本没有操作), 所以在有JS在css文件后面的时候, DOMContentLoaded 会在所有script和及其之前的样式表加载完成之后触发.</p>
+<h2 id="js-css-顺序"><a href="#js-css-顺序" class="headerlink" title="js css 顺序"></a>js css 顺序</h2><ol>
+<li>css 放在BODY前面, 防止页面闪烁. css 会阻塞HTML的渲染, 会在CSS树和HTML树都解析完成之后再渲染.</li>
+<li>js 放在最后, js 如果需要操作DOM元素的话, 我们希望操作的是呈现出来的最终样式(需要等待HTML文档渲染完成), 所以css 会阻塞JS的执行, js 会在之前的CSS执行完成之后才执行. 同时JS会阻塞一切资源的加载</li>
+</ol>
 
           
         

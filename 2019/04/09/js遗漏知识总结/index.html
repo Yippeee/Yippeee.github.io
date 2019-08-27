@@ -102,10 +102,12 @@
 <meta property="og:site_name" content="依破缘">
 <meta property="og:description" content="不得不加上的分号现在在写js的时候，基本上已经会省略掉分号（;）的使用，但是在有些情况省略掉分号就会导致错误。 先直接下结论，在使用 + - ( [ / 位于行首的时候需要加上分号。 除了这五种情况外，js会在行尾自动加上分号，但是上面五种情况不会，有些时候就会导致错误。 下列两种情况使用中常出现： 1;[arr[1], arr[2]] = [arr[2], arr[1]] 123;(functi">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-05-18T05:17:27.088Z">
+<meta property="og:image" content="https://www.html5rocks.com/zh/tutorials/internals/howbrowserswork/webkitflow.png">
+<meta property="og:updated_time" content="2019-08-27T01:11:57.801Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="js遗漏知识总结">
 <meta name="twitter:description" content="不得不加上的分号现在在写js的时候，基本上已经会省略掉分号（;）的使用，但是在有些情况省略掉分号就会导致错误。 先直接下结论，在使用 + - ( [ / 位于行首的时候需要加上分号。 除了这五种情况外，js会在行尾自动加上分号，但是上面五种情况不会，有些时候就会导致错误。 下列两种情况使用中常出现： 1;[arr[1], arr[2]] = [arr[2], arr[1]] 123;(functi">
+<meta name="twitter:image" content="https://www.html5rocks.com/zh/tutorials/internals/howbrowserswork/webkitflow.png">
 
 
 
@@ -324,8 +326,8 @@
           
             <span class="post-updated">
               &nbsp; | &nbsp; 修改于
-              <time itemprop="dateUpdated" datetime="2019-05-18T13:17:27+08:00" content="2019-05-18">
-                2019-05-18
+              <time itemprop="dateUpdated" datetime="2019-08-27T09:11:57+08:00" content="2019-08-27">
+                2019-08-27
               </time>
             </span>
           
@@ -425,6 +427,17 @@
 <p>在一般的canvas动画中，清除上一帧，使用的方法一般是 <code>clearRect()</code></p>
 <p>如果想出现幻影的效果的话，应该保留上几帧的画面，我们使用半透明的遮布去覆盖，就只会让上几帧的画面颜色变淡，到达幻影的效果。</p>
 <p><code>ctx.fillStyle = &#39;rgba(255,255,255,0.6)&#39;;ctx.fillRect(0,0,width,height)</code></p>
+<h2 id="触发-DOMContentLoaded"><a href="#触发-DOMContentLoaded" class="headerlink" title="触发 DOMContentLoaded"></a>触发 DOMContentLoaded</h2><p>DOMContentLoaded 主要用于区别于 onLoaded, onLoaded 会在页面的所有资源都加载完成之后触发. DOMContentLoaded 会在初始的HTML文档加载之后触发. </p>
+<h3 id="初始的HTML文档加载"><a href="#初始的HTML文档加载" class="headerlink" title="初始的HTML文档加载"></a>初始的HTML文档加载</h3><blockquote>
+<p>那么,什么情况下HTML文档才会加载完全呢?</p>
+</blockquote>
+<p><img src="https://www.html5rocks.com/zh/tutorials/internals/howbrowserswork/webkitflow.png" alt="浏览器渲染流程"></p>
+<p>HTML文档和CSS的文档是并行的线程, 是不会相互影响的. 所以说在只有HTML和CSS的时候, DOMContentLoaded会在HTML加载完成之后直接触发,不会等待css样式文件的加载.(仅CSS样式写在head的情况下)</p>
+<p>但是如果有JS资源存在的情况下就会有差异, 因为JS需要读取修改文档内容(浏览器会认为需要,即便本身代码本没有操作), 所以在有JS在css文件后面的时候, DOMContentLoaded 会在所有script和及其之前的样式表加载完成之后触发.</p>
+<h2 id="js-css-顺序"><a href="#js-css-顺序" class="headerlink" title="js css 顺序"></a>js css 顺序</h2><ol>
+<li>css 放在BODY前面, 防止页面闪烁. css 会阻塞HTML的渲染, 会在CSS树和HTML树都解析完成之后再渲染.</li>
+<li>js 放在最后, js 如果需要操作DOM元素的话, 我们希望操作的是呈现出来的最终样式(需要等待HTML文档渲染完成), 所以css 会阻塞JS的执行, js 会在之前的CSS执行完成之后才执行. 同时JS会阻塞一切资源的加载</li>
+</ol>
 
       
     </div>
@@ -634,7 +647,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#不得不加上的分号"><span class="nav-number">1.</span> <span class="nav-text">不得不加上的分号</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#defer-async-在script-标签中的作用以及差异"><span class="nav-number">2.</span> <span class="nav-text">defer async 在script 标签中的作用以及差异</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解构赋值使用方法总结"><span class="nav-number">3.</span> <span class="nav-text">解构赋值使用方法总结</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#数据的解构赋值"><span class="nav-number">3.1.</span> <span class="nav-text">数据的解构赋值</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#经常使用的场景"><span class="nav-number">3.1.1.</span> <span class="nav-text">经常使用的场景</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#对象的解构赋值"><span class="nav-number">3.2.</span> <span class="nav-text">对象的解构赋值</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#requestAnimationFrame-理解"><span class="nav-number">4.</span> <span class="nav-text">requestAnimationFrame 理解</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#屏幕刷新频率"><span class="nav-number">4.1.</span> <span class="nav-text">屏幕刷新频率</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#与setTimeout的对比"><span class="nav-number">4.2.</span> <span class="nav-text">与setTimeout的对比</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#鼠标事件中的那些-X-和-Y"><span class="nav-number">5.</span> <span class="nav-text">鼠标事件中的那些 X 和 Y</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#clientX-clientY"><span class="nav-number">5.1.</span> <span class="nav-text">clientX, clientY</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#screenX-screenY"><span class="nav-number">5.2.</span> <span class="nav-text">screenX,screenY</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#pageX-pageY"><span class="nav-number">5.3.</span> <span class="nav-text">pageX, pageY</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#layerX、layerY"><span class="nav-number">5.4.</span> <span class="nav-text">layerX、layerY</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#movementX、movementY"><span class="nav-number">5.5.</span> <span class="nav-text">movementX、movementY</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#offsetX、offsetY"><span class="nav-number">5.6.</span> <span class="nav-text">offsetX、offsetY</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#x-y"><span class="nav-number">5.7.</span> <span class="nav-text">x,y</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#canvas中移动幻影效果"><span class="nav-number">6.</span> <span class="nav-text">canvas中移动幻影效果</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#不得不加上的分号"><span class="nav-number">1.</span> <span class="nav-text">不得不加上的分号</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#defer-async-在script-标签中的作用以及差异"><span class="nav-number">2.</span> <span class="nav-text">defer async 在script 标签中的作用以及差异</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解构赋值使用方法总结"><span class="nav-number">3.</span> <span class="nav-text">解构赋值使用方法总结</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#数据的解构赋值"><span class="nav-number">3.1.</span> <span class="nav-text">数据的解构赋值</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#经常使用的场景"><span class="nav-number">3.1.1.</span> <span class="nav-text">经常使用的场景</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#对象的解构赋值"><span class="nav-number">3.2.</span> <span class="nav-text">对象的解构赋值</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#requestAnimationFrame-理解"><span class="nav-number">4.</span> <span class="nav-text">requestAnimationFrame 理解</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#屏幕刷新频率"><span class="nav-number">4.1.</span> <span class="nav-text">屏幕刷新频率</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#与setTimeout的对比"><span class="nav-number">4.2.</span> <span class="nav-text">与setTimeout的对比</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#鼠标事件中的那些-X-和-Y"><span class="nav-number">5.</span> <span class="nav-text">鼠标事件中的那些 X 和 Y</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#clientX-clientY"><span class="nav-number">5.1.</span> <span class="nav-text">clientX, clientY</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#screenX-screenY"><span class="nav-number">5.2.</span> <span class="nav-text">screenX,screenY</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#pageX-pageY"><span class="nav-number">5.3.</span> <span class="nav-text">pageX, pageY</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#layerX、layerY"><span class="nav-number">5.4.</span> <span class="nav-text">layerX、layerY</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#movementX、movementY"><span class="nav-number">5.5.</span> <span class="nav-text">movementX、movementY</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#offsetX、offsetY"><span class="nav-number">5.6.</span> <span class="nav-text">offsetX、offsetY</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#x-y"><span class="nav-number">5.7.</span> <span class="nav-text">x,y</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#canvas中移动幻影效果"><span class="nav-number">6.</span> <span class="nav-text">canvas中移动幻影效果</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#触发-DOMContentLoaded"><span class="nav-number">7.</span> <span class="nav-text">触发 DOMContentLoaded</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#初始的HTML文档加载"><span class="nav-number">7.1.</span> <span class="nav-text">初始的HTML文档加载</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#js-css-顺序"><span class="nav-number">8.</span> <span class="nav-text">js css 顺序</span></a></li></ol></div>
             
 
           </div>
