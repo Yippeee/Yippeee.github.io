@@ -283,6 +283,425 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yippee.ink/2019/09/22/vue中的scoped样式是怎么实现的/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yippee">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="依破缘">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/09/22/vue中的scoped样式是怎么实现的/" itemprop="url">vue中的scoped样式是怎么实现的</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-09-22T16:26:27+08:00">
+                2019-09-22
+              </time>
+            
+
+            
+
+            
+          </span>
+          
+          
+            <span class="post-updated">
+              &nbsp; | &nbsp; 修改于
+              <time itemprop="dateUpdated" datetime="2019-09-22T17:30:36+08:00" content="2019-09-22">
+                2019-09-22
+              </time>
+            </span>
+          
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>vue 中可以在 style 标签上加上 scoped 属性, 就可以让样式成为只作用为当前组件的.</p>
+<p>但是 css 中本身是没有作用域的,那么 vue 是怎么实现的呢.</p>
+<p>在 vue 编译后形成后台的页面中检查元素,可以发现元素都有一个<code>data-v-xxx</code>的属性,其实这个就是用来实现样式作用域的.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;div&gt;</span><br><span class="line">    &lt;img class=&quot;imgA&quot; src=&quot;xxx.com&quot; /&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line">&lt;style scoped&gt;</span><br><span class="line">.imgA&#123;</span><br><span class="line">    width: 200px;</span><br><span class="line">&#125;</span><br><span class="line">&lt;style&gt;</span><br></pre></td></tr></table></figure>
+<p>vue 会把这段代码转化成</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">data-v-7ba5bd90</span> <span class="attr">class</span>=<span class="string">""</span><span class="attr">imgA</span>" <span class="attr">src</span>=<span class="string">'xxx.com'</span>  /&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.imgA</span><span class="selector-attr">[data-v-7ba5bd90]</span> &#123;</span><br><span class="line">  <span class="attribute">width</span>: <span class="number">200px</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这样也就形成了一个样式的作用域, 如果是没有加上 scoped 的情况,样式表中就不会有属性修饰符,就是全局的样式了.</p>
+<p>同时这样也说明了父子组件样式不会继承的问题,data-v-后面的值是由属性来定的,组件之间没有影响.</p>
+<h3 id="深度选择器"><a href="#深度选择器" class="headerlink" title="深度选择器"></a>深度选择器</h3><p>如果我们需要把样式写入子组件中, 或者是一些 UI 的组件中.通过上面的分析,我们可以知道,如果加上 scoped 的话,data-v-的属性值导致没有作用上去.</p>
+<p>这种时候就有了深度选择器, 在 vue 中使用&gt;&gt;&gt;, 但是在 less, sass 预处理器中会报错,可以使用/deep/代替.</p>
+<p>看下使用之后的区别:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;style scoped&gt;</span><br><span class="line">h4 &#123;</span><br><span class="line">  color: bisque;</span><br><span class="line">&#125;</span><br><span class="line">.container p &#123;</span><br><span class="line">  color: red;</span><br><span class="line">&#125;</span><br><span class="line">&lt;/style&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.container</span> <span class="selector-tag">p</span><span class="selector-attr">[data-v-763db97b]</span> &#123;</span><br><span class="line">  <span class="attribute">color</span>: red;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;style scoped&gt;</span><br><span class="line">h4 &#123;</span><br><span class="line">  color: bisque;</span><br><span class="line">&#125;</span><br><span class="line">.container &gt;&gt;&gt; p &#123;</span><br><span class="line">  color: red;</span><br><span class="line">&#125;</span><br><span class="line">&lt;/style&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.container</span><span class="selector-attr">[data-v-763db97b]</span> <span class="selector-tag">p</span> &#123;</span><br><span class="line">  <span class="attribute">color</span>: red;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在使用了深度选择器之后, 样式的属性选择器会加到上一个元素中,&gt;&gt;&gt;或者/deep/后面的选择器就不会被scoped了.</p>
+<h3 id="一点小思考"><a href="#一点小思考" class="headerlink" title="一点小思考"></a>一点小思考</h3><p>代码层面这里是怎么实现的呢.</p>
+<p>data-v-xx 是如何生成的, 在我的测试中,好像是没有变的.决定大致去看下源码中的实现:</p>
+<p><a href="https://github.com/vuejs/vue-loader/blob/3597f6d2b5dd6b4b47fbc30b8ff0902278444d1f/lib/utils/gen-id.js" target="_blank" rel="noopener">gen-id</a></p>
+<p>可以看到这个ID就是利用文件的hash值.</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yippee.ink/2019/09/20/UMD使用记录/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yippee">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="依破缘">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/09/20/UMD使用记录/" itemprop="url">UMD使用记录</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-09-20T16:58:36+08:00">
+                2019-09-20
+              </time>
+            
+
+            
+
+            
+          </span>
+          
+          
+            <span class="post-updated">
+              &nbsp; | &nbsp; 修改于
+              <time itemprop="dateUpdated" datetime="2019-09-22T16:23:06+08:00" content="2019-09-22">
+                2019-09-22
+              </time>
+            </span>
+          
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>在实现这个前端的工具库的时候,无法确定使用者会如何使用这个库.为了在所有的环境下都可以兼容的方案,就是 UMD.</p>
+<blockquote>
+<p>在 webpack 的 output 中可以可以直接指定导出文件为 UMD 格式.</p>
+</blockquote>
+<p>UMD 就是一种兼容 AMD 和 commonJS 模块的方案.</p>
+<p>实现代码如下:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">(<span class="function"><span class="keyword">function</span>(<span class="params">root, factory</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (<span class="keyword">typeof</span> define === <span class="string">"function"</span>) &#123;</span><br><span class="line">    <span class="comment">// 判断是否支持AMD</span></span><br><span class="line">    define(<span class="string">"testName"</span>, factory);</span><br><span class="line">  &#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="keyword">typeof</span> <span class="built_in">module</span> === <span class="string">"object"</span> &amp;&amp; <span class="keyword">typeof</span> exports === <span class="string">"object"</span>) &#123;</span><br><span class="line">    <span class="comment">// commonJS</span></span><br><span class="line">    <span class="built_in">module</span>.exports = factory();</span><br><span class="line">  &#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="keyword">typeof</span> exports === <span class="string">"object"</span>) &#123;</span><br><span class="line">    <span class="comment">// commonJS2</span></span><br><span class="line">    exports.testName = factory();</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="comment">// 浏览器环境下</span></span><br><span class="line">    root.testName = factory();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)(<span class="keyword">this</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> &#123; <span class="attr">test</span>: <span class="number">1</span> &#125;;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h3 id="commonJS2-vs-commonJS"><a href="#commonJS2-vs-commonJS" class="headerlink" title="commonJS2 vs commonJS"></a>commonJS2 vs commonJS</h3><p>在看UMD怎么实现的时候, </p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yippee.ink/2019/09/02/算法问题总结/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yippee">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="依破缘">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/09/02/算法问题总结/" itemprop="url">算法问题总结</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-09-02T16:16:19+08:00">
+                2019-09-02
+              </time>
+            
+
+            
+
+            
+          </span>
+          
+          
+            <span class="post-updated">
+              &nbsp; | &nbsp; 修改于
+              <time itemprop="dateUpdated" datetime="2019-09-03T15:08:55+08:00" content="2019-09-03">
+                2019-09-03
+              </time>
+            </span>
+          
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="荷兰国旗问题"><a href="#荷兰国旗问题" class="headerlink" title="荷兰国旗问题"></a>荷兰国旗问题</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> str = <span class="string">"rwbrbwbwrbbrwbrbbwrbbrbwbbwrbwbrbbwbrbwbrbrbwbrbwbrr"</span>;</span><br><span class="line"><span class="comment">// 荷兰国旗问题 🇳🇱 r w b</span></span><br><span class="line"><span class="keyword">const</span> swap = <span class="function">(<span class="params">a, b, str</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> str.replace(<span class="regexp">/./g</span>, <span class="function"><span class="keyword">function</span>(<span class="params">match, offset</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (offset === a) &#123;</span><br><span class="line">      <span class="keyword">return</span> str[b];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (offset === b) &#123;</span><br><span class="line">      <span class="keyword">return</span> str[a];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> match;</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> sort = <span class="function"><span class="params">str</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">let</span> result = str;</span><br><span class="line">  <span class="keyword">let</span> rLength = <span class="number">0</span>,</span><br><span class="line">    bLength = <span class="number">0</span>,</span><br><span class="line">    length = str.length;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; length - bLength; i++) &#123;</span><br><span class="line">    <span class="keyword">if</span> (result[i] === <span class="string">"r"</span>) &#123;</span><br><span class="line">      result = swap(rLength, i, result);</span><br><span class="line">      rLength++;</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (result[i] === <span class="string">"b"</span>) &#123;</span><br><span class="line">      result = swap(i, length - bLength - <span class="number">1</span>, result);</span><br><span class="line">      bLength++;</span><br><span class="line">      i--;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">"result: "</span>, result);</span><br><span class="line">  <span class="keyword">return</span> result;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">// 改用while 加上指针完成</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> sort2 = <span class="function"><span class="params">str</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">let</span> result = str;</span><br><span class="line">  <span class="keyword">let</span> begin = <span class="number">0</span>,</span><br><span class="line">    end = str.length - <span class="number">1</span>,</span><br><span class="line">    cur = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">while</span> (cur &lt;= end) &#123;</span><br><span class="line">    <span class="keyword">let</span> curItem = result[cur];</span><br><span class="line">    <span class="keyword">if</span> (curItem === <span class="string">"r"</span>) &#123;</span><br><span class="line">      result = swap(begin, cur, result);</span><br><span class="line">      begin++;</span><br><span class="line">      cur++;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (curItem === <span class="string">"w"</span>) &#123;</span><br><span class="line">      cur++;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (curItem === <span class="string">"b"</span>) &#123;</span><br><span class="line">      result = swap(end, cur, result);</span><br><span class="line">      end--;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">"result: "</span>, result);</span><br><span class="line">  <span class="keyword">return</span> result;</span><br><span class="line">&#125;;</span><br><span class="line">a = sort(str);</span><br><span class="line">b = sort2(str);</span><br></pre></td></tr></table></figure>
+<h3 id="js-的数组拍平"><a href="#js-的数组拍平" class="headerlink" title="js 的数组拍平"></a>js 的数组拍平</h3><h4 id="使用递归"><a href="#使用递归" class="headerlink" title="使用递归"></a>使用递归</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> deepFlatten = <span class="function"><span class="params">arr</span> =&gt;</span> arr.reduce(<span class="function">(<span class="params">acc, cur</span>) =&gt;</span> (<span class="built_in">Array</span>.isArray(cur) ? acc.concat(deepFlatten(cur)) : acc.concat(cur)), []);</span><br></pre></td></tr></table></figure>
+<h4 id="使用循环"><a href="#使用循环" class="headerlink" title="使用循环"></a>使用循环</h4><blockquote>
+<p>MDN上有这个方法, 不过MDN上复杂了点</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> deepFlatten2 = <span class="function"><span class="params">arr</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">let</span> flattenStack = [...arr];</span><br><span class="line">  <span class="keyword">let</span> result = [];</span><br><span class="line">  <span class="keyword">while</span> (flattenStack.length &gt; <span class="number">0</span>) &#123;</span><br><span class="line">    <span class="keyword">let</span> item = flattenStack.shift();</span><br><span class="line">    <span class="keyword">if</span> (<span class="built_in">Array</span>.isArray(item)) &#123;</span><br><span class="line">      flattenStack.unshift(...item);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      result.push(item);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> result;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yippee.ink/2019/08/08/常见的排序-查找算法-JavaScript实现/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -1013,8 +1432,8 @@
           
             <span class="post-updated">
               &nbsp; | &nbsp; 修改于
-              <time itemprop="dateUpdated" datetime="2019-05-18T13:17:27+08:00" content="2019-05-18">
-                2019-05-18
+              <time itemprop="dateUpdated" datetime="2019-10-08T12:06:34+08:00" content="2019-10-08">
+                2019-10-08
               </time>
             </span>
           
@@ -1105,6 +1524,7 @@
 </tr>
 </tbody>
 </table>
+<h2 id="取反操作符的规则"><a href="#取反操作符的规则" class="headerlink" title="! 取反操作符的规则"></a>! 取反操作符的规则</h2><p>只有 <code>undefined</code> <code>null</code> <code>0</code> <code>NaN</code> <code>&#39;&#39;</code> 才可以准换成false, 所以也就只有它们的取反是为 true</p>
 
           
         
@@ -1505,540 +1925,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yippee.ink/2019/04/09/js遗漏知识总结/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Yippee">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="依破缘">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/04/09/js遗漏知识总结/" itemprop="url">js遗漏知识总结</a></h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-09T14:14:02+08:00">
-                2019-04-09
-              </time>
-            
-
-            
-
-            
-          </span>
-          
-          
-            <span class="post-updated">
-              &nbsp; | &nbsp; 修改于
-              <time itemprop="dateUpdated" datetime="2019-08-27T09:11:57+08:00" content="2019-08-27">
-                2019-08-27
-              </time>
-            </span>
-          
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="不得不加上的分号"><a href="#不得不加上的分号" class="headerlink" title="不得不加上的分号"></a>不得不加上的分号</h2><p>现在在写js的时候，基本上已经会省略掉分号（;）的使用，但是在有些情况省略掉分号就会导致错误。</p>
-<p>先直接下结论，在使用 <code>+</code> <code>-</code> <code>(</code> <code>[</code> <code>/</code> 位于行首的时候需要加上分号。</p>
-<p>除了这五种情况外，js会在行尾自动加上分号，但是上面五种情况不会，有些时候就会导致错误。</p>
-<p>下列两种情况使用中常出现：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">;[arr[<span class="number">1</span>], arr[<span class="number">2</span>]] = [arr[<span class="number">2</span>], arr[<span class="number">1</span>]]</span><br></pre></td></tr></table></figure>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">;(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="comment">// ....</span></span><br><span class="line">&#125;)()</span><br></pre></td></tr></table></figure>
-<p>这种时候都需要手动加上分号</p>
-<h2 id="defer-async-在script-标签中的作用以及差异"><a href="#defer-async-在script-标签中的作用以及差异" class="headerlink" title="defer async 在script 标签中的作用以及差异"></a>defer async 在script 标签中的作用以及差异</h2><p>首先，defer 和 async 都是异步加载脚本文件的语法。都只能作用于有src 属性的script 标签</p>
-<p>区别在于defer 会在文档解析完成之后，也就是DOMContentLoaded 事件前执行，</p>
-<p>而async 在脚本下载完成之后就执行，中断文档的渲染</p>
-<p>多个defer 会按照顺序加载执行，而 async会依据下载时间</p>
-<h2 id="解构赋值使用方法总结"><a href="#解构赋值使用方法总结" class="headerlink" title="解构赋值使用方法总结"></a>解构赋值使用方法总结</h2><p>解构赋值，让获取变量的值，更加的优雅，代码更加的易读。</p>
-<blockquote>
-<p>小提一句原理，是利用的新增的iterator 接口。</p>
-</blockquote>
-<h3 id="数据的解构赋值"><a href="#数据的解构赋值" class="headerlink" title="数据的解构赋值"></a>数据的解构赋值</h3><p>常规的情况：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> [a,b,c] = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]</span><br></pre></td></tr></table></figure></p>
-<p>如果需要忽略某些值，用,,来忽略<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> [a,,,d] = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>] <span class="comment">// a=a,d=4</span></span><br></pre></td></tr></table></figure></p>
-<p>设定默认值:<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> [a=<span class="number">5</span>,b=<span class="number">5</span>] = [<span class="number">2</span>] <span class="comment">// a=2,b=5</span></span><br></pre></td></tr></table></figure></p>
-<p>剩余参数的赋值；（使用… , 但是注意，… 一定得是最后一个参数; 如果后面还有参数，请使用,,, 的方法）<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> [a,b,...rest] = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>] <span class="comment">// a = 1, b = 2, rest = [3,4,5]</span></span><br></pre></td></tr></table></figure></p>
-<h4 id="经常使用的场景"><a href="#经常使用的场景" class="headerlink" title="经常使用的场景"></a>经常使用的场景</h4><p>下面记录几种经常在使用中利用的方法：</p>
-<ol>
-<li><p>交换变量</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[a,b] = [b,a]</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>正则表达式的exec语句、函数参数argument中某个值的获取</p>
-</li>
-</ol>
-<p>exec会返回一个带有很多值的数组，数组中有些的值，是我们不需要的。就可以直接使用解构获取想要的值</p>
-<h3 id="对象的解构赋值"><a href="#对象的解构赋值" class="headerlink" title="对象的解构赋值"></a>对象的解构赋值</h3><p>普通的情况:<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> &#123;o, p&#125; = &#123;<span class="attr">o</span>:<span class="string">'oVAl'</span>,<span class="attr">l</span>:<span class="string">'lVAL'</span>&#125; <span class="comment">// o = 'oVAl', p = undefined</span></span><br></pre></td></tr></table></figure></p>
-<p>使用对象的解构赋值，左边的值必须是对象中的属性名,如果不是将获取不到值(undefined)。如果需要重命名得使用下面的方法：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> &#123;<span class="attr">o</span>:oo, p&#125; = &#123;<span class="attr">o</span>:<span class="string">'oVaL'</span>,<span class="attr">p</span>:<span class="string">'pVAL'</span>&#125; <span class="comment">// oo = 'oVAl', p = 'pVAL'</span></span><br></pre></td></tr></table></figure></p>
-<p>注意，如果是没有声明的赋值，需要用()包起来，并且注意使用;(原因上面有讲)<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">;(&#123;o, p&#125; = &#123;<span class="attr">o</span>:<span class="string">'oVaL'</span>,<span class="attr">p</span>:<span class="string">'pVAL'</span>&#125;);</span><br></pre></td></tr></table></figure></p>
-<p>…rest 和 默认值的使用方法就和数组的差不多了 </p>
-<h2 id="requestAnimationFrame-理解"><a href="#requestAnimationFrame-理解" class="headerlink" title="requestAnimationFrame 理解"></a>requestAnimationFrame 理解</h2><p>这是web中专门对优化动画，增加的函数。按照翻译，API的名字应该叫做，<strong>请求动画帧</strong>。</p>
-<p>接受一个callback 回调，在屏幕刷新时调用。一般在callback 中还会继续调用requestAnimationFrame, 直到约定的条件达成后，实现动画的效果。</p>
-<p>使用注意事项。requestAnimationFrame是window调用的，这一点和setTimeout一眼的。如果要使用this的话，通常可以在外面包装一个函数，用bind绑定this。</p>
-<p>例如下面通过sayBind，来保留this<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">test</span></span>&#123;</span><br><span class="line">    <span class="keyword">constructor</span>()&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name</span><br><span class="line">        <span class="keyword">this</span>.sayBind = <span class="keyword">this</span>.say.bind(<span class="keyword">this</span>)</span><br><span class="line">        requestAnimationFrame(<span class="keyword">this</span>.sayBind)</span><br><span class="line">    &#125;</span><br><span class="line">    say()&#123;</span><br><span class="line">        requestAnimationFrame(<span class="keyword">this</span>.sayBind)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<h3 id="屏幕刷新频率"><a href="#屏幕刷新频率" class="headerlink" title="屏幕刷新频率"></a>屏幕刷新频率</h3><p>一般的显示器设置的是60HZ，就是一秒钟刷新60次，16.67ms刷新一次。</p>
-<h3 id="与setTimeout的对比"><a href="#与setTimeout的对比" class="headerlink" title="与setTimeout的对比"></a>与setTimeout的对比</h3><p>在没有requestAnimationFrame之前，我们都是使用setTimeout来实现动画的。那为什么使用setTimeout不好呢？</p>
-<ol>
-<li><p>屏幕刷新的频率只是一般来说是60HZ，但是不是绝对的。这个间隔人为设定，会有误差。</p>
-</li>
-<li><p>setTimeout 是在异步队列中执行的，在主线程任务执行完成之后才回去执行。</p>
-</li>
-</ol>
-<p>以上两点，会导致setTimeout的执行步调和屏幕刷新不一致，会导致动画的丢帧。</p>
-<p>同时requestAnimationFrame对性能也更加的友好，页面处于未激活状态下，requestAnimationFrame 不会调用，不同于setTimeout。</p>
-<p>综上，如果有使用动画的地方，使用requestAnimationFrame 而不是setTImeout</p>
-<h2 id="鼠标事件中的那些-X-和-Y"><a href="#鼠标事件中的那些-X-和-Y" class="headerlink" title="鼠标事件中的那些 X 和 Y"></a>鼠标事件中的那些 X 和 Y</h2><p>由于些历史原因，事件中定义了很多的位置信息的属性。在使用和阅读中，经常容易混淆，在这里把它们都拿出来做一个总结。</p>
-<p>随便在浏览器的控制台中打印一个事件的event，就可以看到，有这些与位置或者尺寸信息相关的属性。</p>
-<p><code>clientX</code> <code>clientY</code> <code>layerX</code> <code>layerY</code> <code>movementX</code>  <code>movementY</code> <code>offsetX</code> <code>offsetY</code> <code>pageX</code> <code>pageY</code> <code>screenX</code> <code>screenY</code> <code>x</code> <code>y</code></p>
-<p>咋眼一看，是有点多啊。。。</p>
-<h3 id="clientX-clientY"><a href="#clientX-clientY" class="headerlink" title="clientX, clientY"></a>clientX, clientY</h3><p>浏览器内容区域的X/Y坐标（不包含滚动条）</p>
-<h3 id="screenX-screenY"><a href="#screenX-screenY" class="headerlink" title="screenX,screenY"></a>screenX,screenY</h3><p>屏幕中的X/Y坐标</p>
-<h3 id="pageX-pageY"><a href="#pageX-pageY" class="headerlink" title="pageX, pageY"></a>pageX, pageY</h3><p>整个页面的X/Y坐标，包括可以滚动区域。（在没有滚动的情形下，这个值与client的数值相同）</p>
-<h3 id="layerX、layerY"><a href="#layerX、layerY" class="headerlink" title="layerX、layerY"></a>layerX、layerY</h3><p>针对于绝对定位的元素来使用的位置属性。非绝对定位时，与pageX/pageY数值相同。</p>
-<p>绝对定位元素的时候，是基于元素左上角的位置。</p>
-<h3 id="movementX、movementY"><a href="#movementX、movementY" class="headerlink" title="movementX、movementY"></a>movementX、movementY</h3><p>这只是 <code>mousemove</code> 事件才有的属性。 值就是上一次的值和这一次的差值。</p>
-<p>等价于 <code>currentEvent.movementY = currentEvent.screenY - previousEvent.screenY.</code></p>
-<h3 id="offsetX、offsetY"><a href="#offsetX、offsetY" class="headerlink" title="offsetX、offsetY"></a>offsetX、offsetY</h3><p>offset 获取的数值都是相对于父容器的值。</p>
-<p>同理的还有 offsetWidth offsetHeight offsetTop offsetLeft</p>
-<h3 id="x-y"><a href="#x-y" class="headerlink" title="x,y"></a>x,y</h3><p>这只是 clientX 和 clientY 的别名而已。</p>
-<h2 id="canvas中移动幻影效果"><a href="#canvas中移动幻影效果" class="headerlink" title="canvas中移动幻影效果"></a>canvas中移动幻影效果</h2><blockquote>
-<p>幻影效果啊，这是我小时候玩泡泡堂最想要的皮肤。小学的时候，真的被这个帅到不行…</p>
-</blockquote>
-<p>在一般的canvas动画中，清除上一帧，使用的方法一般是 <code>clearRect()</code></p>
-<p>如果想出现幻影的效果的话，应该保留上几帧的画面，我们使用半透明的遮布去覆盖，就只会让上几帧的画面颜色变淡，到达幻影的效果。</p>
-<p><code>ctx.fillStyle = &#39;rgba(255,255,255,0.6)&#39;;ctx.fillRect(0,0,width,height)</code></p>
-<h2 id="触发-DOMContentLoaded"><a href="#触发-DOMContentLoaded" class="headerlink" title="触发 DOMContentLoaded"></a>触发 DOMContentLoaded</h2><p>DOMContentLoaded 主要用于区别于 onLoaded, onLoaded 会在页面的所有资源都加载完成之后触发. DOMContentLoaded 会在初始的HTML文档加载之后触发. </p>
-<h3 id="初始的HTML文档加载"><a href="#初始的HTML文档加载" class="headerlink" title="初始的HTML文档加载"></a>初始的HTML文档加载</h3><blockquote>
-<p>那么,什么情况下HTML文档才会加载完全呢?</p>
-</blockquote>
-<p><img src="https://www.html5rocks.com/zh/tutorials/internals/howbrowserswork/webkitflow.png" alt="浏览器渲染流程"></p>
-<p>HTML文档和CSS的文档是并行的线程, 是不会相互影响的. 所以说在只有HTML和CSS的时候, DOMContentLoaded会在HTML加载完成之后直接触发,不会等待css样式文件的加载.(仅CSS样式写在head的情况下)</p>
-<p>但是如果有JS资源存在的情况下就会有差异, 因为JS需要读取修改文档内容(浏览器会认为需要,即便本身代码本没有操作), 所以在有JS在css文件后面的时候, DOMContentLoaded 会在所有script和及其之前的样式表加载完成之后触发.</p>
-<h2 id="js-css-顺序"><a href="#js-css-顺序" class="headerlink" title="js css 顺序"></a>js css 顺序</h2><ol>
-<li>css 放在BODY前面, 防止页面闪烁. css 会阻塞HTML的渲染, 会在CSS树和HTML树都解析完成之后再渲染.</li>
-<li>js 放在最后, js 如果需要操作DOM元素的话, 我们希望操作的是呈现出来的最终样式(需要等待HTML文档渲染完成), 所以css 会阻塞JS的执行, js 会在之前的CSS执行完成之后才执行. 同时JS会阻塞一切资源的加载</li>
-</ol>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yippee.ink/2019/04/03/css遗漏知识总结/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Yippee">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="依破缘">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/04/03/css遗漏知识总结/" itemprop="url">css遗漏知识总结</a></h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-03T10:04:22+08:00">
-                2019-04-03
-              </time>
-            
-
-            
-
-            
-          </span>
-          
-          
-            <span class="post-updated">
-              &nbsp; | &nbsp; 修改于
-              <time itemprop="dateUpdated" datetime="2019-05-18T13:17:27+08:00" content="2019-05-18">
-                2019-05-18
-              </time>
-            </span>
-          
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="class匹配符"><a href="#class匹配符" class="headerlink" title="class匹配符"></a>class匹配符</h2><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-attr">[class$='xxx']</span>&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-attr">[class^='xxx']</span>&#123;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>这两种对类匹配都可以对名称进行帅选。</p>
-<h2 id="sticky-布局"><a href="#sticky-布局" class="headerlink" title="sticky 布局"></a>sticky 布局</h2><p>使用sticky可以轻易的实现固定表头类似的需求。使用方法:</p>
-<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.demo</span>&#123;</span><br><span class="line">    <span class="attribute">position</span>:sticky;</span><br><span class="line">    <span class="attribute">top</span>: <span class="number">200px</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>在使用position 为 sticky的时候，还需要指定 <code>left</code> <code>right</code> <code>top</code> <code>bottom</code> 四个值中的任意一个。</p>
-<p>指定的这个值，会作为一个阈值，当到达这个值之后，就会被固定在这个位置。</p>
-<h3 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h3><ol>
-<li><p>sticky 的元素不会脱离其父元素的，就是会一直在父元素内部。如果父元素不在可视范围之内，也是会消失的。</p>
-</li>
-<li><p>sticky 的元素没有脱离文档流，不会导致后面的元素占用其位置。</p>
-</li>
-<li><p>其父元素必须得可以scroll，才可以生效。</p>
-</li>
-<li><p>左边(left)的优先级大于右边(right)，上面(top)的大于下面(bottom)的</p>
-</li>
-</ol>
-<p>其实看上来，sticky 的效果像是 absolute 和 fixed 的结合，在判断阈值的时候，是通过和视窗的距离判断；但是在过阈值之后又变成绝对定位。</p>
-<h2 id="window-getComputedStyle-方法"><a href="#window-getComputedStyle-方法" class="headerlink" title="window.getComputedStyle() 方法"></a>window.getComputedStyle() 方法</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> style = <span class="built_in">window</span>.getComputedStyle(ele, [pseudoElement])</span><br></pre></td></tr></table></figure>
-<p>pseudoElement 是伪元素，没有可以不传或者传null。</p>
-<p>返回的值是实时的 <code>CSSStyleDeclaration</code> 对象，该对象会实时更新属性。</p>
-<p><em>这个返回的CSSStyleDeclaration对象是只读的，不能修改。</em></p>
-<h3 id="CSSStyleDeclaration-对象"><a href="#CSSStyleDeclaration-对象" class="headerlink" title="CSSStyleDeclaration 对象"></a>CSSStyleDeclaration 对象</h3><p>除了上面的getComputedStyle 方法会返回 CSSStyleDeclaration 外， style 属性返回的也是一个 CSSStyleDeclaration 对象。</p>
-<p>但是，差别在于，style 只能获取内联的样式（也就是直接写在HTML 标签中的），不过这个对象是<em>可以修改</em>的</p>
-<h4 id="CSSStyleDeclaration-getPropertyPriority-property-name"><a href="#CSSStyleDeclaration-getPropertyPriority-property-name" class="headerlink" title="CSSStyleDeclaration.getPropertyPriority(property_name)"></a>CSSStyleDeclaration.getPropertyPriority(property_name)</h4><p>返回可选的优先级，”Important”, 例如： priString= styleObj.getPropertyPriority(‘color’)</p>
-<h4 id="CSSStyleDeclaration-getPropertyValue-property-name"><a href="#CSSStyleDeclaration-getPropertyValue-property-name" class="headerlink" title="CSSStyleDeclaration.getPropertyValue(property_name)"></a>CSSStyleDeclaration.getPropertyValue(property_name)</h4><p>属性名可以使用驼峰命名法。</p>
-<p>返回属性值。例如: valString= styleObj.getPropertyValue(‘color’)</p>
-<h4 id="CSSStyleDeclaration-removeProperty-property-name"><a href="#CSSStyleDeclaration-removeProperty-property-name" class="headerlink" title="CSSStyleDeclaration.removeProperty(property_name)"></a>CSSStyleDeclaration.removeProperty(property_name)</h4><p>返回被删除的属性。</p>
-<h3 id="CSSStyleDeclaration-setProperty-property-name-property-val-property-priority"><a href="#CSSStyleDeclaration-setProperty-property-name-property-val-property-priority" class="headerlink" title="CSSStyleDeclaration.setProperty(property_name.property_val[, property_priority])"></a>CSSStyleDeclaration.setProperty(property_name.property_val[, property_priority])</h3><p>没有返回值。设置属性值。</p>
-<p><em>后面两个方法都只有在 style 方法中获取的对象可以使用</em></p>
-<h3 id="影响"><a href="#影响" class="headerlink" title="影响"></a>影响</h3><p>使用这个方法会导致页面回流。</p>
-<h2 id="可以继承的css属性"><a href="#可以继承的css属性" class="headerlink" title="可以继承的css属性"></a>可以继承的css属性</h2><blockquote>
-<p>这个问题，记不住啊..得想个办法</p>
-</blockquote>
-<p>继承属性就是，当一个元素没有设定这个属性的值的时候，则取父元素同属性的计算值。</p>
-<p>而非继承属性就是，属性没有设定值的时候，就设为属性的初始值。</p>
-<p>不可继承的：display、margin、border、padding、background、height、min-height、max-height、width、min-width、max-width、overflow、position、left、right、top、bottom、z-index、float、clear、table-layout、vertical-align、page-break-after、page-bread-before和unicode-bidi。</p>
-<p>所有元素可继承：visibility 和 cursor。</p>
-<p>内联元素可继承：letter-spacing、word-spacing、white-space、line-height、color、font、font-family、font-size、font-style、font-variant、font-weight、text-decoration、text-transform、direction。</p>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>可以发现，元素可以继承的属性都是内部样式的属性。例如：颜色，字距，字体，字体顺序。<br>暂时来个总结，一般可以继承的属性，都是元素内容字体的属性，包括颜色，字体，排版，风格。</p>
-<p>visibility 和 cursor 可以继承，也是可以理解的，外部的都不可见了，里面的怎么还能看见呢。</p>
-<p>想来也是，如果子元素的这些元素都与父元素不一致，看上去很不舒畅。</p>
-<h2 id="CSS-渐变属性使用"><a href="#CSS-渐变属性使用" class="headerlink" title="CSS 渐变属性使用"></a>CSS 渐变属性使用</h2><p>使用渐变属性(gradient)可以一个元素多种颜色<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">div</span>&#123;</span><br><span class="line">    <span class="attribute">background-image</span>:<span class="built_in">linear-gradient</span>(to bottom,red 0%,red 50%,blue 50%,blue 100%)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>因为本身属性是渐变的,所有需要对同一个位置(除了首位之外)需要把结束和开始的颜色都标注出来,就可以达到锐化的效果.</p>
-<h2 id="可替换内容的-object-fit-属性"><a href="#可替换内容的-object-fit-属性" class="headerlink" title="可替换内容的 object-fit 属性"></a>可替换内容的 object-fit 属性</h2><p>上面这个描述的可替换内容，在使用中最常用到的就是 image 标签了。参数的意义都是相对于内容的容器来说的。</p>
-<p>可选的值有： fill contain cover none scale-down</p>
-<p>这几个值的区别在于</p>
-<ol>
-<li>是否保持原图比例</li>
-<li>是否填满整个容器</li>
-<li>是否允许内容溢出容器</li>
-</ol>
-<h3 id="fill"><a href="#fill" class="headerlink" title="fill"></a>fill</h3><p>铺满整个容器，不需要保持原图比例。</p>
-<h3 id="contain"><a href="#contain" class="headerlink" title="contain"></a>contain</h3><p>铺满整个容器，但是保持图片比例，同时内容不能溢出容器。</p>
-<h3 id="cover"><a href="#cover" class="headerlink" title="cover"></a>cover</h3><p>铺满整个容器，但是保持图片比例，同时内容可以溢出容器。</p>
-<h3 id="none"><a href="#none" class="headerlink" title="none"></a>none</h3><p>保持原有尺寸</p>
-<h3 id="scale-down"><a href="#scale-down" class="headerlink" title="scale-down"></a>scale-down</h3><p>取 none 和 contain 中尺寸小的那一个</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yippee.ink/2019/03/29/普通图层和复合图层/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Yippee">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="依破缘">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/03/29/普通图层和复合图层/" itemprop="url">普通图层和复合图层</a></h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-29T10:36:23+08:00">
-                2019-03-29
-              </time>
-            
-
-            
-
-            
-          </span>
-          
-          
-            <span class="post-updated">
-              &nbsp; | &nbsp; 修改于
-              <time itemprop="dateUpdated" datetime="2019-05-18T13:17:07+08:00" content="2019-05-18">
-                2019-05-18
-              </time>
-            </span>
-          
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <blockquote>
-<p>理解浏览器渲染的图层，有利于我们去分析更加复杂的css渲染问题。<br>由于本人学艺暂时不精，本博客只对我所了解的片面知识做一个记录以及总结</p>
-</blockquote>
-<p>浏览器渲染的图层一般包含两大类：普通图层以及复合图层</p>
-<p>首先这个图层是对于硬件来说的，也就是GPU。在默认的渲染过程中，都只有一个图层，就是一个默认的复合层。</p>
-<p>无论有几个文档流，怎么添加元素都是在这个复合层中渲染的。</p>
-<p>当然，我们可以通过开启硬件加速，开启一个新的复合图层。这样在GPU中，会对这个新的图层进行单独绘制。</p>
-<p>不同的图层的绘制也是互不影响的，同时这样也是会脱离文档流的。</p>
-<h3 id="如何开启硬件加速"><a href="#如何开启硬件加速" class="headerlink" title="如何开启硬件加速"></a>如何开启硬件加速</h3><p>在浏览器中，如果打开的3d变化，浏览器会自动开启硬件加速(开启一个新的复合图层)。<br>最常用的方式：<code>translate3d</code>、<code>translateZ</code>。</p>
-<p>很多时候在本身没有使用3D变化的时候，可以用<code>transform: translateZ(0)</code>来使用。</p>
-<p>还有就是<code>opacity属性/过渡动画</code></p>
-<h3 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h3><p>在使用硬件加速的时候，我们应该尽可能的规定index，防止后面的元素也创建复合图层。</p>
-<p>因为如果开启硬件加速的元素图层index较低，在它之后的index层级的元素也会创建复合图层。我们应该避免这种情况的出现</p>
-<h3 id="作用"><a href="#作用" class="headerlink" title="作用"></a>作用</h3><p>开启硬件加速，当然可以使页面的动画效果加载的更加流畅。但是，也不能过度的使用，浪费资源，造成卡顿。</p>
-<p>同时本身还脱离的文档流，大量的变动也不会引起整个页面重绘，回流</p>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>图层知识的掌握，就对为什么在做css动画的时候，要去做硬件加速，以及其中的原理，有了一个基础的了解。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2087,7 +1973,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">26</span>
+                <span class="site-state-item-count">29</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -2109,7 +1995,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-count">11</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
