@@ -283,6 +283,189 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yippee.ink/2019/04/15/js-错误捕获总结/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yippee">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="依破缘">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/04/15/js-错误捕获总结/" itemprop="url">js 错误捕获总结</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-15T15:01:10+08:00">
+                2019-04-15
+              </time>
+            
+
+            
+
+            
+          </span>
+          
+          
+            <span class="post-updated">
+              &nbsp; | &nbsp; 修改于
+              <time itemprop="dateUpdated" datetime="2019-05-18T13:17:07+08:00" content="2019-05-18">
+                2019-05-18
+              </time>
+            </span>
+          
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>大纲</p>
+<ul>
+<li>try…catch</li>
+<li>window.onerror</li>
+<li>window.addEventLister(‘error’,function(){}[,Boolean-IsCapture])</li>
+</ul>
+<ol>
+<li><p>try..catch</p>
+<p>try…catch是在运行时捕获错误，并用catch处理错误。</p>
+<p>但是不能处理异步的错误，promise的错误也捕获不到。</p>
+<p>如果是任何情况下都要执行的代码，可以用 finally 子句。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="number">1</span>)</span><br><span class="line">&#125; <span class="keyword">catch</span>(error) &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="number">2</span>)</span><br><span class="line">&#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="number">0</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>window.onerror</p>
+<p>与try catch 的区别，使用try catch错误被捕获了之后，JS会继续进行下去，但是使用window.onerror 虽然会监听到错误，但是JS 会在此处停止运行, 但是try catch 就不会。</p>
+<p>使用方法:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">window</span>.onerror = <span class="function"><span class="keyword">function</span>(<span class="params">message, source, lineno, colno, error</span>)</span>&#123; ... return <span class="literal">true</span>/<span class="literal">false</span>&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>默认返回的是false， 如果返回true，就会阻止浏览器上面的报错。</p>
+<p><strong>注意</strong> <code>element.onerror = function(event){}</code></p>
+<p>这里由于某种历史原因，在window 和element 上监听的函数的参数是不一样的。</p>
+<p>同时，这里的错误是不会冒泡到window的错误处理方法上的。</p>
+<ol start="3">
+<li>window.addEventLister(‘error’,function(){}[,Boolean])</li>
+</ol>
+<p>3-1. 事件流</p>
+<blockquote>
+<p>题外话，由于理不清楚，这个事件流到底是怎么个回事，已经转头温习事件流去了。话说，这个error的事件怎么个流动法</p>
+</blockquote>
+<p>好吧，万事都得躬行啊。惭愧，这么久了才把这个搞清楚。</p>
+<p>首先，addEventListener 最后的参数意思为 useCapture ，是否使用捕获模式，默认为false，使用冒泡模式。</p>
+<p><img src="https://images2015.cnblogs.com/blog/776370/201608/776370-20160814181725921-250498467.png" alt="捕获冒泡"></p>
+<p>使用捕获模式就会在捕获阶段触发函数，反之则反。说明一点，目标阶段常被视为冒泡阶段。</p>
+<p>捕获会先比冒泡执行。 事件委托是建立在事件冒泡的基础上的。</p>
+<p>3-2. stopPropagation()  preventDefault()</p>
+<p>上面的两个方法都会讲事件流在使用位置停止。</p>
+<p>3-3 e.target  e.currentTarget</p>
+<p>currentTarget 是事件流到这里(current)触发函数时候的元素， 而 target 才是事件流发出时候真正的元素</p>
+<blockquote>
+<p>回到正题，addEventListener(‘error’,function(){…},…isCapture)</p>
+</blockquote>
+<p>资源加载时候的错误，是不会传到window的 onerror 上面去的。</p>
+<p>复习了事件流之后，这个地方的监听资源的报错，得在 <strong>捕获</strong> 阶段(isCapture 为 true)监听才能监听的到。（不知道为啥）</p>
+<!-- 尝试解释一下为什么只有在捕获的时候才可以捕捉到error：
+
+在错误监听函数中打印错误Error 对象， 可以发现有一个path的对象，值为 `path: (5) [img#ii, body, html, document, Window]`
+
+我的一个猜想，应该是这个错误对象只有 -->
+<blockquote>
+<p>error 产生的流，是个怎么样的流向啊，还没有找到。。</p>
+</blockquote>
+<blockquote>
+<p>而且没哟找到让浏览器不输出这个错误的方法，是不是就没有呢。</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">window</span>.addEventListener(<span class="string">'error'</span>, (msg, url, row, col, error) =&gt; &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'我知道错误了'</span>);</span><br><span class="line">    <span class="built_in">console</span>.log(</span><br><span class="line">        msg, url, row, col, error</span><br><span class="line">    );</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span>; <span class="comment">// 貌似没有啥用</span></span><br><span class="line">&#125;, <span class="literal">true</span>);</span><br></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yippee.ink/2019/04/09/js遗漏知识总结/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -1865,231 +2048,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yippee.ink/2019/03/12/正则表达式/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Yippee">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="依破缘">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/03/12/正则表达式/" itemprop="url">正则表达式</a></h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-12T10:45:22+08:00">
-                2019-03-12
-              </time>
-            
-
-            
-
-            
-          </span>
-          
-          
-            <span class="post-updated">
-              &nbsp; | &nbsp; 修改于
-              <time itemprop="dateUpdated" datetime="2019-05-18T13:17:07+08:00" content="2019-05-18">
-                2019-05-18
-              </time>
-            </span>
-          
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <blockquote>
-<p>关于正则表达式也使用过很久了,但是总是会有点遗漏和本身就没有掌握的地方.在此做记录.</p>
-</blockquote>
-<h2 id="JS正则中的捕获元和非捕获元"><a href="#JS正则中的捕获元和非捕获元" class="headerlink" title="JS正则中的捕获元和非捕获元"></a>JS正则中的捕获元和非捕获元</h2><table>
-<thead>
-<tr>
-<th>字符</th>
-<th>描述</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>(pattern)</td>
-<td>匹配 pattern ,并且获取</td>
-</tr>
-<tr>
-<td>(?:pattern)</td>
-<td>匹配pattern, 但是不捕获结果, 就是在分组中不考虑pattern的分组</td>
-</tr>
-<tr>
-<td>(?=pattern)</td>
-<td>正向预查,也不捕获结果,同时还不获取pattern的结果,只是做一个预查(就是在P中, 都不会包含pattern匹配的结果,这也是?=和?:的差别所在)</td>
-</tr>
-<tr>
-<td>(?!pattern)</td>
-<td>正向预查的否定版</td>
-</tr>
-</tbody>
-</table>
-<p>这里用一道面试题作为例子: 将数值转化成千分位(00,000,000的形式)</p>
-<blockquote>
-<p>题外话,<code>toLocaleSting(&#39;en&#39;)</code>的方式也可以</p>
-</blockquote>
-<p>对比三种正则的获取情况<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> reg1 = <span class="regexp">/\d&#123;1,3&#125;(\d&#123;3&#125;)+$/</span></span><br><span class="line"><span class="keyword">var</span> reg2 = <span class="regexp">/\d&#123;1,3&#125;(?:(\d&#123;3&#125;)+)/g</span></span><br><span class="line"><span class="keyword">var</span> reg3 = <span class="regexp">/\d&#123;1,3&#125;(?=(\d&#123;3&#125;)+$)/g</span></span><br><span class="line"><span class="keyword">var</span> num = <span class="string">'1234567890'</span></span><br><span class="line">num.replace(reg1, <span class="function"><span class="keyword">function</span> (<span class="params">p, $<span class="number">1</span>, $<span class="number">2</span></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'p: '</span>, p); <span class="comment">// 1234567890</span></span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'$1: '</span>, $<span class="number">1</span>); <span class="comment">// 890</span></span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'$2: '</span>, $<span class="number">2</span>); <span class="comment">// 0</span></span><br><span class="line">&#125;)</span><br><span class="line">num.replace(reg2, <span class="function"><span class="keyword">function</span> (<span class="params">p, $<span class="number">1</span>, $<span class="number">2</span></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'p: '</span>, p); <span class="comment">// 1234567890</span></span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'$1: '</span>, $<span class="number">1</span>); <span class="comment">// 890</span></span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'$2: '</span>, $<span class="number">2</span>); <span class="comment">// 0</span></span><br><span class="line">&#125;)</span><br><span class="line">num.replace(reg3, <span class="function"><span class="keyword">function</span> (<span class="params">p, $<span class="number">1</span>, $<span class="number">2</span></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'p: '</span>, p);</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'$1: '</span>, $<span class="number">1</span>);</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'$2: '</span>, $<span class="number">2</span>);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></p>
-<p>首先看第一种正则的情况,虽然的确这就是最后千分位分割的样式,但是这样我们无法匹配以及获取到我们每次需要的数据,它只能讲整个结果返回出来.</p>
-<p>然后是第二种情况,首先说明,我们的匹配符都是用的正则中默认的规则也就是贪婪获取,所以可以看到第二种会和第一种得到一样的情况.如果我们这这种情况下进行优化呢.<br><code>reg2 = /(\d{1,3})(?:(\d{3})+?)/g</code></p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">num.replace(reg2, <span class="function"><span class="keyword">function</span> (<span class="params">p, $<span class="number">1</span>, $<span class="number">2</span></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'p: '</span>, p); <span class="comment">// 123456   7890</span></span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'$1: '</span>, $<span class="number">1</span>); <span class="comment">// 123     7</span></span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'$2: '</span>, $<span class="number">2</span>); <span class="comment">// 456   890</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-<p>这时候会进行两轮,但是因为<code>?:</code>非捕获元的特性, ?:后面的内容会进行消耗,也就是在P中会有消耗,所以下一轮的时候,会略过被消耗用掉的pattern.<br>这个时候肯定会说应该在最后加上$啊,是的,这只是为了举这个例而已,即便加上了$造成的结果还是一样的.</p>
-<p>第三种情况,当然就是正确的方法了.我们来分析这个为什么可以达到我们的效果.<br>因为?=不会消耗pattern匹配的内容,所以会保证每个值都会被捕获.同时由于第一次的匹配情况,保证了除了第一次之外的后面每次匹配都是{3}的情况.<br>同时P就是我们需要的数值的前面的部分,只需要 <code>return p + &#39;,&#39;</code>就可以了</p>
-<h3 id="实用情况"><a href="#实用情况" class="headerlink" title="实用情况"></a>实用情况</h3><h4 id="验证密码的复杂性和位数"><a href="#验证密码的复杂性和位数" class="headerlink" title="验证密码的复杂性和位数"></a>验证密码的复杂性和位数</h4><p>要求:位数大于6,而且包含有字母小写和大写,同时有特殊符号<br><code>/(?=.{6,})(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&amp;&amp;*()_+])/</code></p>
-<h4 id="验证邮箱"><a href="#验证邮箱" class="headerlink" title="验证邮箱"></a>验证邮箱</h4><p><code>/^[0-9a-zA-Z\-_]+@[0-9a-zA-Z\-_]+[\.0-9a-zA-Z\-_]+$/</code></p>
-<h4 id="匹配汉字"><a href="#匹配汉字" class="headerlink" title="匹配汉字"></a>匹配汉字</h4><p><code>[\u4e00-\u9fa5]</code></p>
-<p><code>[\u4E00-\u9FA5\uf900-\ufa2d]</code> </p>
-<h4 id="重学js中的正则表达式"><a href="#重学js中的正则表达式" class="headerlink" title="重学js中的正则表达式"></a>重学js中的正则表达式</h4><blockquote>
-<p>之前，自认为对正则的掌握已经有一丢丢的火候了。但是今天阅读了vue中对 template parse 形成 AST 过程中的原码。我哭了。so，重学正则。</p>
-</blockquote>
-<p>不要去看什么教程，走官网的 <a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/RegExp/n" target="_blank" rel="noopener">介绍</a></p>
-<ol>
-<li>正则基本API补充</li>
-</ol>
-<p>RegExp.$1~$9 可以直接获取当前正则表达式获取到的括号中的匹配项</p>
-<p>RegExp.prototype.source 获取去掉正则两侧的 <code>/</code> 以及标志字符的字符串</p>
-<ol start="2">
-<li>正则的工具使用</li>
-</ol>
-<p><a href="https://regex101.com/" target="_blank" rel="noopener">链接</a><br>这个网站分析的很不错，比一些什么可视化网站好用的多。</p>
-<ol start="3">
-<li>案例分析</li>
-</ol>
-<blockquote>
-<p>这一部分不出意外，将会持续一段时间，将会记录我对其中的正则不断分析和领会的过程.<br><code>/\{\{((?:.|\n)+?)\}\}/</code> &amp; <code>^&lt;((?:[a-zA-Z_][\w\-\.]*\:)?[a-zA-Z_][\w\-\.]*)</code></p>
-</blockquote>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">isPrimeNum2</span>(<span class="params">num</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> !<span class="regexp">/^.?$|^(..+?)\1+$/</span>.test(<span class="built_in">Array</span>(num + <span class="number">1</span>).join(<span class="string">'1'</span>))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>看到一个用正则判断是不是质数的函数，呆了，这是啥玩意。容我细细品味下…</p>
-<p>update：2019-04-09</p>
-<blockquote>
-<p>自我解答来了..</p>
-</blockquote>
-<p>先把正则之外的部分解决一下，<code>Array(num + 1).join(&#39;1&#39;)</code> 返回的是由1组成的num个的字符串。 之所以需要加一，是因为这里用的是join，个数会被减一。</p>
-<p>然后才是重头戏，正则部分。</p>
-<p>正则分成了两部分，前面的 <code>^.?$</code> 是对是否有内容的一个检查，不做多余的说明。</p>
-<p>后面的部分才是对真正的判断，这里我们只能判断是否是非素数，然后求反。</p>
-<p><code>^(..+?)\1+$</code>, 是对非素数的判断。</p>
-<p>非素数，就是除了1之外还有其他因子的数。</p>
-<p>这里，我们就来构造这样的情况。</p>
-<p><code>(..+?)</code> 这里是一个非贪婪的捕获，会先用 <code>(..)</code> 的情况来进行匹配，后面是<code>\1+$</code>对第一次捕获分组的帅选，如果满足条件，容易发现其实在就满足了被2整除的条件，那么就不是质数了。如果2没有匹配到，因为是<code>..+</code>会继续用3,4..etc</p>
-<p>这样，被3,4等等的情况，就都考虑进去了，就满足了对一个非素数的判断。</p>
-<blockquote>
-<p>TODO: 有限状态机，在正则中对倍数的判断的使用。</p>
-</blockquote>
-<p>这块有点复杂，有空闲时间再来研究吧。</p>
-<h2 id="ES9-中正则表达式的更新"><a href="#ES9-中正则表达式的更新" class="headerlink" title="ES9 中正则表达式的更新"></a>ES9 中正则表达式的更新</h2><h3 id="支持分组命名"><a href="#支持分组命名" class="headerlink" title="支持分组命名"></a>支持分组命名</h3><p>使用 <code>?&lt;name&gt;</code> 放于 <code>(</code> 后面，对分组进行命名。<br>例如：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> str = <span class="string">'2019-04-11'</span></span><br><span class="line"><span class="keyword">const</span> reg = <span class="regexp">/(?&lt;year&gt;....)-(?&lt;month&gt;..)-(?&lt;day&gt;..)/</span></span><br><span class="line"><span class="keyword">const</span> group = reg.exec(str).groups</span><br><span class="line"><span class="keyword">let</span> &#123;year, month, day&#125; = group</span><br></pre></td></tr></table></figure></p>
-<h3 id="反向断言"><a href="#反向断言" class="headerlink" title="反向断言"></a>反向断言</h3><p>之前的版本js中的正则是不支持反向断言的，不过现在支持了。</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> regex = <span class="regexp">/(?&lt;=2019)-(..)-(..)/</span></span><br></pre></td></tr></table></figure>
-<p>只会匹配2019后面的月份和日期。<br><em>注意一点: 反向断言中不能使用捕获组</em> 就是这样使用是不行的： <code>(?&lt;=\1)(..)</code></p>
-<h3 id="dotAll"><a href="#dotAll" class="headerlink" title="dotAll"></a>dotAll</h3><p>这个属性是针对于 <code>.</code> 匹配符的，是使用 dotAll 的情况下，<code>.</code> 实现了真正的 all 匹配，换行(\n)，回车(\r)， 行分隔，段分隔，都可以匹配。<br>使用的方式，是使用新增的修饰符 /s</p>
-<p>其实完全的 all 匹配，还得加上 /u 修饰符，考虑Unicode的情况</p>
-<h3 id="Unicode-转义"><a href="#Unicode-转义" class="headerlink" title="Unicode 转义"></a>Unicode 转义</h3><p><code>var regex = new RegExp(&#39;\u{61}&#39;, &#39;u&#39;);</code></p>
-<h2 id="反向非贪婪匹配"><a href="#反向非贪婪匹配" class="headerlink" title="反向非贪婪匹配"></a>反向非贪婪匹配</h2><p>一个这样的字符串<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> str = <span class="string">"&lt;option value='2'&gt;default user group&lt;/option&gt;&lt;option value='8'&gt;默认用户组&lt;/option&gt;&lt;option value='11'&gt;OTT默认用户组&lt;/option&gt;&lt;option value='3418'&gt;黑名单用户组&lt;/option&gt;&lt;option value='3433'&gt;zhonggp测试用户组&lt;/option&gt;&lt;option value='14063'&gt;yangcongtest&lt;/option&gt;&lt;option value='14106'&gt;portal_test&lt;/option&gt;&lt;option value='14126'&gt;大连用户组&lt;/option&gt;"</span></span><br></pre></td></tr></table></figure></p>
-<p>要找出 大连用户组 的标签的value是多少。<br>本来觉得很简单，一个普通的正则就搞定了， <code>value\=&#39;(.*?)&#39;&gt;大连用户组</code>.</p>
-<p>然而，匹配到的结果是 </p>
-<p><code>2&#39;&gt;default user group&lt;/option&gt;&lt;option value=&#39;8&#39;&gt;默认用户组&lt;/option&gt;&lt;option value=&#39;11&#39;&gt;OTT默认用户组&lt;/option&gt;&lt;option value=&#39;3418&#39;&gt;黑名单用户组&lt;/option&gt;&lt;option value=&#39;3433&#39;&gt;zhonggp测试用户组&lt;/option&gt;&lt;option value=&#39;14063&#39;&gt;yangcongtest&lt;/option&gt;&lt;option value=&#39;14106&#39;&gt;portal_test&lt;/option&gt;&lt;option value=&#39;14126&#39;</code></p>
-<p>我就蒙蔽了.我不是用了?了啊，应该是非贪婪的啊，怎么会这样呢。</p>
-<p>后面查阅了资料才发现，贪婪是对应的正向的匹配，对于一个正向的匹配没有第一次匹配到就放手的情况。。</p>
-<p>既然是反向的，我们的思维也反向一下吧。</p>
-<p>在前面加一个贪婪的匹配，那后面的不就是非贪婪的了嘛。</p>
-<p><code>.*value\=&#39;(.*?)&#39;&gt;大连用户组</code> 这样就bingo啦。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2138,7 +2096,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">29</span>
+                <span class="site-state-item-count">30</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -2160,7 +2118,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-count">12</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
